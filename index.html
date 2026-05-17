@@ -1,0 +1,3150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-335Y4K48WR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-335Y4K48WR');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Philippine Trail Race Calendar 2026 | Find Races</title>
+<meta name="description" content="Race slots fill fast. Find every upcoming trail race in the Philippines — dates, distances &amp; reg links in one place. Don't get left at the start line.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NzQuODIgNTU2LjU3Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9PC9zdHlsZT48L2RlZnM+PHBvbHlnb24gcG9pbnRzPSIzOTUuNjUgMCAzMTguNDYgNzcuMTkgMjU5LjU4IDE4LjE1IDAgMjc3LjcyIDI3OS4wNiA1NTYuNTcgMzU2LjI0IDQ3OS4zOSA0MTUuMTIgNTM4LjQzIDY3NC44MiAyNzguNzMgMzk1LjY1IDAiLz48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMzk1LjY1IDEwNC4xMyA1MTYuMDggMjI0LjU2IDU5MS42NiAyMjQuNTYgMzk1LjY1IDI4LjU2IDMzNy4wNSA4Ny4xNiAzNzQuODMgMTI0Ljk0IDM5NS42NSAxMDQuMTMiLz48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMjc5LjA2IDQ1Mi40NCAxNTguNjIgMzMyLjAyIDgzLjA0IDMzMi4wMiAyNzkuMDYgNTI4LjAxIDMzNy42NSA0NjkuNDIgMjk5Ljg3IDQzMS42MyAyNzkuMDYgNDUyLjQ0Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjYxOS42MyAyNTEuODEgNjE5LjEgMjUxLjI4IDEzMC41NCAyNTEuMzIgMjU5LjMyIDEyMi41NCAzNjEuMzQgMjI0LjU2IDQzNi45MiAyMjQuNTYgMjU5LjU2IDQ2LjczIDI4LjM1IDI3Ny45NSA1NS42IDMwNS4yOSA1NDQuMTYgMzA1LjI1IDQxNS4zOCA0MzQuMDMgMzEzLjM3IDMzMi4wMiAyMzcuNzggMzMyLjAyIDQxNS4xNCA1MDkuODQgNjQ2LjM2IDI3OC42MiA2MTkuNjMgMjUxLjgxIi8+PC9zdmc+">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Oswald:wght@400;600;700&family=Roboto+Condensed:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── COLOR TOKENS ── */
+:root {
+  --primary: #002FA7;
+  --accent:  #D0021B;
+}
+:root.hike-mode {
+  --primary: #1B4D2E;
+  --accent:  #D4720B;
+}
+
+/* ── GLOBAL TRANSITION for all themed elements ── */
+.cal-frame, .cal-frame *,
+.bottom-nav, .bottom-nav * {
+  transition:
+    color          0.3s ease,
+    background-color 0.3s ease,
+    border-color   0.3s ease,
+    outline-color  0.3s ease,
+    box-shadow     0.3s ease,
+    fill           0.3s ease;
+}
+
+body {
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 24px 12px;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+/* ── ABOVE-FOLD WRAPPER (desktop: transparent passthrough) ── */
+.above-fold {
+  display: contents;
+}
+
+/* ── OUTER FRAME ── */
+.cal-frame {
+  width: 100%;
+  max-width: 860px;
+  background: white;
+  border: 5px solid var(--primary);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--primary), 6px 6px 0 4px #000a;
+  position: relative;
+  padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+}
+
+/* ── TOP BANNER ── */
+.top-banner {
+  background: #fff;
+  border-bottom: 4px solid var(--primary);
+  display: flex;
+  align-items: stretch;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+/* Banner nav row: arrows on sides, content centred */
+.banner-nav-row {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+.banner-center {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-width: 0;
+  padding: 8px 0;
+}
+.banner-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  border-left: 2px solid rgba(0, 47, 167, 0.22);
+  padding-left: 14px;
+  overflow: hidden;
+  min-width: 0;
+}
+/* Prominent nav arrows — SVG chevrons, always pixel-perfect centred */
+.banner-nav-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  padding: 0 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  transition: opacity 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.banner-nav-btn svg {
+  width: 36px;
+  height: 36px;
+  display: block;
+}
+.banner-nav-btn:hover  { opacity: 0.6; }
+.banner-nav-btn:active { opacity: 1; }
+.banner-logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.banner-logo-row svg { height: 44px; width: auto; }
+.banner-logo-row .nav-btn { font-size: 20px; padding: 4px 14px; line-height: 1; }
+.banner-logo {
+  height: 38px;
+  width: auto;
+  fill: var(--primary);
+  display: block;
+  flex-shrink: 0;
+}
+.banner-title {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 26px;
+  letter-spacing: 2px;
+  color: var(--primary);
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.banner-sub {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  line-height: 1;
+}
+
+/* ── MONTH/YEAR HEADER ── */
+.month-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  background: white;
+  padding: 6px;
+  gap: 6px;
+  position: sticky;
+  top: var(--banner-h, 58px);
+  z-index: 99;
+}
+.year-box {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 46px;
+  color: white;
+  text-align: center;
+  padding: 2px 16px;
+  letter-spacing: 1px;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.month-name-box {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 46px;
+  background: transparent;
+  letter-spacing: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.month-name-text {
+  background: var(--accent);
+  color: white;
+  padding: 2px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  width: 100%;
+}
+.today-btn {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 46px;
+  color: white;
+  background: var(--primary);
+  border: none;
+  padding: 2px 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.today-btn:hover  { background: var(--accent); }
+.today-btn:active { opacity: 0.8; }
+/* Hidden when already on current month */
+.today-btn.is-current-month { opacity: 0.32; pointer-events: none; }
+
+/* ── NAV BUTTONS ── */
+.nav-btn {
+  background: white;
+  color: var(--primary);
+  border: none;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  padding: 3px 14px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+.nav-btn:hover { background: var(--accent); color: white; }
+
+/* ── DAY HEADERS ── */
+.day-headers {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 4px 2px;
+  margin: 0 6px;
+  gap: 2px;
+  background: var(--primary);
+}
+.dh {
+  text-align: center;
+  padding: 5px 0;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 20px;
+  letter-spacing: 1px;
+  background: white;
+  color: var(--primary);
+  border-radius: 5px;
+}
+.dh.sun-hdr { color: var(--accent); }
+
+/* ── CALENDAR GRID ── */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 4px 2px 6px;
+  margin: 0 6px 6px;
+  gap: 2px;
+  background: var(--primary);
+}
+
+.day-cell {
+  border-radius: 5px;
+  min-height: 90px;
+  padding: 3px 4px;
+  position: relative;
+  background: white;
+  overflow: hidden;
+  cursor: pointer;
+}
+.day-cell.blank {
+  background: white;
+  cursor: default;
+  pointer-events: none;
+}
+.day-cell:not(.blank):hover { background: #f0f4ff; }
+
+/* date number wrapper */
+.date-num-wrap { position: relative; display: inline-block; }
+
+.holiday-lbl {
+  display: block;
+  color: var(--accent);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  pointer-events: none;
+  margin-top: 1px;
+}
+
+/* big date number */
+.date-num {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 52px;
+  line-height: 0.95;
+  color: var(--primary);
+}
+.day-cell.is-sun .date-num { color: var(--accent); }
+.day-cell.is-holiday .date-num { color: var(--accent); }
+
+/* event pill */
+.event-pill {
+  margin-top: 2px;
+  background: var(--accent);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  line-height: 1.3;
+  cursor: pointer;
+  border-radius: 1px;
+  font-family: 'Roboto Condensed', sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: block;
+}
+.event-pill:hover { background: var(--primary); }
+
+/* +N more events badge */
+.more-badge {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--primary);
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.5px;
+  margin-top: 1px;
+}
+
+
+/* current date highlight — red border only, no background tint */
+.day-cell.is-today { box-shadow: inset 0 0 0 3px var(--accent); }
+
+/* ── BOTTOM SECTION ── */
+.bottom-row {
+  border-top: 3px solid var(--primary);
+}
+
+.mgh.s { color: var(--accent); }
+.mgd { color: #333; }
+.mgd.s { color: var(--accent); }
+.mgd.today { background: var(--primary); color: white; border-radius: 50%; display: inline-block; width: 14px; height: 14px; line-height: 14px; }
+
+/* center info */
+.center-info { padding: 14px 0 14px; }
+
+/* ── SECTION HEADER ROW — title + nav arrows ── */
+.ev-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 10px 14px;
+  border-bottom: 1.5px solid var(--primary);
+}
+
+.ev-title {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 11px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  line-height: 1;
+}
+
+/* Nav arrow buttons — quiet helpers, not dominant */
+.strip-nav {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.strip-nav-btn {
+  background: none;
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+}
+.strip-nav-btn:hover  { background: var(--primary); color: white; }
+.strip-nav-btn:active { background: var(--accent); border-color: var(--accent); color: white; }
+.strip-nav-btn:disabled { opacity: 0.22; cursor: default; pointer-events: none; }
+.strip-nav-btn svg { display: block; width: 12px; height: 12px; }
+
+/* ── SCROLL STRIP WRAPPER — handles edge fade ── */
+.race-strip-wrap {
+  position: relative;
+}
+/* right-edge fade: signals more cards exist */
+.race-strip-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 36px;
+  background: linear-gradient(to right, transparent, white);
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.2s;
+}
+/* left-edge fade: signals cards exist behind */
+.race-strip-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 20px;
+  background: linear-gradient(to left, transparent, white);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.race-strip-wrap.at-start::before { opacity: 0; }
+.race-strip-wrap.at-end::after    { opacity: 0; }
+.race-strip-wrap.scrolled::before { opacity: 1; }
+
+/* ── HORIZONTAL SCROLL STRIP ── */
+.race-strip {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 8px;
+  padding: 12px 40px 14px 14px;  /* right pad keeps last card clear of fade */
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+}
+.race-strip::-webkit-scrollbar { display: none; }
+.race-strip.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  user-select: none;
+}
+
+/* Individual race card */
+.race-card {
+  flex: 0 0 auto;
+  width: 158px;
+  border: 1.5px solid var(--primary);
+  border-radius: 4px;
+  padding: 10px 11px 11px;
+  cursor: pointer;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: white;
+  transition: background 0.1s, border-color 0.1s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  position: relative;
+}
+.race-card:hover  { background: #f0f4ff; }
+.race-card:active { background: #dce6ff; }
+.race-card.is-selected {
+  background: #dce6ff;
+  border-color: var(--accent);
+}
+
+/* Date block — compact, noticeable */
+.rc-date {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Event name — primary focus */
+.rc-name {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--primary);
+  letter-spacing: 0.1px;
+  line-height: 1.3;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Supporting detail — location + distance, visually secondary */
+.rc-meta {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 11px;
+  color: #666;
+  letter-spacing: 0.1px;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Divider between date and name */
+.rc-div {
+  height: 1px;
+  background: #e0e6f5;
+  margin: 1px 0;
+  flex-shrink: 0;
+}
+
+/* "No events" state */
+.race-strip-empty {
+  padding: 10px 14px 6px;
+  font-size: 11px;
+  color: #777;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-style: italic;
+}
+
+/* ── SEARCH / FILTER BAR ── */
+.sf-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px 0;
+  gap: 8px;
+}
+.sf-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 7px 12px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.12s, color 0.12s;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 44px;
+}
+.sf-toggle-btn:hover  { background: var(--primary); color: white; }
+.sf-toggle-btn.is-open { background: var(--primary); color: white; }
+.sf-clear-btn {
+  background: none;
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 7px 11px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.12s, color 0.12s;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 44px;
+}
+.sf-clear-btn:hover { background: var(--accent); color: white; }
+
+/* ── SEARCH / FILTER PANEL ── */
+.sf-panel {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px 14px;
+  border-top: 1.5px solid var(--primary);
+  margin-top: 8px;
+}
+.sf-panel.is-open { display: flex; }
+
+.sf-search-row { display: flex; gap: 8px; align-items: center; }
+.sf-input {
+  flex: 1;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: white;
+  border: 2px solid var(--primary);
+  padding: 9px 12px;
+  border-radius: 2px;
+  outline: none;
+  -webkit-appearance: none;
+  min-height: 44px;
+}
+.sf-input::placeholder { color: #aaa; font-weight: 400; letter-spacing: 0.5px; }
+.sf-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(208, 2, 27, 0.12); }
+
+.sf-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.sf-chips-lbl {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: #aaa;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  margin-right: 2px;
+}
+.sf-chip {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border: 1.5px solid var(--primary);
+  background: white;
+  color: var(--primary);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 36px;
+  white-space: nowrap;
+}
+.sf-chip:hover  { background: #e8eeff; }
+.sf-chip.is-active { background: var(--primary); color: white; }
+
+.sf-results-label {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 11px;
+  color: #888;
+  font-style: italic;
+  letter-spacing: 0.3px;
+  min-height: 14px;
+}
+.sf-results-label.has-results { color: var(--accent); font-style: normal; font-weight: 700; }
+.sf-results-label.no-results  { color: #999; }
+
+/* Compatibility — keep .hol-row.is-selected for list-mode openEventDetailFromList */
+.hol-row { display: flex; gap: 10px; cursor: pointer; border-radius: 2px; padding: 6px 5px; margin: 0 -3px 1px; -webkit-tap-highlight-color: transparent; transition: background 0.1s; align-items: flex-start; }
+.hol-row.is-selected { background: #dce6ff; box-shadow: inset 3px 0 0 var(--primary); }
+
+/* ── UPDATE BANNER ── */
+.update-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  background: var(--primary);
+  color: white;
+  text-decoration: none;
+  padding: 12px 16px;
+  border-top: 3px solid #001d6e;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s;
+  user-select: none;
+}
+.update-banner:hover  { background: var(--accent); }
+.update-banner:active { opacity: 0.82; }
+.update-banner-text {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  line-height: 1;
+}
+.update-banner-arr {
+  font-size: 16px;
+  line-height: 1;
+  opacity: 0.75;
+  flex-shrink: 0;
+}
+
+/* ── FLOATING CARD + OVERLAY ── */
+.fc-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.12s ease-out;
+}
+.float-card {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border: 4px solid var(--primary);
+  box-shadow: 4px 4px 0 rgba(0,0,30,0.3);
+  padding: 18px 16px 16px;
+  z-index: 1001;
+  width: 320px;
+  max-width: 90vw;
+  opacity: 0;
+  transition: opacity 0.12s ease-out;
+}
+.float-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: var(--primary);
+  cursor: pointer;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 5px;
+}
+.float-close:hover { color: var(--accent); }
+.fc-date {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 13px;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 3px solid var(--primary);
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+  padding-right: 24px;
+  line-height: 1.2;
+}
+.fc-section-lbl {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.fc-holiday {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: 'Oswald', sans-serif;
+  margin-bottom: 2px;
+}
+.fc-event {
+  background: var(--accent);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 4px 7px;
+  margin-bottom: 4px;
+  border-radius: 1px;
+  font-family: 'Roboto Condensed', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.12s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.fc-event:hover { background: var(--primary); }
+.fc-event-chevron {
+  font-size: 11px;
+  opacity: 0.7;
+  flex-shrink: 0;
+  margin-left: 5px;
+  font-style: normal;
+  line-height: 1;
+}
+.fc-section-hint {
+  font-size: 9px;
+  color: #888;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-style: italic;
+  text-align: right;
+  margin-bottom: 6px;
+  margin-top: -2px;
+}
+.fc-empty {
+  font-size: 11px;
+  color: #888;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-style: italic;
+}
+
+/* ── EVENT DETAIL MODAL (Layer 2) ── */
+.ed-modal {
+  display: none;           /* hidden by default — JS sets display:'flex' to open */
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border: 4px solid var(--primary);
+  box-shadow: 4px 4px 0 rgba(0,0,30,0.3);
+  z-index: 1002;
+  width: 380px;
+  max-width: 94vw;
+  max-height: 90vh;
+  opacity: 0;
+  transition: opacity 0.12s ease-out;
+  overflow: hidden;
+}
+.ed-header {
+  background: var(--primary);
+  padding: 9px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.ed-back-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 3px 0;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  opacity: 0.85;
+  transition: opacity 0.12s;
+  -webkit-tap-highlight-color: transparent;
+}
+.ed-back-btn:hover { opacity: 1; }
+.ed-back-btn svg { display: block; }
+.ed-close-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 4px;
+  opacity: 0.75;
+  transition: opacity 0.12s;
+  -webkit-tap-highlight-color: transparent;
+}
+.ed-close-btn:hover { opacity: 1; color: #ffcccc; }
+.ed-body {
+  padding: 18px 18px 20px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── SECTION 1: PRIMARY INFO ── */
+.ed-event-name {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 18px;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.ed-date-loc {
+  margin-bottom: 14px;
+}
+.ed-date-line {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  color: #333;
+  letter-spacing: 0.4px;
+  line-height: 1.5;
+}
+.ed-loc-line {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 11px;
+  color: #666;
+  letter-spacing: 0.2px;
+  line-height: 1.4;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.ed-island-badge {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 7.5px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #6680cc;
+  border: 1px solid #b3c0e8;
+  border-radius: 20px;
+  padding: 1px 7px 1px 6px;
+  line-height: 1.6;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.ed-distances {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.ed-dist-pill {
+  background: var(--accent);
+  color: white;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  padding: 4px 11px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+.ed-reg-btn {
+  display: block;
+  width: 100%;
+  background: var(--primary);
+  color: white;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 12px 12px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.12s;
+  border-radius: 1px;
+  box-sizing: border-box;
+}
+.ed-reg-btn:hover { background: var(--accent); }
+
+/* ── RACE SCHEDULE ── */
+.ed-schedule {
+  margin-bottom: 14px;
+}
+.ed-schedule-lbl {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--primary);
+  margin-bottom: 6px;
+  line-height: 1;
+}
+.ed-schedule-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.ed-schedule-dist {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.ed-schedule-date {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 11px;
+  color: #555;
+  letter-spacing: 0.1px;
+}
+
+/* ── SECTION DIVIDER ── */
+.ed-divider {
+  border: none;
+  border-top: 2px solid var(--primary);
+  margin: 16px 0;
+  opacity: 0.12;
+}
+
+/* ── SECTION 2: DECISION INFO ── */
+.ed-decision {
+  margin-bottom: 4px;
+}
+.ed-decision-block {
+  margin-bottom: 12px;
+}
+.ed-decision-lbl {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #777;
+  margin-bottom: 5px;
+}
+.ed-decision-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.ed-decision-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.ed-decision-dist {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+  min-width: 34px;
+  flex-shrink: 0;
+}
+.ed-decision-val {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: 0.2px;
+}
+/* Tags row: difficulty + reg status */
+.ed-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.ed-tag {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 9.5px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 2px;
+}
+/* Difficulty variants */
+.ed-tag-beginner   { background: #e8f5e9; color: #2e7d32; }
+.ed-tag-intermediate { background: #fff3e0; color: #e65100; }
+.ed-tag-technical  { background: #e8eaf6; color: #1a237e; }
+.ed-tag-brutal     { background: #ffebee; color: #b71c1c; }
+/* Reg status variants */
+.ed-tag-open   { background: #e8f5e9; color: #2e7d32; }
+.ed-tag-last   { background: #fff3e0; color: #e65100; }
+.ed-tag-soldout { background: #ffebee; color: #b71c1c; }
+
+/* ── SECTION 3: SUPPORTING INFO ── */
+.ed-support {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ed-support-row {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+.ed-support-lbl {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #888;
+  min-width: 54px;
+  flex-shrink: 0;
+}
+.ed-support-val {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 11px;
+  color: #555;
+  letter-spacing: 0.1px;
+  line-height: 1.4;
+}
+
+/* ── COUNTDOWN TIMER — subtle secondary ── */
+.ed-countdown {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #e8e8e8;
+}
+.ed-countdown-lbl {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 7px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #bbb;
+  margin-bottom: 6px;
+}
+.ed-cd-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+.ed-cd-unit {
+  background: #f4f6fb;
+  color: var(--primary);
+  text-align: center;
+  padding: 6px 2px 4px;
+  border-radius: 2px;
+}
+.ed-cd-num {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  display: block;
+}
+.ed-cd-lbl {
+  font-family: 'Oswald', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  opacity: 0.55;
+  display: block;
+  margin-top: 2px;
+}
+.ed-cd-done {
+  background: var(--accent);
+  color: white;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  padding: 8px 0;
+  border-radius: 1px;
+}
+.ed-no-details {
+  font-size: 11px;
+  color: #888;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* emoji span — hidden on all breakpoints; mobile rule below is now redundant but kept for clarity */
+.pill-emoji { display: none; }
+
+/* event pill extras — mobile only (hidden on desktop) */
+.pill-extra-mobile  { display: none; }
+/* desktop more-badge shown; mobile variant hidden on desktop */
+.more-badge-desktop { display: block; }
+.more-badge-mobile  { display: none; }
+
+/* ── MOBILE NAV ARROWS (hidden on desktop) ── */
+.mob-nav-btn {
+  display: none;
+}
+
+/* ── SCROLL INDICATOR ── */
+.scroll-hint {
+  display: none;
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 56px;
+  color: var(--accent);
+  opacity: 1;
+  transition: opacity 0.4s;
+  pointer-events: none;
+  animation: bounce 1.5s ease-in-out infinite;
+  z-index: 999;
+  line-height: 1;
+  user-select: none;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0px); }
+  50%       { transform: translateX(-50%) translateY(7px); }
+}
+
+/* ── SKELETON LOADING OVERLAY ── */
+@keyframes cal-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes skel-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+.cal-loading-overlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: white;
+  z-index: 50;
+  flex-direction: column;
+  pointer-events: all;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+.cal-loading-overlay.is-visible {
+  display: flex;
+}
+.cal-loading-overlay.is-opaque {
+  opacity: 1;
+}
+
+/* ── Inline progress bar — top of overlay, browser-style ── */
+.skel-progress-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.07);
+  z-index: 1;
+  overflow: hidden;
+}
+.skel-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--primary);
+  transition: width 0.3s ease;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ── Skeleton grid — mirrors the real 7-col calendar grid ── */
+.skel-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 4px 2px 6px;
+  margin: 0 6px 6px;
+  gap: 2px;
+  background: var(--primary);
+  flex: 1;
+}
+.skel-cell {
+  background: white;
+  border-radius: 5px;
+  padding: 6px 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  animation: skel-pulse 1.4s ease-in-out infinite;
+}
+/* Stagger the pulse so cells ripple, not all flash together */
+.skel-cell:nth-child(7n+2) { animation-delay: 0.08s; }
+.skel-cell:nth-child(7n+3) { animation-delay: 0.16s; }
+.skel-cell:nth-child(7n+4) { animation-delay: 0.24s; }
+.skel-cell:nth-child(7n+5) { animation-delay: 0.32s; }
+.skel-cell:nth-child(7n+6) { animation-delay: 0.40s; }
+.skel-cell:nth-child(7n+0) { animation-delay: 0.48s; }
+.skel-cell.skel-blank { background: white; pointer-events: none; }
+
+/* Date-number shimmer block */
+.skel-num {
+  width: 36px;
+  height: 40px;
+  background: #e8edf8;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+/* Event-pill shimmer block */
+.skel-pill {
+  width: 90%;
+  height: 14px;
+  background: #f0d0d5;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ── Spinner + label — centred below the grid, inside the bottom strip area ── */
+.skel-footer {
+  padding: 16px 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 3px solid var(--primary);
+}
+.skel-spinner {
+  width: 22px;
+  height: 22px;
+  border: 2.5px solid rgba(0, 47, 167, 0.15);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: cal-spin 0.75s linear infinite;
+  flex-shrink: 0;
+}
+.skel-label {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--primary);
+  opacity: 0.6;
+}
+
+@media (min-width: 601px) {
+  .cal-frame { position: relative; }
+}
+
+/* ═══════════════════════════════
+   MOBILE  (≤ 600px)
+   ═══════════════════════════════ */
+@media (max-width: 600px) {
+  body {
+    padding: 0;
+    /* Keep scrollable below-fold content above the nav bar + Android gesture strip */
+    padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+    overflow-x: hidden;
+  }
+
+  /* Frame: full-width, left/right borders matching the sticky banner's 4px thickness */
+  .cal-frame {
+    max-width: 100%;
+    border-left: 4px solid var(--primary);
+    border-right: 4px solid var(--primary);
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Above-fold: fills the usable screen area — stops just short of the bottom blue divider
+     so it is always visible, signalling scrollable content below.
+     env(safe-area-inset-bottom) excludes the Android home/back gesture strip and any
+     other system navigation area so the layout never intrudes into that region.
+     viewport-fit=cover (set in the meta tag) is required for env() to return real values. */
+  .above-fold {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: calc(100vh  - 56px - 3px);    /* Fallback: browsers without dvh or env() */
+    height: calc(100dvh - 56px - 3px);    /* Fallback: dvh without env() support */
+    height: calc(100dvh - 56px - env(safe-area-inset-bottom, 0px) - 3px); /* Preferred */
+    overflow: clip;  /* clips visually without creating a scroll container,
+                        so position:sticky on .top-banner propagates to the
+                        page scroll context (matching desktop behaviour) */
+  }
+
+  /* Banner — mobile-optimised: logo and text fill the available height */
+  .top-banner { padding: 0; gap: 0; flex-shrink: 0; }
+  .banner-nav-btn { padding: 0 10px; }
+  .banner-nav-btn svg { width: 22px; height: 22px; }
+  .banner-logo-row svg { height: 28px; }
+  .banner-logo-row .nav-btn { font-size: 16px; padding: 3px 10px; }
+  .desktop-only { display: none !important; }
+  .banner-center { gap: 8px; min-width: 0; padding: 5px 0; }
+  .banner-logo { height: 24px; }
+  .banner-text { border-left-width: 1.5px; padding-left: 9px; gap: 3px; overflow: hidden; min-width: 0; }
+  .banner-sep { display: none; }
+  .banner-title { font-size: 13px; letter-spacing: 0.8px; line-height: 1; flex-shrink: 0; }
+  .banner-sub { font-size: 8.5px; letter-spacing: 0.4px; line-height: 1; }
+
+  /* Month/year — tightened */
+  .month-header { padding: 3px 4px; gap: 3px; flex-shrink: 0; }
+  .year-box { font-size: 22px; padding: 1px 8px; }
+  .month-name-box { font-size: 22px; letter-spacing: 2px; }
+  .month-name-text { padding: 1px 8px; }
+  .today-btn { font-size: 22px; padding: 1px 8px; letter-spacing: 1px; }
+
+  /* Day headers — tightened */
+  .day-headers { margin: 0 4px; padding: 2px; gap: 2px; flex-shrink: 0; }
+  .dh { font-size: 11px; padding: 3px 0; border-radius: 3px; }
+
+  /* Grid — takes all remaining space; rows stretch evenly to fill it */
+  .cal-grid {
+    flex: 1;
+    min-height: 0;       /* critical: lets flex child shrink below content size */
+    margin: 0 4px;
+    padding: 2px;
+    gap: 2px;
+    align-content: stretch;   /* rows fill the container height */
+    grid-auto-rows: 1fr;      /* each row takes equal share */
+    margin-bottom: 0;
+  }
+
+  /* Cells — no fixed min-height; let the grid rows control height */
+  .day-cell { min-height: 0; padding: 2px 3px; border-radius: 3px; overflow: hidden; }
+
+  /* Date number — smaller */
+  .date-num { font-size: 26px; line-height: 0.9; }
+
+  /* Holiday label — flows below date number, plain red text */
+  .holiday-lbl { font-size: 8px; letter-spacing: 0.1px; margin-top: 1px; }
+
+  /* Event pill — no emoji (span hidden), truncated */
+  .event-pill { font-size: 9px; padding: 1px 2px; margin-top: 1px; letter-spacing: 0; }
+  .pill-emoji { display: none; }
+
+  /* +N badge */
+  .more-badge { font-size: 8px; margin-top: 0; }
+
+  /* Bottom section — below the fold, full-width */
+  .bottom-row { flex-shrink: 0; }
+  .center-info { padding: 12px 0 12px; }
+  .ev-header { padding: 0 8px 9px 12px; }
+  .ev-title { font-size: 10px; letter-spacing: 1.5px; }
+  .strip-nav-btn { width: 20px; height: 20px; }
+  .strip-nav-btn svg { width: 11px; height: 11px; }
+  .race-strip { padding: 10px 36px 12px 12px; gap: 8px; }
+  .race-card { width: 144px; padding: 9px 10px 10px; }
+  .rc-date { font-size: 9.5px; }
+  .rc-name { font-size: 11.5px; }
+  .rc-meta { font-size: 10px; }
+
+  /* Event detail modal — full-screen feel on mobile */
+  .ed-modal {
+    width: 100%;
+    max-width: 100%;
+    max-height: 92vh;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    transform: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 0;
+  }
+  .ed-body { padding: 16px 16px 24px; }
+  .ed-event-name { font-size: 16px; }
+  .ed-decision-block { margin-bottom: 10px; }
+
+  /* Event pill extras — visible on mobile */
+  .pill-extra-mobile { display: block; }
+  /* Desktop more-badge hidden on mobile; mobile more-badge shown */
+  .more-badge-desktop { display: none; }
+  .more-badge-mobile  { display: block; }
+
+  /* Mobile nav arrows */
+  .mob-nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 64px;
+    background: rgba(204, 0, 0, 0.13);
+    color: var(--accent);
+    border: none;
+    font-size: 22px;
+    font-weight: 900;
+    cursor: pointer;
+    z-index: 998;
+    transition: background 0.18s;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    line-height: 1;
+    padding: 0;
+  }
+  .mob-nav-btn:active { background: rgba(204, 0, 0, 0.32); }
+  .mob-nav-prev { left: 0; border-radius: 0 8px 8px 0; }
+  .mob-nav-next { right: 0; border-radius: 8px 0 0 8px; }
+
+  /* Scroll chevron visible on mobile */
+  .scroll-hint { display: block; }
+
+  /* On mobile, shift scroll-hint up above the nav bar */
+  .scroll-hint { bottom: calc(56px + env(safe-area-inset-bottom, 0px) + 10px); }
+
+  /* Search / Filter — mobile */
+  .sf-bar { padding: 6px 12px 0; }
+  .sf-toggle-btn { font-size: 10px; letter-spacing: 1px; padding: 6px 10px; }
+  .sf-panel { padding: 10px 12px 12px; gap: 8px; }
+  .sf-input { font-size: 11px; padding: 8px 10px; }
+  .sf-chip { font-size: 9px; padding: 4px 9px; }
+
+  /* Skeleton grid — match mobile cal-grid sizing */
+  .skel-grid {
+    flex: 1;
+    min-height: 0;
+    margin: 0 4px;
+    padding: 2px;
+    gap: 2px;
+    align-content: stretch;
+    grid-auto-rows: 1fr;
+    margin-bottom: 0;
+  }
+  .skel-cell { border-radius: 3px; padding: 3px 3px; gap: 3px; }
+  .skel-num  { width: 28px; height: 26px; }
+  .skel-pill { height: 10px; }
+}
+
+/* ── BOTTOM NAV BAR ── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 860px;
+  height: calc(56px + env(safe-area-inset-bottom, 0px));
+  background: #ffffff;
+  border-top: 1px solid #e0e0e0;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: flex-start;
+  z-index: 200;
+  /* Prevent content from extending under iOS home indicator */
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.bottom-nav-tab {
+  flex: 1;
+  /* 56px on mobile (Material 3 standard); scales to 60px on desktop
+     to give the larger label comfortable vertical breathing room */
+  height: clamp(56px, 7vw, 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  position: relative;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  min-height: 44px;
+}
+
+.bottom-nav-tab:active {
+  background: rgba(0,0,0,0.04);
+}
+
+/* Vertical divider between tabs */
+.bottom-nav-divider {
+  width: 1px;
+  height: calc(clamp(56px, 7vw, 60px) * 0.6);
+  background: #e8e8e8;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+/* Active indicator bar — top of tab */
+.bottom-nav-tab::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: transparent;
+}
+
+.bottom-nav-tab.is-active::before {
+  background: var(--primary);
+}
+
+.bottom-nav-icon {
+  font-size: 22px;
+  line-height: 1;
+  display: block;
+  /* Inactive: grayscale + low opacity */
+  filter: grayscale(100%);
+  opacity: 0.35;
+}
+
+.bottom-nav-tab.is-active .bottom-nav-icon {
+  filter: none;
+  opacity: 1;
+}
+
+.bottom-nav-label {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  /* Responsive: 12px on mobile (2026 WCAG / Material 3 nav bar minimum)
+     scaling up to 14px on wide/desktop viewports. */
+  font-size: clamp(12px, 3vw, 14px);
+  /* Scale letter-spacing down slightly at smaller sizes to avoid cramping */
+  letter-spacing: clamp(0.6px, 0.15vw, 1.2px);
+  text-transform: uppercase;
+  line-height: 1;
+  color: #aaaaaa;
+}
+
+.bottom-nav-tab.is-active .bottom-nav-label {
+  color: var(--primary);
+}
+</style>
+</head>
+<body>
+
+<!-- Embedded MASL logo -->
+<svg id="masl-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 674.82 556.57" style="display:none">
+  <defs><style>.cls-1{fill:#fff;}</style></defs>
+  <polygon points="395.65 0 318.46 77.19 259.58 18.15 0 277.72 279.06 556.57 356.24 479.39 415.12 538.43 674.82 278.73 395.65 0"/>
+  <polygon class="cls-1" points="395.65 104.13 516.08 224.56 591.66 224.56 395.65 28.56 337.05 87.16 374.83 124.94 395.65 104.13"/>
+  <polygon class="cls-1" points="279.06 452.44 158.62 332.02 83.04 332.02 279.06 528.01 337.65 469.42 299.87 431.63 279.06 452.44"/>
+  <polygon class="cls-1" points="619.63 251.81 619.1 251.28 130.54 251.32 259.32 122.54 361.34 224.56 436.92 224.56 259.56 46.73 28.35 277.95 55.6 305.29 544.16 305.25 415.38 434.03 313.37 332.02 237.78 332.02 415.14 509.84 646.36 278.62 619.63 251.81"/>
+</svg>
+
+<div class="cal-frame">
+
+  <!-- ABOVE-FOLD: header + month + day-labels + grid all live here.
+       On mobile this div is exactly 100dvh tall — the first full screen. -->
+  <div class="above-fold">
+
+    <!-- TOP BANNER -->
+    <div class="top-banner">
+      <div class="banner-nav-row">
+        <button class="banner-nav-btn" onclick="shift(-1)" aria-label="Previous month">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="banner-center">
+          <svg class="banner-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 692.98 184.99"><path d="M696.6,160H9.18V345h693V160ZM14.74,339.8V165.24H222V339.8Zm681.86,0H227.68V165.24H696.6Z" transform="translate(-9.18 -159.99)"/><g id="favicon"><polygon points="125.24 39.45 161.12 75.33 183.64 75.33 125.24 16.94 107.78 34.4 119.04 45.66 125.24 39.45"/><polygon points="90.5 143.24 54.61 107.35 32.09 107.35 90.5 165.75 107.95 148.29 96.7 137.03 90.5 143.24"/><polygon points="199.75 91.25 199.76 91.25 191.97 83.45 191.82 83.3 46.25 83.31 84.62 44.94 115.01 75.33 137.53 75.33 84.69 22.35 15.79 91.25 15.98 91.43 15.97 91.44 23.76 99.23 23.92 99.39 169.49 99.38 131.12 137.75 100.72 107.35 78.2 107.35 131.04 160.34 199.94 91.44 199.75 91.25"/></g><g id="MASL_txt" data-name="MASL txt"><g id="ASL"><path d="M252.14,288.44,246,326.64h5.51l1-6.93h7.37l1,6.93h6l-6.11-38.2Zm1.2,26.08,2.89-19.31,2.89,19.31Z" transform="translate(-9.18 -159.99)"/><path d="M294.8,306.29c2.68-1.26,3.88-3.77,3.88-7.7v-1.36c0-5.9-2.62-8.79-8.9-8.79h-9v38.2h9.44c6.05,0,9.11-3.17,9.11-9.06v-3.11C299.28,310.38,298.08,307.54,294.8,306.29Zm-8.07-12.39h2.89c2.13,0,3.06,1.14,3.06,3.93V300c0,3.05-1.37,4-3.6,4h-2.35Zm6.55,23.52c0,2.83-1.1,3.76-3.11,3.76h-3.44V309.45h2.67c2.78,0,3.88,1.09,3.88,4.64Z" transform="translate(-9.18 -159.99)"/><path d="M322.41,288c-5.89,0-9.11,3.43-9.11,9.6v19.86c0,6.17,3.22,9.6,9.11,9.6s9.11-3.43,9.11-9.6V297.61C331.52,291.44,328.3,288,322.41,288Zm3.11,29.84c0,2.79-1.2,3.77-3.11,3.77s-3.11-1-3.11-3.77V297.23c0-2.79,1.2-3.77,3.11-3.77s3.11,1,3.11,3.77Z" transform="translate(-9.18 -159.99)"/><polygon points="346.13 159.61 341.55 128.45 335.49 128.45 341.38 166.65 350.33 166.65 356.23 128.45 350.71 128.45 346.13 159.61" /><polygon points="369.92 166.65 386.29 166.65 386.29 161.19 375.92 161.19 375.92 150.01 384.16 150.01 384.16 144.55 375.92 144.55 375.92 133.91 386.29 133.91 386.29 128.45 369.92 128.45 369.92 166.65" /><path d="M440.59,306.18a33.23,33.23,0,0,1-2.84-2.68c-1.74-1.74-3.05-3.65-3.05-6.27,0-2.79,1.09-3.77,3-3.77s3,1,3,3.77v1.58h5.67v-1.2c0-6.17-2.94-9.6-8.84-9.6s-8.84,3.43-8.84,9.6a11.74,11.74,0,0,0,.88,4.75,18.06,18.06,0,0,0,5,6.49c1,.93,1.91,1.8,2.78,2.67,1.75,1.8,3.06,3.71,3.06,6.33,0,2.79-1.21,3.71-3.11,3.71s-3.12-.92-3.12-3.71v-2.73h-5.67v2.35c0,6.17,3.06,9.6,9,9.6s8.95-3.43,8.95-9.6a11.74,11.74,0,0,0-.88-4.75A19.26,19.26,0,0,0,440.59,306.18Z" transform="translate(-9.18 -159.99)"/><polygon points="451.6 166.65 467.96 166.65 467.96 161.19 457.6 161.19 457.6 150.01 465.84 150.01 465.84 144.55 457.6 144.55 457.6 133.91 467.96 133.91 467.96 128.45 451.6 128.45 451.6 166.65" /><path d="M496.29,288.44l-6.11,38.2h5.51l1-6.93h7.37l1,6.93h6.06l-6.11-38.2Zm1.2,26.08,2.9-19.31,2.89,19.31Z" transform="translate(-9.18 -159.99)"/><polygon points="541.07 128.45 535.07 128.45 535.07 166.65 550.95 166.65 550.95 161.19 541.07 161.19 541.07 128.45" /><polygon points="564.48 166.65 580.85 166.65 580.85 161.19 570.48 161.19 570.48 150.01 578.72 150.01 578.72 144.55 570.48 144.55 570.48 133.91 580.85 133.91 580.85 128.45 564.48 128.45 564.48 166.65" /><polygon points="604.53 159.61 599.95 128.45 593.89 128.45 599.78 166.65 608.73 166.65 614.62 128.45 609.11 128.45 604.53 159.61" /><polygon points="628.32 166.65 644.68 166.65 644.68 161.19 634.32 161.19 634.32 150.01 642.56 150.01 642.56 144.55 634.32 144.55 634.32 133.91 644.68 133.91 644.68 128.45 628.32 128.45 628.32 166.65" /><polygon points="665.31 161.19 665.31 128.45 659.31 128.45 659.31 166.65 675.18 166.65 675.18 161.19 665.31 161.19" /></g><g id="memories"><polygon points="282.13 28.82 264.52 95.69 262.15 87.09 243.36 17.17 236.23 17.19 236.22 116.6 243.65 115.69 243.66 45.52 261.55 113.64 267.48 113 270.58 100.75 285.17 44.49 285.07 111.22 292.4 110.53 292.54 17.08 285.3 17.09 282.13 28.82" /><path d="M326.71,177l-.17,91.37,2-.16,5.41-.4,4.7-.34,4.47-.32,4.7-.31,5.41-.35,1.71-.11v-7.63l-1.93.11-4.62.28-11.82.78-2.66.19.07-35.2,3.27-.12,15.4-.54,0-7.64-18.68.6.06-32.53,21-.09V177H343.11Z" transform="translate(-9.18 -159.99)"/><polygon points="399.17 87.84 377.96 16.97 370.87 16.98 370.73 105.05 378.17 104.71 378.27 42.38 396.17 104.02 402.04 103.83 419.82 42.16 419.77 103.38 427.11 103.25 427.17 16.94 419.96 16.94 399.17 87.84" /><path d="M488.92,183.24a10.92,10.92,0,0,0-1.86-3,9.26,9.26,0,0,0-2.94-2.31,9.52,9.52,0,0,0-3.63-1H470.41a9.42,9.42,0,0,0-4.14.85,7.05,7.05,0,0,0-3,2.69,12.77,12.77,0,0,0-1.47,3.34,14,14,0,0,0-.48,3.71v64.9a13.66,13.66,0,0,0,.46,3.53,13.25,13.25,0,0,0,1.36,3.26A7.26,7.26,0,0,0,466,262a10.08,10.08,0,0,0,4.18,1l10.92.07h.06a8.86,8.86,0,0,0,3.68-.95,7.57,7.57,0,0,0,2.75-2.47,11.15,11.15,0,0,0,2-6.45l0-66.56A9.26,9.26,0,0,0,488.92,183.24Zm-6.65,67a16.9,16.9,0,0,1-.21,2.86,6.38,6.38,0,0,1-.53,1.72c-.36.68-1.56.8-2.47.8l-6.05,0a7.84,7.84,0,0,1-2.6-.37,1.65,1.65,0,0,1-.89-.63,5.41,5.41,0,0,1-.62-1.71,13.65,13.65,0,0,1-.24-2.73V189.71a10.37,10.37,0,0,1,.28-2.5,5.22,5.22,0,0,1,.74-1.67c.71-1,1.3-1.14,1.75-1.14H479c.93,0,2.11.15,2.47.84A6.17,6.17,0,0,1,482,187a16.86,16.86,0,0,1,.21,2.85Z" transform="translate(-9.18 -159.99)"/><path d="M538.45,235c-.37-1.35-.74-2.61-1.11-3.75a30.23,30.23,0,0,0-1.45-3.61c-.34-.71-.71-1.43-1.12-2.15a12.69,12.69,0,0,0,2-2,23.44,23.44,0,0,0,3-5A24.9,24.9,0,0,0,541,215a34,34,0,0,0,.84-3.89c.22-1.36.39-2.85.5-4.41s.16-3.22.16-4.94-.1-3.49-.27-5.11a39.33,39.33,0,0,0-.8-4.7,40.56,40.56,0,0,0-1.21-4.13,28.64,28.64,0,0,0-1.53-3.56,21.34,21.34,0,0,0-1.83-2.93,14.36,14.36,0,0,0-2.13-2.3,7.67,7.67,0,0,0-4.93-2.11H514.54l.1,86.77,7.33.22,0-36.91,4,.08a11.56,11.56,0,0,1,1.29,1.19,12.28,12.28,0,0,1,1.78,2.79c.32.65.66,1.44,1,2.34s.71,2,1.07,3.12.74,2.52,1.12,4.05.79,3.28,1.2,5.21l4,18.69,1.41.06,4.36.19,2.4.1-6-25.45C539.19,237.8,538.81,236.31,538.45,235Zm-3.51-30.06c-.11,1.08-.22,2.2-.33,3.35s-.26,2.17-.44,3.18-.41,2-.67,2.89a12.81,12.81,0,0,1-.9,2.34,9.06,9.06,0,0,1-1.17,1.77,3.3,3.3,0,0,1-1.26.88,5,5,0,0,1-2,.29l-6.27-.1,0-35H527a6.69,6.69,0,0,1,2.2.34,4.23,4.23,0,0,1,1.52.94,9.31,9.31,0,0,1,1.38,1.71,12,12,0,0,1,1.1,2.21,22.3,22.3,0,0,1,.84,2.73,30.75,30.75,0,0,1,.58,3.06c.14,1.11.27,2.23.38,3.34,0,.3.07.61.11.92a18.69,18.69,0,0,1,.17,2.22,16.83,16.83,0,0,1-.18,1.77C535,204.11,535,204.51,534.94,204.91Z" transform="translate(-9.18 -159.99)"/><polygon points="560.71 17 560.87 106.14 568.53 106.61 568.37 17 560.71 17" /><path d="M629.37,262.8l-4.61-.4-11.81-1-2.93-.23L610,225.51l18.66.84v-7.82l-18.67-.76-.06-33,21,.12v-7.83l-28.35,0,.16,91.33,1.68.13,5.41.44,4.69.39,4.46.38,4.7.41,5.41.5,2,.18V263Z" transform="translate(-9.18 -159.99)"/><path d="M683.24,226.43a11.53,11.53,0,0,0-1.85-2.59A9.45,9.45,0,0,0,679,222a6.08,6.08,0,0,0-2.48-.82l-10.72-.59a3.7,3.7,0,0,1-2-.44h0a11,11,0,0,1-.42-3.41l0-25.4a21.17,21.17,0,0,1,.2-3.05,9.67,9.67,0,0,1,.55-2.13c.15-.36.46-1.05,2-1l7.6.06c2,0,2.31.77,2.44,1.05a8,8,0,0,1,.57,2.14,22.18,22.18,0,0,1,.22,3.38v19.07l7.33.3v-23a11.62,11.62,0,0,0-.61-3.76,12.31,12.31,0,0,0-1.81-3.43,9.64,9.64,0,0,0-2.92-2.66,8.84,8.84,0,0,0-3.71-1.13l-10.09,0H665a9.57,9.57,0,0,0-4.13,1.14,7.67,7.67,0,0,0-2.92,2.9,14,14,0,0,0-1.45,3.6,16.8,16.8,0,0,0-.47,4l0,30.71a9.76,9.76,0,0,0,.69,3.8,7.06,7.06,0,0,0,2.18,2.92,9.34,9.34,0,0,0,5.22,2.24l9.15.55c1.75.11,2.63.5,2.88.84a5.32,5.32,0,0,1,.66,3v28.58a18.57,18.57,0,0,1-.22,3.07,8,8,0,0,1-.6,2c-.23.49-.54.92-1.72.78l-7.59-.84c-2.1-.23-2.49-1.09-2.62-1.37a8.84,8.84,0,0,1-.57-2.1,24.21,24.21,0,0,1-.22-3.31V240.92l-7.32-.55,0,22.43a11.83,11.83,0,0,0,.61,3.72,13.43,13.43,0,0,0,1.79,3.46,10.87,10.87,0,0,0,2.83,2.83,9.68,9.68,0,0,0,3.62,1.47l.13,0,5,.57,5,.58H675l.63,0a8.55,8.55,0,0,0,3.57-.71,6.87,6.87,0,0,0,3-2.75,13,13,0,0,0,1.46-3.57,17.19,17.19,0,0,0,.47-4.09v-34.3A7.53,7.53,0,0,0,683.24,226.43Z" transform="translate(-9.18 -159.99)"/></g></g></svg>
+          <div class="banner-text">
+            <div class="banner-title">Kita-kits sa Trail!</div>
+            <div class="banner-sub" id="bannerSub">Upcoming Trail Races Sa Pinas</div>
+          </div>
+        </div>
+        <button class="banner-nav-btn" onclick="shift(1)" aria-label="Next month">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- MONTH HEADER -->
+    <div class="month-header">
+      <div class="year-box" id="yr-l">2026</div>
+      <div class="month-name-box"><span class="month-name-text" id="mon-name">MAY</span></div>
+      <button class="today-btn" id="today-btn" onclick="jumpToToday()" aria-label="Go to current month">TODAY</button>
+    </div>
+
+    <!-- DAY HEADERS -->
+    <div class="day-headers">
+      <div class="dh sun-hdr">SUN</div>
+      <div class="dh">MON</div>
+      <div class="dh">TUE</div>
+      <div class="dh">WED</div>
+      <div class="dh">THU</div>
+      <div class="dh">FRI</div>
+      <div class="dh">SAT</div>
+    </div>
+
+    <!-- GRID -->
+    <div class="cal-grid" id="cal-grid"></div>
+
+    <!-- LOADING OVERLAY — skeleton shown while race/hike data fetches -->
+    <div class="cal-loading-overlay" id="cal-loading-overlay">
+      <!-- Progress bar — top of overlay, browser-style -->
+      <div class="skel-progress-track">
+        <div class="skel-progress-fill" id="skel-progress-fill"></div>
+      </div>
+      <!-- Skeleton grid: 5 rows × 7 cols = 35 cells -->
+      <div class="skel-grid" id="skel-grid">
+        <!-- Row 1: 1 blank + 6 days -->
+        <div class="skel-cell skel-blank"></div>
+        <div class="skel-cell"><div class="skel-num"></div><div class="skel-pill"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div><div class="skel-pill"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div><div class="skel-pill"></div></div>
+        <!-- Row 2 -->
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div><div class="skel-pill"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div><div class="skel-pill"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <!-- Row 3 -->
+        <div class="skel-cell"><div class="skel-num"></div><div class="skel-pill"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div><div class="skel-pill"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div><div class="skel-pill"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <!-- Row 4 -->
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div><div class="skel-pill"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div><div class="skel-pill"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <!-- Row 5: 2 days + 5 blanks -->
+        <div class="skel-cell"><div class="skel-num"></div></div>
+        <div class="skel-cell"><div class="skel-num"></div><div class="skel-pill"></div></div>
+        <div class="skel-cell skel-blank"></div>
+        <div class="skel-cell skel-blank"></div>
+        <div class="skel-cell skel-blank"></div>
+        <div class="skel-cell skel-blank"></div>
+        <div class="skel-cell skel-blank"></div>
+      </div>
+      <div class="skel-footer">
+        <div class="skel-spinner"></div>
+        <div class="skel-label" id="skel-label">Loading…</div>
+      </div>
+    </div>
+
+  </div><!-- /.above-fold -->
+
+  <!-- BOTTOM SECTION — below the fold on mobile, scroll to reveal -->
+  <div class="bottom-row">
+    <!-- ── SEARCH / FILTER PANEL ── -->
+    <div class="sf-bar">
+      <button class="sf-toggle-btn" id="sf-toggle-btn" onclick="toggleSearchPanel()" aria-expanded="false" aria-controls="sf-panel">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span>SEARCH &amp; FILTER</span>
+      </button>
+      <button class="sf-clear-btn" id="sf-clear-btn" onclick="clearSearch()" style="display:none" aria-label="Clear search and filters">CLEAR ✕</button>
+    </div>
+
+    <div class="sf-panel" id="sf-panel" aria-hidden="true">
+      <!-- Search input -->
+      <div class="sf-search-row">
+        <input
+          class="sf-input"
+          id="sf-input"
+          type="search"
+          placeholder="RACE NAME OR LOCATION…"
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="false"
+          aria-label="Search races by name or location"
+          oninput="applySearch()"
+        />
+      </div>
+
+      <!-- Results count -->
+      <div class="sf-results-label" id="sf-results-label" aria-live="polite" aria-atomic="true"></div>
+    </div>
+
+    <div class="center-info" id="center-info"></div>
+  </div>
+
+  <!-- UPDATE BANNER — href is updated dynamically when mode switches -->
+  <a id="update-banner" class="update-banner"
+     href="https://docs.google.com/forms/d/e/1FAIpQLSfhpuMI4T_9rXTtIwcS--tUYmDQgR8WwSObjJIxQ4rooj1XRg/viewform?usp=header"
+     target="_blank"
+     rel="noopener noreferrer">
+    <span class="update-banner-text">Help improve this calendar. Send updates or feedback.</span>
+    <span class="update-banner-arr">&#8250;</span>
+  </a>
+
+</div><!-- /.cal-frame -->
+
+<!-- DARK OVERLAY — tap outside card to dismiss -->
+<div class="fc-overlay" id="fc-overlay" onclick="handleOverlayClick()"></div>
+
+<!-- FLOATING DETAIL CARD — appears on date tap -->
+<div class="float-card" id="float-card">
+  <button class="float-close" onclick="closeCard()">✕</button>
+  <div class="fc-date" id="fc-date"></div>
+  <div id="fc-body"></div>
+</div>
+
+<!-- EVENT DETAIL MODAL — second layer, opens from day events list -->
+<div class="ed-modal" id="ed-modal">
+  <div class="ed-header">
+    <button class="ed-back-btn" onclick="closeEventDetail()">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      Back
+    </button>
+    <button class="ed-close-btn" onclick="closeCard()">✕</button>
+  </div>
+  <div class="ed-body" id="ed-body"></div>
+</div>
+
+<!-- SCROLL CHEVRON — mobile only, fades on scroll -->
+<div class="scroll-hint" id="scroll-hint">&#8964;</div>
+
+<!-- BOTTOM NAV BAR -->
+<nav class="bottom-nav" aria-label="Main navigation">
+  <button class="bottom-nav-tab is-active" id="tabRuns" onclick="switchMode('runs')" aria-label="Trail Runs" aria-selected="true">
+    <span class="bottom-nav-label">Trail Runs</span>
+  </button>
+  <div class="bottom-nav-divider" role="separator"></div>
+  <button class="bottom-nav-tab" id="tabHikes" onclick="switchMode('hikes')" aria-label="Hikes" aria-selected="false">
+    <span class="bottom-nav-label">Hikes</span>
+  </button>
+</nav>
+
+
+<script>
+// ── DATA ──────────────────────────────────────────────────
+const PH_HOLIDAYS = {
+  '2026-01-01': ["New Year's Day",      'Thu'],
+  '2026-01-25': ['Chinese New Year',    'Sun'],
+  '2026-02-25': ['EDSA Revolution',     'Wed'],
+  '2026-04-02': ['Maundy Thursday',     'Thu'],
+  '2026-04-03': ['Good Friday',         'Fri'],
+  '2026-04-04': ['Black Saturday',      'Sat'],
+  '2026-04-09': ['Araw ng Kagitingan',  'Thu'],
+  '2026-05-01': ['Labor Day',           'Fri'],
+  '2026-06-12': ['Independence Day',    'Fri'],
+  '2026-08-21': ["Ninoy Aquino Day",    'Fri'],
+  '2026-08-31': ['National Heroes Day', 'Mon'],
+  '2026-11-01': ["All Saints' Day",     'Sun'],
+  '2026-11-02': ["All Souls' Day",      'Mon'],
+  '2026-11-30': ["Bonifacio Day",       'Mon'],
+  '2026-12-08': ['Imm. Conception',     'Tue'],
+  '2026-12-24': ['Christmas Eve',       'Thu'],
+  '2026-12-25': ['Christmas Day',       'Fri'],
+  '2026-12-30': ['Rizal Day',           'Wed'],
+  '2026-12-31': ["New Year's Eve",      'Thu'],
+};
+
+// ── GOOGLE SHEET CSV URLS ─────────────────────────────────
+const RACE_CSV_URL  = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRgLX2R0c_LekofFvWcGKaoJvs6kdJQquTQ43-ZvWG6WoazU1ZBnF9SBPbVvDHc1dKD72xVDDkwfdhw/pub?gid=1550638156&single=true&output=csv';
+const HIKE_CSV_URL  = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRgLX2R0c_LekofFvWcGKaoJvs6kdJQquTQ43-ZvWG6WoazU1ZBnF9SBPbVvDHc1dKD72xVDDkwfdhw/pub?gid=1290848239&single=true&output=csv';
+const RACE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfhpuMI4T_9rXTtIwcS--tUYmDQgR8WwSObjJIxQ4rooj1XRg/viewform?usp=header';
+const HIKE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfS2x-PgVGihQsUaPwyQwnudNzVbx3Vbma5YRQjMNpH2b4dlA/viewform?usp=dialog';
+
+// ── SESSION CACHE ─────────────────────────────────────────
+// Each is null until first fetched; re-used on subsequent tab switches.
+let raceData = null;   // { events, details }
+let hikeData = null;   // { events, details }
+
+// ── ACTIVE MODE ───────────────────────────────────────────
+let currentMode = 'runs';
+
+// These globals always reflect the ACTIVE mode's data.
+// Swapped by switchMode() — all rendering functions read from here.
+// These are populated by fetchSheetData() before first render
+let TRAIL_EVENTS  = {};
+let EVENT_DETAILS = {};
+
+// ── CSV PARSER ────────────────────────────────────────────
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+  return lines.slice(1).map(line => {
+    // Handle quoted fields (fields may contain commas inside quotes)
+    const fields = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"') { inQ = !inQ; }
+      else if (c === ',' && !inQ) { fields.push(cur.trim()); cur = ''; }
+      else { cur += c; }
+    }
+    fields.push(cur.trim());
+    const row = {};
+    headers.forEach((h, i) => { row[h] = (fields[i] || '').replace(/^"|"$/g, '').trim(); });
+    return row;
+  }).filter(row => Object.values(row).some(v => v !== ''));
+}
+
+// ── RAW CSV PARSER (column-index based, for hike CSV) ─────
+function parseCSVRaw(text) {
+  return text.trim().split('\n').map(line => {
+    const fields = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"') { inQ = !inQ; }
+      else if (c === ',' && !inQ) { fields.push(cur.trim()); cur = ''; }
+      else { cur += c; }
+    }
+    fields.push(cur.trim());
+    return fields.map(f => f.replace(/^"|"$/g, '').trim());
+  });
+}
+
+// ── HIKE CSV → { events, details } ───────────────────────
+// Uses named headers — column order in the sheet does not matter.
+// Expected headers (exact match, case-sensitive):
+//   Date, Event Name, Location, Island Group, Difficulty, Organizer,
+//   Package Price, Inclusions, Meetup point, Reg Link, Max Slots, Schedule
+function parseHikeData(csv) {
+  const rows    = parseCSV(csv);   // header-keyed objects, order-independent
+  const events  = {};
+  const details = {};
+
+  rows.forEach(row => {
+    const date = (row['Date']       || '').trim();
+    const name = (row['Event Name'] || '').trim();
+    if (!date || !name) return;
+
+    if (!events[date]) events[date] = [];
+    events[date].push(name);
+
+    details[name] = {
+      location:     (row['Location']      || '').trim(),
+      islandGroup:  (row['Island Group']  || '').trim(),
+      difficulty:   (row['Difficulty']    || '').trim(),
+      organizer:    (row['Organizer']     || '').trim(),
+      packagePrice: (row['Package Price'] || '').trim(),
+      inclusions:   (row['Inclusions']    || '').trim(),
+      meetupPoint:  (row['Meetup point']  || '').trim(),
+      regLink:      (row['Reg Link']      || '').trim(),
+      maxSlots:     (row['Max Slots']     || '').trim(),
+      schedule:     (row['Schedule']      || '').trim(),
+      _isHike: true,
+    };
+  });
+
+  return { events, details };
+}
+
+// ── FETCH & BUILD DATA ────────────────────────────────────
+// ── CALENDAR LOADING OVERLAY UTILITIES ───────────────────
+// Shared by both the initial race fetch and the hike tab fetch.
+// Uses a RAF-driven simulated progress bar (same philosophy as the
+// Uses a RAF-driven simulated progress bar — eases to ~88% on its own, snaps to 100% on hide.
+
+let _calLoadingRaf = null;
+let _calLoadingProgress = 0;
+
+function calLoadingShow(label) {
+  const overlay  = document.getElementById('cal-loading-overlay');
+  const fill     = document.getElementById('skel-progress-fill');
+  const labelEl  = document.getElementById('skel-label');
+
+  if (!overlay) return;
+
+  // Reset progress
+  _calLoadingProgress = 0;
+  if (fill) {
+    fill.style.transition = 'none';
+    fill.style.width = '0%';
+  }
+  if (labelEl) labelEl.textContent = label || 'Loading…';
+
+  // Show overlay — use rAF to ensure display:flex is painted before opacity
+  overlay.classList.add('is-visible');
+  requestAnimationFrame(() => {
+    overlay.classList.add('is-opaque');
+  });
+
+  // Animate progress bar
+  cancelAnimationFrame(_calLoadingRaf);
+  function tick() {
+    _calLoadingProgress += (88 - _calLoadingProgress) * 0.045;
+    if (fill) fill.style.width = _calLoadingProgress + '%';
+    _calLoadingRaf = requestAnimationFrame(tick);
+  }
+  if (fill) fill.style.transition = 'width 0.3s ease';
+  _calLoadingRaf = requestAnimationFrame(tick);
+}
+
+function calLoadingHide() {
+  const overlay = document.getElementById('cal-loading-overlay');
+  const fill    = document.getElementById('skel-progress-fill');
+
+  cancelAnimationFrame(_calLoadingRaf);
+
+  // Snap bar to 100%
+  if (fill) {
+    fill.style.transition = 'width 0.18s ease';
+    fill.style.width = '100%';
+  }
+
+  // Fade out overlay after bar completes
+  setTimeout(() => {
+    if (overlay) overlay.classList.remove('is-opaque');
+    setTimeout(() => {
+      if (overlay) {
+        overlay.classList.remove('is-visible');
+        // Reset bar silently for next use
+        if (fill) {
+          fill.style.transition = 'none';
+          fill.style.width = '0%';
+        }
+      }
+    }, 200); // matches CSS transition duration
+  }, 180);
+}
+
+async function fetchSheetData() {
+  // ── Show skeleton overlay while race data loads ──────────
+  calLoadingShow('Loading Trail Races…');
+
+  try {
+    const res = await fetch(RACE_CSV_URL);
+    const csv = await res.text();
+    const rows = parseCSV(csv);
+
+    TRAIL_EVENTS  = {};
+    EVENT_DETAILS = {};
+
+    rows.forEach(row => {
+      const date = (row['Date'] || '').trim();
+      const name = (row['Event Name'] || '').trim();
+      if (!date || !name) return;
+
+      // Build TRAIL_EVENTS: { 'YYYY-MM-DD': ['Event Name', ...] }
+      if (!TRAIL_EVENTS[date]) TRAIL_EVENTS[date] = [];
+      TRAIL_EVENTS[date].push(name);
+
+      // Build EVENT_DETAILS: { 'Event Name': { location, distances, regLink, elevation, organizer } }
+      const distances = (row['Distances'] || '').split(',').map(d => d.trim()).filter(Boolean);
+
+      const elevation = {};
+      (row['Elevation'] || '').split('|').forEach(pair => {
+        const [dist, gain] = pair.split(':').map(s => s.trim());
+        if (dist && gain) elevation[dist] = gain;
+      });
+
+      // Schedule: built from Day 1 Distances / Day 2 Distances columns.
+      // Day 1 date = the event's Date value (YYYY-MM-DD).
+      // Day 2 date = Day 1 date + 1 calendar day (always derived, never hardcoded).
+      const schedule = [];
+      const day1Dist = (row['Day 1 Distances'] || '').trim();
+      const day2Dist = (row['Day 2 Distances'] || '').trim();
+
+      // Helper: format a YYYY-MM-DD string as "Mon D" (e.g. "Jun 27")
+      function fmtScheduleDate(isoDate) {
+        const [sy, sm, sd] = isoDate.split('-').map(Number);
+        const dt = new Date(sy, sm - 1, sd);
+        const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        const DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        return `${MON[dt.getMonth()]} ${sd} ${DOW[dt.getDay()]}`;
+      }
+
+      if (day1Dist) {
+        schedule.push({ dist: day1Dist, date: fmtScheduleDate(date) });
+      }
+
+      if (day2Dist) {
+        // Compute Day 2 = Day 1 + 1 calendar day
+        const [d1y, d1m, d1d] = date.split('-').map(Number);
+        const day2Date = new Date(d1y, d1m - 1, d1d + 1);
+        const day2Key = `${day2Date.getFullYear()}-${pad(day2Date.getMonth()+1)}-${pad(day2Date.getDate())}`;
+        schedule.push({ dist: day2Dist, date: fmtScheduleDate(day2Key) });
+      }
+
+      // Strip ", Philippines" (any casing/spacing) from end of location for display
+      const rawLocation = (row['Location'] || '').trim();
+      const displayLocation = rawLocation.replace(/,?\s*philippines\s*$/i, '').trim();
+
+      EVENT_DETAILS[name] = {
+        location:    displayLocation,
+        distances,
+        regLink:     (row['Reg Link']    || '').trim(),
+        organizer:   (row['Organizer']   || '').trim(),
+        islandGroup: (row['Island Group'] || '').trim(),
+        elevation,
+        schedule,
+      };
+    });
+
+  } catch (err) {
+    console.error('Failed to load race data from Google Sheets:', err);
+  }
+
+  // Cache the loaded race data for tab switching
+  raceData = { events: TRAIL_EVENTS, details: EVENT_DETAILS };
+
+  // Hide overlay, then render
+  calLoadingHide();
+  render();
+  document.fonts.ready.then(updateStickyOffset);
+}
+const MONTHS = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE',
+                'JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+const DAY_NAMES_FULL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const DAYS_S = ['S','M','T','W','T','F','S'];
+
+let cur = new Date(2026, 4, 1);
+
+function pad(n) { return String(n).padStart(2, '0'); }
+function key(y, m, d) { return `${y}-${pad(m+1)}-${pad(d)}`; }
+
+// Strip emoji characters — used for mobile pill text
+function stripEmoji(str) {
+  return str.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '').trim();
+}
+
+// ── SEARCH & FILTER STATE ────────────────────────────────
+const sfState = {
+  query:  '',
+  island: 'all',
+  status: 'all',
+};
+
+function toggleSearchPanel() {
+  const panel  = document.getElementById('sf-panel');
+  const btn    = document.getElementById('sf-toggle-btn');
+  const isOpen = panel.classList.contains('is-open');
+  panel.classList.toggle('is-open', !isOpen);
+  panel.setAttribute('aria-hidden', isOpen ? 'true' : 'false');
+  btn.classList.toggle('is-open', !isOpen);
+  btn.setAttribute('aria-expanded', (!isOpen).toString());
+  if (!isOpen) {
+    const input = document.getElementById('sf-input');
+    if (input) setTimeout(() => input.focus(), 50);
+  }
+}
+
+function setFilter(key, value, chipEl) {
+  sfState[key] = value;
+  document.querySelectorAll(`.sf-chip[data-filter="${key}"]`)
+    .forEach(c => c.classList.toggle('is-active', c === chipEl));
+  applySearch();
+}
+
+function applySearch() {
+  sfState.query = (document.getElementById('sf-input')?.value || '').trim().toLowerCase();
+  const hasFilters = sfState.query || sfState.island !== 'all' || sfState.status !== 'all';
+  const clearBtn = document.getElementById('sf-clear-btn');
+  if (clearBtn) clearBtn.style.display = hasFilters ? '' : 'none';
+  renderFilteredStrip();
+}
+
+function clearSearch() {
+  sfState.query  = '';
+  sfState.island = 'all';
+  sfState.status = 'all';
+  const input = document.getElementById('sf-input');
+  if (input) input.value = '';
+  document.querySelectorAll('.sf-chip').forEach(c => {
+    c.classList.toggle('is-active', c.dataset.value === 'all');
+  });
+  document.getElementById('sf-clear-btn').style.display = 'none';
+  document.getElementById('sf-results-label').textContent = '';
+  renderFilteredStrip();
+}
+
+function renderFilteredStrip() {
+  const { query, island, status } = sfState;
+  const hasFilters = query || island !== 'all' || status !== 'all';
+
+  if (!hasFilters) {
+    // No active filters — normal month render
+    render();
+    updateResultsLabel('');
+    return;
+  }
+
+  // ── Search is active: rebuild strip from ALL events across all months ──
+
+  // Re-draw the calendar grid for the current month (navigation stays intact)
+  const y = cur.getFullYear(), m = cur.getMonth();
+  document.getElementById('yr-l').textContent     = y;
+  document.getElementById('mon-name').textContent = MONTHS[m];
+  const firstDow    = new Date(y, m, 1).getDay();
+  const daysInMonth = new Date(y, m+1, 0).getDate();
+  const today       = new Date();
+  let cells = Array(firstDow).fill(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(d);
+  while (cells.length % 7) cells.push(null);
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = '';
+  cells.forEach((d, i) => {
+    const div = document.createElement('div');
+    div.className = 'day-cell';
+    if (d === null) { div.classList.add('blank'); grid.appendChild(div); return; }
+    const dow = i % 7, dk = key(y, m, d);
+    const isSun = dow === 0, isHol = !!PH_HOLIDAYS[dk], evArr = TRAIL_EVENTS[dk] || [];
+    const isToday = (y === today.getFullYear() && m === today.getMonth() && d === today.getDate());
+    if (isSun)   div.classList.add('is-sun');
+    if (isHol)   div.classList.add('is-holiday');
+    if (isToday) div.classList.add('is-today');
+    div.addEventListener('click', () => openCard(dk, d, m, y));
+    div.innerHTML += `<div class="date-num-wrap"><div class="date-num">${d}</div></div>`;
+    if (isHol) div.innerHTML += `<div class="holiday-lbl">${PH_HOLIDAYS[dk][0]}</div>`;
+    if (evArr.length > 0) {
+      div.innerHTML += `<div class="event-pill"><span class="pill-emoji">🏃 </span>${stripEmoji(evArr[0])}</div>`;
+      const mobileMax = Math.min(evArr.length, 4);
+      for (let pi = 1; pi < mobileMax; pi++) {
+        div.innerHTML += `<div class="event-pill pill-extra-mobile">${stripEmoji(evArr[pi])}</div>`;
+      }
+      if (evArr.length > 1) div.innerHTML += `<div class="more-badge more-badge-desktop">+${evArr.length - 1}</div>`;
+      if (evArr.length > 4) div.innerHTML += `<div class="more-badge more-badge-mobile">+${evArr.length - 4}</div>`;
+    }
+    grid.appendChild(div);
+  });
+  updateStickyOffset();
+  updateTodayBtn();
+
+  // Build flat list of ALL events across all months, sorted chronologically
+  const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const allCards = [];
+  Object.entries(TRAIL_EVENTS)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .forEach(([k, arr]) => {
+      const parts = k.split('-').map(Number);
+      const km = parts[1], kd = parts[2];
+      const dateLabel = `${MONTH_ABBR[km - 1]} ${kd}`;
+      arr.forEach(name => allCards.push({ k, name, dateLabel }));
+    });
+
+  // Filter against the full dataset
+  const matchedCards = allCards.filter(({ name }) => {
+    const det        = EVENT_DETAILS[name];
+    const cardIsland = det ? (det.islandGroup || '') : '';
+    const cardStatus = det ? (det.regStatus   || '') : '';
+    const metaStr    = det
+      ? (currentMode === 'hikes'
+          ? [det.location || '', det.difficulty || ''].join(' ')
+          : [det.location || '', (det.distances || []).join(' ')].join(' '))
+      : '';
+    const searchText = (name + ' ' + metaStr).toLowerCase();
+    const matchesQuery  = !query  || searchText.includes(query);
+    const matchesIsland = island === 'all' || cardIsland.toLowerCase().includes(island.toLowerCase());
+    const matchesStatus = status === 'all' || cardStatus.toLowerCase() === status.toLowerCase();
+    return matchesQuery && matchesIsland && matchesStatus;
+  });
+
+  // Rebuild the strip with global results
+  const el = document.getElementById('center-info');
+  const stripTitle = currentMode === 'hikes' ? 'ALL HIKES' : 'ALL TRAIL RACES';
+
+  let h = `
+    <div class="ev-header">
+      <div class="ev-title">${stripTitle}</div>
+      ${matchedCards.length > 0 ? `
+      <div class="strip-nav" id="strip-nav">
+        <button class="strip-nav-btn" id="strip-prev" onclick="stripNav(-1)" aria-label="Previous" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="strip-nav-btn" id="strip-next" onclick="stripNav(1)" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>` : ''}
+    </div>`;
+
+  if (matchedCards.length > 0) {
+    h += `<div class="race-strip-wrap at-start" id="race-strip-wrap"><div class="race-strip" id="race-strip">`;
+    matchedCards.forEach(({ k, name, dateLabel }) => {
+      const det      = EVENT_DETAILS[name];
+      const safeName = name.replace(/'/g, "\'").replace(/"/g, '&quot;');
+      let metaStr;
+      if (currentMode === 'hikes') {
+        const hikeParts = det ? det.location.split(',') : [];
+        const hikeLoc   = hikeParts.length >= 2 ? hikeParts[1].trim() : (hikeParts[0] ? hikeParts[0].trim() : '');
+        metaStr = [hikeLoc, det ? det.difficulty : ''].filter(Boolean).join(' · ');
+      } else {
+        const parts    = det ? det.location.split(',') : [];
+        const locShort = parts.length >= 2 ? parts[1].trim() : (parts[0] ? parts[0].trim() : '');
+        const distStr  = det && det.distances ? det.distances.join(' / ') : '';
+        metaStr = [locShort, distStr].filter(Boolean).join(' • ');
+      }
+      const cardIsland = det ? (det.islandGroup || '') : '';
+      const cardStatus = det ? (det.regStatus   || '') : '';
+      h += `<div class="race-card" data-island="${cardIsland}" data-status="${cardStatus}" onclick="openEventDetailFromList('${safeName}','${k}',this)">
+              <div class="rc-date">${dateLabel}</div>
+              <div class="rc-div"></div>
+              <div class="rc-name">${name}</div>
+              ${metaStr ? `<div class="rc-meta">${metaStr}</div>` : ''}
+            </div>`;
+    });
+    h += `</div></div>`;
+  } else {
+    h += `<div class="race-strip-empty">No events match your search.</div>`;
+  }
+
+  el.innerHTML = h;
+  if (matchedCards.length > 0) _initStripBehavior();
+
+  if (matchedCards.length === 0) {
+    updateResultsLabel('No events match your search.', false);
+  } else {
+    updateResultsLabel(`${matchedCards.length} event${matchedCards.length !== 1 ? 's' : ''} found`, true);
+  }
+}
+
+function updateResultsLabel(text, hasResults = false) {
+  const label = document.getElementById('sf-results-label');
+  if (!label) return;
+  label.textContent = text;
+  label.classList.toggle('has-results', hasResults);
+  label.classList.toggle('no-results', !hasResults && text.length > 0);
+}
+
+// ── RENDER ──────────────────────────────────────────────────
+function render() {
+  const y = cur.getFullYear(), m = cur.getMonth();
+  document.getElementById('yr-l').textContent    = y;
+  document.getElementById('mon-name').textContent = MONTHS[m];
+
+  const firstDow    = new Date(y, m, 1).getDay();
+  const daysInMonth = new Date(y, m+1, 0).getDate();
+  const today       = new Date();
+
+  // Build cell array: leading blanks + days + trailing blanks
+  let cells = Array(firstDow).fill(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(d);
+  while (cells.length % 7) cells.push(null);
+
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = '';
+
+  cells.forEach((d, i) => {
+    const div = document.createElement('div');
+    div.className = 'day-cell';
+
+    if (d === null) {
+      div.classList.add('blank');
+      grid.appendChild(div);
+      return;
+    }
+
+    const dow     = i % 7;
+    const dk      = key(y, m, d);
+    const isSun   = dow === 0;
+    const isHol   = !!PH_HOLIDAYS[dk];
+    const evArr   = TRAIL_EVENTS[dk] || [];
+    const isToday = (y === today.getFullYear() && m === today.getMonth() && d === today.getDate());
+
+    if (isSun)   div.classList.add('is-sun');
+    if (isHol)   div.classList.add('is-holiday');
+    if (isToday) { div.classList.add('is-today'); }
+
+    // Tap/click → floating detail card
+    div.addEventListener('click', () => openCard(dk, d, m, y));
+
+    // Date number
+    div.innerHTML += `<div class="date-num-wrap"><div class="date-num">${d}</div></div>`;
+
+    // Holiday label (top-right corner)
+    if (isHol) {
+      div.innerHTML += `<div class="holiday-lbl">${PH_HOLIDAYS[dk][0]}</div>`;
+    }
+
+    // Event pills
+    // Desktop: 1 pill + desktop badge for extras
+    // Mobile:  up to 4 pills + mobile badge if more than 4
+    if (evArr.length > 0) {
+      // Pill 1 — always shown (desktop + mobile)
+      const p1 = stripEmoji(evArr[0]);
+      div.innerHTML += `<div class="event-pill"><span class="pill-emoji">🏃 </span>${p1}</div>`;
+
+      // Pills 2–4 — mobile only (pill-extra-mobile hidden on desktop)
+      const mobileMax = Math.min(evArr.length, 4);
+      for (let pi = 1; pi < mobileMax; pi++) {
+        div.innerHTML += `<div class="event-pill pill-extra-mobile">${stripEmoji(evArr[pi])}</div>`;
+      }
+
+      // Desktop badge: total extras beyond pill 1
+      if (evArr.length > 1) {
+        div.innerHTML += `<div class="more-badge more-badge-desktop">+${evArr.length - 1}</div>`;
+      }
+      // Mobile badge: extras beyond 4 pills
+      if (evArr.length > 4) {
+        div.innerHTML += `<div class="more-badge more-badge-mobile">+${evArr.length - 4}</div>`;
+      }
+    }
+
+    grid.appendChild(div);
+  });
+
+  renderCenter(y, m, today);
+  updateStickyOffset();
+  updateTodayBtn();
+}
+
+function renderCenter(y, m, today) {
+  const el = document.getElementById('center-info');
+
+  // Chronological order — sort by ISO date key ascending
+  const evs = Object.entries(TRAIL_EVENTS).filter(([k]) => {
+    const [ky, km] = k.split('-').map(Number);
+    return ky === y && km === m + 1;
+  }).sort(([a], [b]) => a.localeCompare(b));
+
+  // Build flat list of all events in chrono order
+  const allCards = [];
+  evs.forEach(([k, arr]) => {
+    const d         = parseInt(k.split('-')[2]);
+    const dateLabel = `${MONTHS[m].slice(0,3)} ${d}`;
+    arr.forEach(name => {
+      allCards.push({ k, name, dateLabel });
+    });
+  });
+
+  const hasEvents = allCards.length > 0;
+
+  const stripTitle = currentMode === 'hikes' ? 'HIKES THIS MONTH' : 'TRAIL RACES THIS MONTH';
+  const hikeLoadFailed = currentMode === 'hikes' && hikeData && hikeData._loadError;
+  const emptyMsg   = hikeLoadFailed
+    ? 'Could not load hike events. Please check your connection and try again.'
+    : currentMode === 'hikes' ? 'No hikes this month.' : 'No trail events this month.';
+
+  let h = `
+    <div class="ev-header">
+      <div class="ev-title">${stripTitle}</div>
+      ${hasEvents ? `
+      <div class="strip-nav" id="strip-nav">
+        <button class="strip-nav-btn" id="strip-prev" onclick="stripNav(-1)" aria-label="Previous races" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="strip-nav-btn" id="strip-next" onclick="stripNav(1)" aria-label="Next races">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>` : ''}
+    </div>`;
+
+  if (hasEvents) {
+    h += `<div class="race-strip-wrap at-start" id="race-strip-wrap">
+            <div class="race-strip" id="race-strip">`;
+
+    allCards.forEach(({ k, name, dateLabel }) => {
+      const det      = EVENT_DETAILS[name];
+      const safeName = name.replace(/'/g, "\'").replace(/"/g, '&quot;');
+      let metaStr;
+      if (currentMode === 'hikes') {
+        const parts = det ? det.location.split(',') : [];
+        const loc   = parts.length >= 2 ? parts[1].trim() : (parts[0] ? parts[0].trim() : '');
+        const diff  = det ? det.difficulty : '';
+        metaStr = [loc, diff].filter(Boolean).join(' · ');
+      } else {
+        const parts   = det ? det.location.split(',') : [];
+        const locShort = parts.length >= 2 ? parts[1].trim() : (parts[0] ? parts[0].trim() : '');
+        const distStr  = det && det.distances ? det.distances.join(' / ') : '';
+        metaStr = [locShort, distStr].filter(Boolean).join(' • ');
+      }
+
+      const cardIsland = det ? (det.islandGroup || '') : '';
+      const cardStatus = det ? (det.regStatus   || '') : '';
+
+      h += `<div class="race-card" data-island="${cardIsland}" data-status="${cardStatus}" onclick="openEventDetailFromList('${safeName}','${k}',this)">
+              <div class="rc-date">${dateLabel}</div>
+              <div class="rc-div"></div>
+              <div class="rc-name">${name}</div>
+              ${metaStr ? `<div class="rc-meta">${metaStr}</div>` : ''}
+            </div>`;
+    });
+
+    h += `    </div>
+          </div>`;
+  } else {
+    h += `<div class="race-strip-empty">${emptyMsg}</div>`;
+  }
+
+  el.innerHTML = h;
+
+  if (hasEvents) {
+    _initStripBehavior();
+  }
+}
+
+// ── STRIP BEHAVIOR: scroll sync, edge fades, mouse drag ──────────────────────
+function _initStripBehavior() {
+  const strip = document.getElementById('race-strip');
+  const wrap  = document.getElementById('race-strip-wrap');
+  const prev  = document.getElementById('strip-prev');
+  const next  = document.getElementById('strip-next');
+  if (!strip || !wrap) return;
+
+  // Card scroll step — width of one card + gap
+  const STEP = 160;
+
+  // Update arrow state + edge-fade classes based on scroll position
+  function syncState() {
+    const { scrollLeft, scrollWidth, clientWidth } = strip;
+    const atStart = scrollLeft <= 2;
+    const atEnd   = scrollLeft >= scrollWidth - clientWidth - 2;
+
+    wrap.classList.toggle('at-start', atStart);
+    wrap.classList.toggle('at-end',   atEnd);
+    wrap.classList.toggle('scrolled', !atStart);
+
+    if (prev) prev.disabled = atStart;
+    if (next) next.disabled = atEnd;
+  }
+
+  strip.addEventListener('scroll', syncState, { passive: true });
+  // Run once on init
+  syncState();
+  // Run again after images/fonts settle
+  setTimeout(syncState, 300);
+
+  // ── MOUSE DRAG ────────────────────────────────────────────
+  let dragStartX    = 0;
+  let dragScrollLeft = 0;
+  let isDragging    = false;
+  let didDrag       = false;
+
+  strip.addEventListener('mousedown', e => {
+    // Only left button, not on interactive children
+    if (e.button !== 0) return;
+    isDragging     = true;
+    didDrag        = false;
+    dragStartX     = e.pageX - strip.offsetLeft;
+    dragScrollLeft = strip.scrollLeft;
+    strip.classList.add('is-dragging');
+  });
+
+  window.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    const x    = e.pageX - strip.offsetLeft;
+    const walk = (x - dragStartX) * 1.2;
+    if (Math.abs(walk) > 4) didDrag = true;
+    strip.scrollLeft = dragScrollLeft - walk;
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    strip.classList.remove('is-dragging');
+  });
+
+  // Prevent click-firing on cards after a drag
+  strip.addEventListener('click', e => {
+    if (didDrag) {
+      e.stopImmediatePropagation();
+      didDrag = false;
+    }
+  }, true);
+}
+
+// ── STRIP ARROW NAV ────────────────────────────────────────
+function stripNav(dir) {
+  const strip = document.getElementById('race-strip');
+  if (!strip) return;
+  const STEP = 158 + 8; // card width + gap
+  strip.scrollBy({ left: dir * STEP * 3, behavior: 'smooth' });
+}
+
+function shift(dir) {
+  cur.setMonth(cur.getMonth() + dir);
+  render();
+}
+
+function jumpToToday() {
+  const now = new Date();
+  cur = new Date(now.getFullYear(), now.getMonth(), 1);
+  render();
+}
+
+function updateTodayBtn() {
+  const btn = document.getElementById('today-btn');
+  if (!btn) return;
+  const now = new Date();
+  const isCurrentMonth = (cur.getFullYear() === now.getFullYear() && cur.getMonth() === now.getMonth());
+  btn.classList.toggle('is-current-month', isCurrentMonth);
+}
+
+// ── STICKY MONTH-HEADER OFFSET ────────────────────────────
+// Measures the rendered height of the top-banner and writes it to
+// --banner-h so .month-header's sticky top always sits flush below it,
+// regardless of viewport size or whether Archivo Black has loaded yet.
+function updateStickyOffset() {
+  const banner = document.querySelector('.top-banner');
+  if (banner) {
+    document.documentElement.style.setProperty('--banner-h', banner.offsetHeight + 'px');
+  }
+}
+
+// Fetch data from Google Sheets, then render
+fetchSheetData();
+window.addEventListener('resize', updateStickyOffset, { passive: true });
+
+// ── FLOATING CARD ─────────────────────────────────────────
+function openCard(dk, d, m, y) {
+  const overlay = document.getElementById('fc-overlay');
+  const card    = document.getElementById('float-card');
+  const dateEl  = document.getElementById('fc-date');
+  const bodyEl  = document.getElementById('fc-body');
+
+  // Full date string
+  const dow = new Date(y, m, d).getDay();
+  dateEl.textContent = `${DAY_NAMES_FULL[dow]}, ${MONTHS[m].slice(0,3)} ${d}, ${y}`;
+
+  // If the day has exactly one event, skip the intermediate card and go straight to detail
+  const evArr = TRAIL_EVENTS[dk] || [];
+  if (evArr.length === 1) {
+    _listModeActive = true;
+    overlay.style.display = 'block';
+    requestAnimationFrame(() => requestAnimationFrame(() => { overlay.style.opacity = '1'; }));
+    openEventDetail(evArr[0], dk);
+    return;
+  }
+
+  let content = '';
+
+  // Holiday
+  if (PH_HOLIDAYS[dk]) {
+    content += `<div class="fc-section-lbl" style="color:var(--accent)">Legal Holiday</div>`;
+    content += `<div class="fc-holiday">${PH_HOLIDAYS[dk][0]}</div>`;
+  }
+
+  // All events
+  if (evArr.length) {
+    const evSectionLbl = currentMode === 'hikes' ? 'Hike Events' : 'Trail Events';
+    content += `<div class="fc-section-lbl" style="color:var(--primary);margin-top:${PH_HOLIDAYS[dk] ? 10 : 0}px">${evSectionLbl}</div>`;
+    content += `<div class="fc-section-hint">Tap an event for details</div>`;
+    evArr.forEach(ev => {
+      const safeName = ev.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+      content += `<div class="fc-event" onclick="openEventDetail('${safeName}','${dk}')"><span>${ev}</span><span class="fc-event-chevron">›</span></div>`;
+    });
+  }
+
+  if (!content) {
+    content = '<div class="fc-empty">No events or holidays on this day.</div>';
+  }
+
+  bodyEl.innerHTML = content;
+
+  // Show with 120ms ease-out fade
+  overlay.style.display = 'block';
+  card.style.display    = 'block';
+  // Double rAF: ensures display:block paints before opacity transition fires
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    overlay.style.opacity = '1';
+    card.style.opacity    = '1';
+  }));
+}
+
+function closeCard() {
+  const overlay = document.getElementById('fc-overlay');
+  const card    = document.getElementById('float-card');
+  const edModal = document.getElementById('ed-modal');
+  _clearCountdown();
+  // Close detail layer immediately (no fade needed — card fades out underneath)
+  if (edModal) { edModal.style.opacity = '0'; edModal.style.display = 'none'; }
+  overlay.style.opacity = '0';
+  card.style.opacity    = '0';
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    card.style.display    = 'none';
+  }, 120);
+}
+
+// Overlay tap: dismiss only the top-most visible layer
+function handleOverlayClick() {
+  const edModal = document.getElementById('ed-modal');
+  if (edModal && edModal.style.display !== 'none' && edModal.style.opacity !== '0') {
+    closeEventDetail();
+  } else {
+    closeCard();
+  }
+}
+
+// ── EVENT DETAIL MODAL (Layer 2) ─────────────────────────
+function openEventDetail(eventName, dk) {
+  // Delegate to hike-specific modal when in hike mode
+  if (currentMode === 'hikes') {
+    openHikeEventDetail(eventName, dk);
+    return;
+  }
+
+  const det      = EVENT_DETAILS[eventName];
+  const modal    = document.getElementById('ed-modal');
+  const bodyEl   = document.getElementById('ed-body');
+  const dateText = document.getElementById('fc-date').textContent;
+
+  // Parse a full weekday+date string from dk for display inside modal
+  let fullDate = dateText;
+  if (dk) {
+    const [cy, cm, cd] = dk.split('-').map(Number);
+    const dow = new Date(cy, cm - 1, cd).getDay();
+    const monthName = ['January','February','March','April','May','June',
+                       'July','August','September','October','November','December'][cm - 1];
+    fullDate = `${DAY_NAMES_FULL[dow]}, ${monthName} ${cd}, ${cy}`;
+  }
+
+  // ── SECTION 1: PRIMARY INFO ───────────────────────────
+  let html = `<div class="ed-event-name">${eventName}</div>`;
+
+  html += `<div class="ed-date-loc">
+    <div class="ed-date-line">${fullDate}</div>`;
+  if (det && det.location) {
+    const islandBadge = (det.islandGroup)
+      ? ` <span class="ed-island-badge">${det.islandGroup}</span>`
+      : '';
+    html += `<div class="ed-loc-line">${det.location}${islandBadge}</div>`;
+  }
+  html += `</div>`;
+
+  if (det && det.distances && det.distances.length) {
+    const pills = det.distances.map(d => `<span class="ed-dist-pill">${d}</span>`).join('');
+    html += `<div class="ed-distances">${pills}</div>`;
+  }
+
+  if (det && det.schedule && det.schedule.length) {
+    html += `<div class="ed-schedule">`;
+    html += `<div class="ed-schedule-lbl">Race Schedule</div>`;
+    det.schedule.forEach(s => {
+      html += `<div class="ed-schedule-row">
+        <span class="ed-schedule-dist">${s.dist}</span>
+        <span class="ed-schedule-date">${s.date}</span>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  if (det && det.regLink) {
+    html += `<a class="ed-reg-btn" href="${det.regLink}" target="_blank" rel="noopener noreferrer">Register Now &rsaquo;</a>`;
+  }
+
+  if (!det) {
+    html += `<div class="ed-no-details">No additional details available for this event.</div>`;
+    html += `<div class="ed-countdown" id="ed-countdown"></div>`;
+    bodyEl.innerHTML = html;
+    _clearCountdown();
+    _startCountdown(dk);
+    modal.style.display = 'flex';
+    requestAnimationFrame(() => requestAnimationFrame(() => { modal.style.opacity = '1'; }));
+    return;
+  }
+
+  // ── SECTION 2: DECISION INFO ──────────────────────────
+
+  // ── SECTION 3: SUPPORTING INFO ────────────────────────
+  if (det.organizer) {
+    html += `<hr class="ed-divider">`;
+    html += `<div class="ed-support">`;
+    html += `<div class="ed-support-row"><span class="ed-support-lbl">Organizer</span><span class="ed-support-val">${det.organizer}</span></div>`;
+    html += `</div>`;
+  }
+
+  // ── COUNTDOWN ─────────────────────────────────────────
+  html += `<div class="ed-countdown" id="ed-countdown"></div>`;
+
+  bodyEl.innerHTML = html;
+
+  _clearCountdown();
+  _startCountdown(dk);
+
+  modal.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    modal.style.opacity = '1';
+  }));
+}
+
+function _startCountdown(dk, dayLabel) {
+  dayLabel = dayLabel || 'Race Day!';
+  const cdEl = document.getElementById('ed-countdown');
+  if (!cdEl || !dk) return;
+  const [cy, cm, cd] = dk.split('-').map(Number);
+  const pad2   = n => String(n).padStart(2, '0');
+
+  // If the event date is strictly in the past, show motivational message
+  const today    = new Date();
+  const todayKey = `${today.getFullYear()}-${pad2(today.getMonth()+1)}-${pad2(today.getDate())}`;
+  if (dk < todayKey) {
+    cdEl.innerHTML = '<div class="ed-cd-done">Well Done. You showed up.</div>';
+    return;
+  }
+
+  const target = new Date(cy, cm - 1, cd).getTime();
+
+  function tickCountdown() {
+    const diff = target - Date.now();
+    if (diff <= 0) {
+      cdEl.innerHTML = `<div class="ed-cd-done">&#127937; ${dayLabel}</div>`;
+      _clearCountdown();
+      return;
+    }
+    const totalSec = Math.floor(diff / 1000);
+    const days  = Math.floor(totalSec / 86400);
+    const hours = Math.floor((totalSec % 86400) / 3600);
+    const mins  = Math.floor((totalSec % 3600)  / 60);
+    const secs  = totalSec % 60;
+    cdEl.innerHTML =
+      `<div class="ed-countdown-lbl">Countdown to ${dayLabel}</div>
+       <div class="ed-cd-grid">
+         <div class="ed-cd-unit"><span class="ed-cd-num">${days}</span><span class="ed-cd-lbl">Days</span></div>
+         <div class="ed-cd-unit"><span class="ed-cd-num">${pad2(hours)}</span><span class="ed-cd-lbl">Hours</span></div>
+         <div class="ed-cd-unit"><span class="ed-cd-num">${pad2(mins)}</span><span class="ed-cd-lbl">Mins</span></div>
+         <div class="ed-cd-unit"><span class="ed-cd-num">${pad2(secs)}</span><span class="ed-cd-lbl">Secs</span></div>
+       </div>`;
+  }
+  tickCountdown();
+  _countdownTimer = setInterval(tickCountdown, 1000);
+}
+
+// ── HIKE EVENT DETAIL MODAL ───────────────────────────────
+function openHikeEventDetail(eventName, dk) {
+  const det    = EVENT_DETAILS[eventName];
+  const modal  = document.getElementById('ed-modal');
+  const bodyEl = document.getElementById('ed-body');
+
+  // Build full date string from dk
+  let fullDate = '';
+  if (dk) {
+    const [cy, cm, cd] = dk.split('-').map(Number);
+    const dow       = new Date(cy, cm - 1, cd).getDay();
+    const monthName = ['January','February','March','April','May','June',
+                       'July','August','September','October','November','December'][cm - 1];
+    fullDate = `${DAY_NAMES_FULL[dow]}, ${monthName} ${cd}, ${cy}`;
+  }
+
+  // ── 1. Event name ──────────────────────────────────────
+  let html = `<div class="ed-event-name">${eventName}</div>`;
+
+  // ── 2. Date + Location ─────────────────────────────────
+  html += `<div class="ed-date-loc"><div class="ed-date-line">${fullDate}</div>`;
+  if (det && det.location) {
+    const islandBadge = det.islandGroup
+      ? ` <span class="ed-island-badge">${det.islandGroup}</span>`
+      : '';
+    html += `<div class="ed-loc-line">${det.location}${islandBadge}</div>`;
+  }
+  html += `</div>`;
+
+  // ── 3. Difficulty badge ────────────────────────────────
+  if (det && det.difficulty) {
+    html += `<div class="ed-distances"><span class="ed-dist-pill">${det.difficulty}</span></div>`;
+  }
+
+  // ── 4. Package Price ───────────────────────────────────
+  if (det) {
+    const priceDisplay = det.packagePrice ? `₱${det.packagePrice}` : 'Free';
+    html += `<div class="ed-support" style="margin-bottom:12px">
+      <div class="ed-support-row">
+        <span class="ed-support-lbl">Package</span>
+        <span class="ed-support-val" style="font-weight:700;color:#222">${priceDisplay}</span>
+      </div>`;
+
+    // ── 5. Inclusions ──────────────────────────────────
+    if (det.inclusions) {
+      html += `<div class="ed-support-row">
+        <span class="ed-support-lbl">Inclusions</span>
+        <span class="ed-support-val">${det.inclusions}</span>
+      </div>`;
+    }
+
+    // ── 6. Meetup Point ────────────────────────────────
+    if (det.meetupPoint) {
+      html += `<div class="ed-support-row">
+        <span class="ed-support-lbl">Meet Up Point</span>
+        <span class="ed-support-val">${det.meetupPoint}</span>
+      </div>`;
+    }
+
+    // ── Max Slots ──────────────────────────────────────
+    if (det.maxSlots) {
+      html += `<div class="ed-support-row">
+        <span class="ed-support-lbl">Max Slots</span>
+        <span class="ed-support-val">${det.maxSlots}</span>
+      </div>`;
+    }
+
+    // ── Hike Schedule ──────────────────────────────────
+    if (det.schedule) {
+      html += `<div class="ed-support-row">
+        <span class="ed-support-lbl">Schedule</span>
+        <span class="ed-support-val">${det.schedule}</span>
+      </div>`;
+    }
+
+    html += `</div>`;
+  }
+
+  // ── 7. Register button ─────────────────────────────────
+  if (det && det.regLink) {
+    html += `<a class="ed-reg-btn" href="${det.regLink}" target="_blank" rel="noopener noreferrer">Register Now &rsaquo;</a>`;
+  }
+
+  // ── 8. Organizer (below divider) ───────────────────────
+  if (det && det.organizer) {
+    html += `<hr class="ed-divider">
+      <div class="ed-support">
+        <div class="ed-support-row">
+          <span class="ed-support-lbl">Organizer</span>
+          <span class="ed-support-val">${det.organizer}</span>
+        </div>
+      </div>`;
+  }
+
+  // ── 9. Countdown ───────────────────────────────────────
+  html += `<div class="ed-countdown" id="ed-countdown"></div>`;
+
+  bodyEl.innerHTML = html;
+
+  _clearCountdown();
+  _startCountdown(dk, 'Hike Day!');
+
+  modal.style.display = 'flex';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    modal.style.opacity = '1';
+  }));
+}
+
+// Tracks whether the detail modal was opened directly from the bottom list
+// (no day-card behind it) so closeEventDetail knows to also dismiss the overlay.
+let _listModeActive = false;
+
+// ── Countdown timer handle ────────────────────────────────
+let _countdownTimer = null;
+function _clearCountdown() {
+  if (_countdownTimer) { clearInterval(_countdownTimer); _countdownTimer = null; }
+}
+
+function closeEventDetail() {
+  const modal   = document.getElementById('ed-modal');
+  const overlay = document.getElementById('fc-overlay');
+  _clearCountdown();
+  modal.style.opacity = '0';
+  setTimeout(() => { modal.style.display = 'none'; }, 120);
+  // When opened from the bottom list there is no day-card underneath —
+  // dismiss the overlay in the same action so it takes only one tap to close.
+  if (_listModeActive) {
+    _listModeActive = false;
+    // Clear the list row's selected indicator now that the modal is dismissed.
+    document.querySelectorAll('.hol-row.is-selected')
+            .forEach(r => r.classList.remove('is-selected'));
+    overlay.style.opacity = '0';
+    setTimeout(() => { overlay.style.display = 'none'; }, 120);
+  }
+}
+
+// ── OPEN FROM BOTTOM LIST ─────────────────────────────────
+// Called when the user taps an event row in the "Upcoming Trail Events" list.
+// Formats the date from the TRAIL_EVENTS key, pre-fills fc-date so the shared
+// openEventDetail() can read it, then shows the overlay + detail modal directly
+// (bypassing the day-card layer which is not relevant here).
+function openEventDetailFromList(eventName, dk, el) {
+  // ── Selection indicator ──────────────────────────────────
+  // Clear any previously selected row, then mark this one.
+  document.querySelectorAll('.hol-row.is-selected')
+          .forEach(r => r.classList.remove('is-selected'));
+  if (el) el.classList.add('is-selected');
+
+  _listModeActive = true;
+
+  // Build a human-readable date string from the ISO key (e.g. '2026-05-09')
+  const parts = dk.split('-').map(Number);          // [2026, 5, 9]
+  const y = parts[0], m = parts[1] - 1, d = parts[2];
+  const dow = new Date(y, m, d).getDay();
+  const formattedDate = `${DAY_NAMES_FULL[dow]}, ${MONTHS[m].slice(0,3)} ${d}, ${y}`;
+
+  // Pre-fill the shared date element that openEventDetail() reads
+  document.getElementById('fc-date').textContent = formattedDate;
+
+  // Show the overlay (normally shown by openCard; we replicate that here)
+  const overlay = document.getElementById('fc-overlay');
+  overlay.style.display = 'block';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    overlay.style.opacity = '1';
+  }));
+
+  // Delegate to the existing detail-modal logic
+  openEventDetail(eventName, dk);
+}
+
+// ── SCROLL CHEVRON ────────────────────────────────────────
+const scrollHint = document.getElementById('scroll-hint');
+window.addEventListener('scroll', () => {
+  if (scrollHint) scrollHint.style.opacity = window.scrollY > 40 ? '0' : '1';
+}, { passive: true });
+
+// Tapping the chevron scrolls down to the bottom section
+if (scrollHint) {
+  scrollHint.style.pointerEvents = 'auto';
+  scrollHint.style.cursor = 'pointer';
+  scrollHint.addEventListener('click', () => {
+    const bottomRow = document.querySelector('.bottom-row');
+    if (bottomRow) bottomRow.scrollIntoView({ behavior: 'smooth' });
+  });
+}
+
+// ── MOBILE SWIPE NAVIGATION ────────────────────────────────
+(function () {
+  let tx = 0, ty = 0, swiped = false;
+  const target = document.querySelector('.above-fold') || document.querySelector('.cal-grid');
+  if (!target) return;
+
+  target.addEventListener('touchstart', e => {
+    tx = e.touches[0].clientX;
+    ty = e.touches[0].clientY;
+    swiped = false;
+  }, { passive: true });
+
+  target.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    const dy = e.changedTouches[0].clientY - ty;
+    // Fire only on clearly horizontal swipes (>55px, more horizontal than vertical)
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.6) {
+      swiped = true;
+      shift(dx < 0 ? 1 : -1);
+    }
+  }, { passive: true });
+})();
+
+// ── DESKTOP TOUCHPAD SWIPE (wheel deltaX) ─────────────────
+(function () {
+  // Only wire up on non-touch devices (pointer: fine = mouse/trackpad)
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+
+  let accumulated = 0;
+  let debounce    = null;
+  let locked      = false;          // prevent double-fire within cooldown
+  const THRESHOLD = 60;             // px of horizontal scroll to trigger
+  const COOLDOWN  = 600;            // ms before another shift is allowed
+
+  const frame = document.querySelector('.cal-frame');
+  if (!frame) return;
+
+  frame.addEventListener('wheel', e => {
+    // Ignore predominantly vertical scrolls (e.g. normal page scroll)
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) return;
+
+    e.preventDefault();             // stop the page from panning horizontally
+    if (locked) return;
+
+    accumulated += e.deltaX;
+
+    clearTimeout(debounce);
+    debounce = setTimeout(() => {
+      if (Math.abs(accumulated) >= THRESHOLD) {
+        shift(accumulated > 0 ? 1 : -1);
+        locked = true;
+        setTimeout(() => { locked = false; }, COOLDOWN);
+      }
+      accumulated = 0;
+    }, 80);
+  }, { passive: false });
+})();
+
+// ── DESKTOP KEYBOARD ARROW NAVIGATION ─────────────────────
+(function () {
+  // Only wire up on non-touch devices (pointer: fine = mouse/trackpad)
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+
+  document.addEventListener('keydown', e => {
+    // Ignore when focus is inside a text field or interactive element
+    const tag = document.activeElement && document.activeElement.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); shift(-1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); shift( 1); }
+  });
+})();
+
+// ── MODE SWITCHING (Trail Runs ↔ Hikes) ───────────────────
+async function switchMode(mode) {
+  // No-op if already on this mode (prevents re-fetch flicker)
+  if (mode === currentMode) return;
+
+  // ── Clear search + filters on every tab switch ──────────
+  // Mirrors clearSearch() but skips renderFilteredStrip()
+  // since switchMode calls render() itself at the end.
+  sfState.query  = '';
+  sfState.island = 'all';
+  sfState.status = 'all';
+
+  const sfInput = document.getElementById('sf-input');
+  if (sfInput) sfInput.value = '';
+
+  // Reset chips: deactivate all, re-activate the "all" chips
+  document.querySelectorAll('.sf-chip').forEach(c => {
+    c.classList.toggle('is-active', c.dataset.value === 'all');
+  });
+
+  // Hide the CLEAR button
+  const sfClearBtn = document.getElementById('sf-clear-btn');
+  if (sfClearBtn) sfClearBtn.style.display = 'none';
+
+  // Collapse the search panel if it is open
+  const sfPanel   = document.getElementById('sf-panel');
+  const sfToggle  = document.getElementById('sf-toggle-btn');
+  if (sfPanel && sfPanel.classList.contains('is-open')) {
+    sfPanel.classList.remove('is-open');
+    sfPanel.setAttribute('aria-hidden', 'true');
+    if (sfToggle) {
+      sfToggle.classList.remove('is-open');
+      sfToggle.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  updateResultsLabel('');
+
+  const html     = document.documentElement;
+  const tabRuns  = document.getElementById('tabRuns');
+  const tabHikes = document.getElementById('tabHikes');
+  const banner   = document.getElementById('update-banner');
+  const grid     = document.getElementById('cal-grid');
+
+  // ── Color identity ──────────────────────────────────────
+  if (mode === 'hikes') {
+    html.classList.add('hike-mode');
+  } else {
+    html.classList.remove('hike-mode');
+  }
+
+  // ── Tab UI ──────────────────────────────────────────────
+  tabRuns.classList.toggle('is-active',  mode === 'runs');
+  tabHikes.classList.toggle('is-active', mode === 'hikes');
+  tabRuns.setAttribute('aria-selected',  mode === 'runs'  ? 'true' : 'false');
+  tabHikes.setAttribute('aria-selected', mode === 'hikes' ? 'true' : 'false');
+
+  // ── Banner subtitle ─────────────────────────────────────
+  document.getElementById('bannerSub').textContent = mode === 'hikes'
+    ? 'Upcoming Hikes & Treks Sa Pinas'
+    : 'Upcoming Trail Races Sa Pinas';
+
+  // ── Update-banner link ──────────────────────────────────
+  if (banner) banner.href = mode === 'hikes' ? HIKE_FORM_URL : RACE_FORM_URL;
+
+  currentMode = mode;
+
+  // ── Update strip title immediately (before fetch/render) ─
+  const evTitleEl = document.querySelector('.ev-title');
+  if (evTitleEl) evTitleEl.textContent = mode === 'hikes' ? 'HIKES THIS MONTH' : 'TRAIL RACES THIS MONTH';
+
+  // ── Fetch (if not yet cached) & swap globals ────────────
+  if (mode === 'hikes') {
+    if (!hikeData) {
+      calLoadingShow('Loading Hikes…');
+      grid.style.pointerEvents = 'none';
+      try {
+        const res = await fetch(HIKE_CSV_URL);
+        const csv = await res.text();
+        hikeData  = parseHikeData(csv);
+      } catch (err) {
+        console.error('Failed to load hike data:', err);
+        hikeData = { events: {}, details: {}, _loadError: true };
+      }
+      calLoadingHide();
+      grid.style.pointerEvents = '';
+    }
+    TRAIL_EVENTS  = hikeData.events;
+    EVENT_DETAILS = hikeData.details;
+  } else {
+    // Restore race data (always available — loaded on page start)
+    if (raceData) {
+      TRAIL_EVENTS  = raceData.events;
+      EVENT_DETAILS = raceData.details;
+    }
+  }
+
+  // ── Re-render ───────────────────────────────────────────
+  render();
+}
+</script>
+</body>
+</html>
