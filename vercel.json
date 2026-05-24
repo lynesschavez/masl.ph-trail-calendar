@@ -1,1 +1,6 @@
-{}
+{
+  "routes": [
+    { "src": "/api/og",    "dest": "/api/og.jsx" },
+    { "src": "/api/share", "dest": "/api/share.js" }
+  ]
+}
