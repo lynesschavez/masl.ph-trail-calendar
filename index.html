@@ -4391,16 +4391,10 @@ function rwShareReward() {
   const reward   = rewardId ? _activeRewardPool.find(r => r.id === rewardId) : null;
   if (!reward) return;
 
-  const shareText = [
-    reward.content,
-    '',
-    reward.subtext,
-    '',
-    '—',
-    'Trail find from MASL.PH',
-    'Philippine Trail Race & Hike Calendar',
-    'https://masl.ph'
-  ].join('\n');
+  const shareURL = 'https://masl.ph/api/share?'
+    + 'type='   + encodeURIComponent(reward.tier)
+    + '&title=' + encodeURIComponent(reward.content)
+    + '&body='  + encodeURIComponent(reward.subtext);
 
   const btn = document.getElementById('reward-share-btn');
 
@@ -4414,16 +4408,16 @@ function rwShareReward() {
 
   if (navigator.share) {
     navigator.share({
-      title: 'Relate much? — MASL.PH',
-      text:  shareText
-    }).catch(() => {}); // user dismissed share sheet — silent
+      title: 'MASL.PH',
+      text:  reward.content,
+      url:   shareURL
+    }).catch(() => {});
   } else if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(shareText)
+    navigator.clipboard.writeText(shareURL)
       .then(showCopiedFeedback)
-      .catch(() => { window.prompt('Copy this:', shareText); });
+      .catch(() => { window.prompt('Copy this link:', shareURL); });
   } else {
-    // Last resort for browsers with no clipboard API
-    window.prompt('Copy this:', shareText);
+    window.prompt('Copy this link:', shareURL);
   }
 }
 
