@@ -14,8 +14,9 @@ export default function handler(req, res) {
   <meta property="og:url"         content="${shareUrl}" />
   <meta property="og:type"        content="website" />
   <meta name="twitter:card"       content="summary_large_image" />
-  <meta http-equiv="refresh"      content="0; url=https://masl.ph" />
 </head>
-<body>Redirecting...</body>
+<body>
+  <script>window.location.href = 'https://masl.ph';</script>
+</body>
 </html>`);
 }
