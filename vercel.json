@@ -1,6 +1,6 @@
 {
   "routes": [
-    { "src": "/api/og",    "dest": "/api/og.jsx" },
+    { "src": "/api/og",    "dest": "/api/og.js" },
     { "src": "/api/share", "dest": "/api/share.js" }
   ]
 }
