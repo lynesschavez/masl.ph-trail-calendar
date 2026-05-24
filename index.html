@@ -14,6 +14,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Philippines Trail Running & Hiking Calendar</title>
 <meta name="description" content="The most complete calendar of trail races and hike schedules in the Philippines. Updated regularly. Find your next adventure.">
+
+<!-- Facebook / Open Graph Preview Tags -->
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://masl.ph/">
+<meta property="og:title"       content="Philippines Trail Running and Hiking Calendar 2026">
+<meta property="og:description" content="Finding your next trail race or hike in the Philippines just got easier. Races, hike schedules, and events from across the islands, in one place.">
+<meta property="og:image"       content="https://masl.ph/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name"   content="MASL.PH">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NzQuODIgNTU2LjU3Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9PC9zdHlsZT48L2RlZnM+PHBvbHlnb24gcG9pbnRzPSIzOTUuNjUgMCAzMTguNDYgNzcuMTkgMjU5LjU4IDE4LjE1IDAgMjc3LjcyIDI3OS4wNiA1NTYuNTcgMzU2LjI0IDQ3OS4zOSA0MTUuMTIgNTM4LjQzIDY3NC44MiAyNzguNzMgMzk1LjY1IDAiLz48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMzk1LjY1IDEwNC4xMyA1MTYuMDggMjI0LjU2IDU5MS42NiAyMjQuNTYgMzk1LjY1IDI4LjU2IDMzNy4wNSA4Ny4xNiAzNzQuODMgMTI0Ljk0IDM5NS42NSAxMDQuMTMiLz48cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMjc5LjA2IDQ1Mi40NCAxNTguNjIgMzMyLjAyIDgzLjA0IDMzMi4wMiAyNzkuMDYgNTI4LjAxIDMzNy42NSA0NjkuNDIgMjk5Ljg3IDQzMS42MyAyNzkuMDYgNDUyLjQ0Ii8+PHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjYxOS42MyAyNTEuODEgNjE5LjEgMjUxLjI4IDEzMC41NCAyNTEuMzIgMjU5LjMyIDEyMi41NCAzNjEuMzQgMjI0LjU2IDQzNi45MiAyMjQuNTYgMjU5LjU2IDQ2LjczIDI4LjM1IDI3Ny45NSA1NS42IDMwNS4yOSA1NDQuMTYgMzA1LjI1IDQxNS4zOCA0MzQuMDMgMzEzLjM3IDMzMi4wMiAyMzcuNzggMzMyLjAyIDQxNS4xNCA1MDkuODQgNjQ2LjM2IDI3OC42MiA2MTkuNjMgMjUxLjgxIi8+PC9zdmc+">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Roboto+Condensed:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
@@ -4090,21 +4100,42 @@ function rwPickReward(tier, profile) {
   const basePool = _activeRewardPool.filter(r => r.active && r.tier === tier);
   if (basePool.length === 0) return null;
 
-  let pool = basePool;
-
   // Recent-rewards de-weighting (last 10 seen get 0.2× weight)
-  const history    = rwGetHistory();
-  const recentIds  = new Set(history.slice(-10).map(h => h.rewardId));
+  const history   = rwGetHistory();
+  const recentIds = new Set(history.slice(-10).map(h => h.rewardId));
 
-  const weighted = pool.map(r => ({ r, w: recentIds.has(r.id) ? 0.2 : 1 }));
-  const total    = weighted.reduce((s, x) => s + x.w, 0);
-  let roll       = Math.random() * total;
+  let weighted;
+
+  if (tier === 'ultra-rare') {
+    // ── Two-phase ultra-rare weighting ──────────────────────
+    // Phase 1 (not yet exhausted): normal behavior — uncollected entries get
+    //   1x weight; recently seen get 0.2x via the standard de-weighting.
+    // Phase 2 (all collected): replace the hard tier downgrade with a
+    //   re-weighted pool. All entries stay in the ultra-rare pool at 0.05x,
+    //   so they remain possible but very unlikely. No tier demotion occurs.
+    const allUltraRareIds = basePool.map(r => r.id);
+    const collectedIds    = new Set(
+      (profile.collectedUltraRareIds || []).filter(id => allUltraRareIds.includes(id))
+    );
+    const allCollected = allUltraRareIds.length > 0 &&
+                         allUltraRareIds.every(id => collectedIds.has(id));
+
+    weighted = allCollected
+      ? basePool.map(r => ({ r, w: 0.05 }))
+      : basePool.map(r => ({ r, w: recentIds.has(r.id) ? 0.2 : 1 }));
+  } else {
+    // Common and rare: existing recent-history de-weighting unchanged
+    weighted = basePool.map(r => ({ r, w: recentIds.has(r.id) ? 0.2 : 1 }));
+  }
+
+  const total = weighted.reduce((s, x) => s + x.w, 0);
+  let roll    = Math.random() * total;
 
   for (const { r, w } of weighted) {
     roll -= w;
     if (roll <= 0) return r;
   }
-  return pool[pool.length - 1];
+  return basePool[basePool.length - 1];
 }
 
 
@@ -4143,16 +4174,8 @@ function handleEmptyDayTap(dk, sourceCell) {
   const profile = rwGetProfile();
   let tier      = rwRollTier(profile);
 
-  if (tier === 'ultra-rare') {
-    const allUltraRareIds = _activeRewardPool.filter(r => r.active && r.tier === 'ultra-rare').map(r => r.id);
-    // Filter collected IDs to only those present in the *current* active pool.
-    // This prevents stale offline-fallback IDs (U001–U008) from incorrectly
-    // satisfying the "all collected" check when the sheet pool has different IDs.
-    const collectedIds    = (profile.collectedUltraRareIds || []).filter(id => allUltraRareIds.includes(id));
-    const allCollected    = allUltraRareIds.length > 0 && allUltraRareIds.every(id => collectedIds.includes(id));
-    if (allCollected) tier = 'rare';
-  }
-
+  // Ultra-rare exhaustion is now handled inside rwPickReward via two-phase
+  // re-weighting (0.05x) rather than a hard tier downgrade here.
   const reward = rwPickReward(tier, profile);
   if (!reward) { _tapInFlight = false; return; }
 
