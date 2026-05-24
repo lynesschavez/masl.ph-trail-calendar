@@ -1,10 +1,1 @@
-{
-  "functions": {
-    "api/og.jsx": {
-      "runtime": "edge"
-    },
-    "api/share.js": {
-      "runtime": "nodejs18.x"
-    }
-  }
-}
+{}
