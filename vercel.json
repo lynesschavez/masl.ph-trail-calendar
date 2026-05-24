@@ -1,8 +1,10 @@
 {
-  "builds": [
-    { "src": "index.html", "use": "@vercel/static" },
-    { "src": "og-image.png", "use": "@vercel/static" },
-    { "src": "api/test.js", "use": "@vercel/node" },
-    { "src": "api/og.jsx", "use": "@vercel/node" }
-  ]
+  "functions": {
+    "api/og.jsx": {
+      "runtime": "edge"
+    },
+    "api/share.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
 }
