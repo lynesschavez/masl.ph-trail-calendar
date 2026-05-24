@@ -9,7 +9,7 @@ export default function handler(req) {
   const title = searchParams.get('title') || 'MASL.PH';
   const body  = searchParams.get('body')  || 'Philippine Trail Race & Hike Calendar';
 
-  const bodyShort = body.length > 400 ? body.slice(0, 397) + '…' : body;
+  const bodyShort = body.length > 500 ? body.slice(0, 397) + '…' : body;
   const accent    = type === 'ultra-rare' ? '#C9A227' : '#D0021B';
 
   const logoSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 674.82 556.57"><polygon fill="white" points="395.65 0 318.46 77.19 259.58 18.15 0 277.72 279.06 556.57 356.24 479.39 415.12 538.43 674.82 278.73 395.65 0"/><polygon fill="#002FA7" points="395.65 104.13 516.08 224.56 591.66 224.56 395.65 28.56 337.05 87.16 374.83 124.94 395.65 104.13"/><polygon fill="#002FA7" points="279.06 452.44 158.62 332.02 83.04 332.02 279.06 528.01 337.65 469.42 299.87 431.63 279.06 452.44"/><polygon fill="#002FA7" points="619.63 251.81 619.1 251.28 130.54 251.32 259.32 122.54 361.34 224.56 436.92 224.56 259.56 46.73 28.35 277.95 55.6 305.29 544.16 305.25 415.38 434.03 313.37 332.02 237.78 332.02 415.14 509.84 646.36 278.62 619.63 251.81"/></svg>`;
@@ -111,7 +111,7 @@ export default function handler(req) {
                         type: 'div',
                         props: {
                           style: {
-                            fontSize: '46px', fontWeight: 'bold',
+                            fontSize: '40px', fontWeight: 'bold',
                             color: '#ffffff', lineHeight: 1.06,
                             maxWidth: '800px',
                             marginBottom: '18px',
