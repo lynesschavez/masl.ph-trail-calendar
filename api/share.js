@@ -1,7 +1,7 @@
 export default function handler(req, res) {
   const { type, title, body } = req.query;
 
-  const ogImageUrl = `https://masl.ph/api/og?type=${encodeURIComponent(type || '')}&title=${encodeURIComponent(title || '')}&body=${encodeURIComponent(body || '')}`;
+  const ogImageUrl = `https://www.masl.ph/api/og?type=${encodeURIComponent(type || '')}&title=${encodeURIComponent(title || '')}&body=${encodeURIComponent(body || '')}`;
 
   res.setHeader('Content-Type', 'text/html');
   res.send(`<!DOCTYPE html>
