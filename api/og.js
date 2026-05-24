@@ -1,7 +1,9 @@
-const { ImageResponse } = require('@vercel/og');
+import { ImageResponse } from '@vercel/og';
 
-module.exports = async function handler(req, res) {
-  const { searchParams } = new URL(req.url, 'https://masl.ph');
+export const config = { runtime: 'edge' };
+
+export default function handler(req) {
+  const { searchParams } = new URL(req.url);
 
   const type  = searchParams.get('type')  || 'common';
   const title = searchParams.get('title') || 'MASL.PH';
@@ -10,7 +12,7 @@ module.exports = async function handler(req, res) {
   const bodyShort = body.length > 160 ? body.slice(0, 157) + '…' : body;
   const accentColor = type === 'ultra-rare' ? '#C9A227' : '#D0021B';
 
-  const imageResponse = new ImageResponse(
+  return new ImageResponse(
     {
       type: 'div',
       props: {
@@ -35,9 +37,4 @@ module.exports = async function handler(req, res) {
     },
     { width: 1200, height: 630 }
   );
-
-  const arrayBuffer = await imageResponse.arrayBuffer();
-  res.setHeader('Content-Type', 'image/png');
-  res.setHeader('Cache-Control', 'public, max-age=31536000');
-  res.end(Buffer.from(arrayBuffer));
-};
+}
