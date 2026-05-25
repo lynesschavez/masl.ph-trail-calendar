@@ -4,10 +4,32 @@ export const config = { runtime: 'edge' };
 
 export default function handler(req) {
   const { searchParams } = new URL(req.url);
-  const type      = searchParams.get('type')  || 'common';
-  const title     = searchParams.get('title') || 'MASL.PH';
-  const body      = searchParams.get('body')  || 'Philippine Trail Race & Hike Calendar';
-  const bodyShort = body.length > 400 ? body.slice(0, 397) + '…' : body;
+  const type  = searchParams.get('type')  || 'common';
+  const title = searchParams.get('title') || 'MASL.PH';
+  const body  = searchParams.get('body')  || 'Philippine Trail Race & Hike Calendar';
+
+  // ── Font scaling based on character count ─────────────────
+  function headingSize(len, base) {
+    if (len <= 20)  return base;
+    if (len <= 35)  return base - 8;
+    if (len <= 55)  return base - 16;
+    if (len <= 80)  return base - 24;
+    return base - 32;
+  }
+
+  function bodySize(len) {
+    if (len <= 150) return 22;
+    if (len <= 250) return 20;
+    if (len <= 350) return 18;
+    if (len <= 500) return 16;
+    if (len <= 650) return 14;
+    return 13;
+  }
+
+  const bodyFs    = bodySize(body.length);
+  const commonHfs = headingSize(title.length, 58);
+  const rareHfs   = headingSize(title.length, 54);
+  const ultraHfs  = headingSize(title.length, 92);
 
   // ─────────────────────────────────────────────────────────
   // COMMON — Brutalist Mono
@@ -40,14 +62,14 @@ export default function handler(req) {
                   padding: '64px 72px',
                   width: '1200px', height: '630px',
                   position: 'relative',
-                  gap: '24px',
+                  gap: '22px',
                 },
                 children: [
                   {
                     type: 'div',
                     props: {
                       style: {
-                        fontSize: '58px', fontWeight: 'bold',
+                        fontSize: `${commonHfs}px`, fontWeight: 'bold',
                         color: '#111', lineHeight: 1.02,
                         maxWidth: '1060px',
                         fontFamily: 'monospace', display: 'flex', flexWrap: 'wrap',
@@ -60,11 +82,11 @@ export default function handler(req) {
                     type: 'div',
                     props: {
                       style: {
-                        fontSize: '20px', color: '#333',
-                        lineHeight: 1.55, maxWidth: '1000px',
+                        fontSize: `${bodyFs}px`, color: '#333',
+                        lineHeight: 1.55, maxWidth: '1060px',
                         fontFamily: 'monospace', display: 'flex', flexWrap: 'wrap',
                       },
-                      children: bodyShort
+                      children: body
                     }
                   },
                 ]
@@ -122,9 +144,9 @@ export default function handler(req) {
                 style: {
                   display: 'flex', flexDirection: 'column',
                   justifyContent: 'center',
-                  padding: '44px 64px 44px 84px',
+                  padding: '36px 64px 36px 84px',
                   flex: 1,
-                  gap: '20px',
+                  gap: '18px',
                 },
                 children: [
                   {
@@ -138,7 +160,7 @@ export default function handler(req) {
                     type: 'div',
                     props: {
                       style: {
-                        fontSize: '54px', fontWeight: 'bold',
+                        fontSize: `${rareHfs}px`, fontWeight: 'bold',
                         color: '#ffffff', lineHeight: 1.0,
                         maxWidth: '1060px',
                         display: 'flex', flexWrap: 'wrap',
@@ -151,11 +173,11 @@ export default function handler(req) {
                     type: 'div',
                     props: {
                       style: {
-                        fontSize: '20px', color: 'rgba(255,255,255,0.60)',
-                        lineHeight: 1.55, maxWidth: '920px',
+                        fontSize: `${bodyFs}px`, color: 'rgba(255,255,255,0.60)',
+                        lineHeight: 1.55, maxWidth: '1060px',
                         display: 'flex', flexWrap: 'wrap',
                       },
-                      children: bodyShort
+                      children: body
                     }
                   },
                 ]
@@ -231,7 +253,6 @@ export default function handler(req) {
         children: [
 
           { type: 'img', props: { src: starsSrc, style: { position: 'absolute', top: 0, left: 0, width: '1200px', height: '630px' } } },
-
           { type: 'div', props: { style: { position: 'absolute', bottom: '-150px', left: '-80px', width: '500px', height: '500px', borderRadius: '50%', background: 'rgba(90,40,180,0.22)', display: 'flex' } } },
           { type: 'div', props: { style: { position: 'absolute', top: '-100px', right: '100px', width: '300px', height: '300px', borderRadius: '50%', background: 'rgba(120,50,210,0.14)', display: 'flex' } } },
 
@@ -268,13 +289,13 @@ export default function handler(req) {
                 {
                   type: 'div',
                   props: {
-                    style: { display: 'flex', flexDirection: 'column', gap: '28px' },
+                    style: { display: 'flex', flexDirection: 'column', gap: '26px' },
                     children: [
                       {
                         type: 'div',
                         props: {
                           style: {
-                            fontSize: '92px', fontWeight: 'bold',
+                            fontSize: `${ultraHfs}px`, fontWeight: 'bold',
                             color: '#ffffff', lineHeight: 1.0,
                             maxWidth: '860px',
                             fontFamily: 'serif', display: 'flex', flexWrap: 'wrap',
@@ -287,7 +308,7 @@ export default function handler(req) {
                         type: 'div',
                         props: {
                           style: {
-                            fontSize: '20px',
+                            fontSize: `${bodyFs}px`,
                             color: 'rgba(220,200,255,0.72)',
                             lineHeight: 1.65,
                             maxWidth: '780px',
@@ -295,7 +316,7 @@ export default function handler(req) {
                             fontStyle: 'italic',
                             display: 'flex', flexWrap: 'wrap',
                           },
-                          children: bodyShort
+                          children: body
                         }
                       },
                     ]
