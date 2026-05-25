@@ -481,6 +481,13 @@ body {
   border-color: var(--accent);
 }
 
+/* Past-event cards — visible but secondary; only applied on current-month view */
+.race-card.is-past {
+  opacity: 0.38;
+}
+.race-card.is-past:hover  { background: #f0f4ff; opacity: 0.55; }
+.race-card.is-past:active { background: #dce6ff; }
+
 /* Date block — compact, noticeable */
 .rc-date {
   font-family: 'Oswald', sans-serif;
@@ -2455,7 +2462,7 @@ body {
           <a class="banner-logo-link" href="https://www.facebook.com/share/1CRRTYUPyu/" target="_blank" rel="noopener noreferrer" aria-label="Visit MASL on Facebook"><svg class="banner-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 692.98 184.99"><path d="M696.6,160H9.18V345h693V160ZM14.74,339.8V165.24H222V339.8Zm681.86,0H227.68V165.24H696.6Z" transform="translate(-9.18 -159.99)"/><g id="favicon"><polygon points="125.24 39.45 161.12 75.33 183.64 75.33 125.24 16.94 107.78 34.4 119.04 45.66 125.24 39.45"/><polygon points="90.5 143.24 54.61 107.35 32.09 107.35 90.5 165.75 107.95 148.29 96.7 137.03 90.5 143.24"/><polygon points="199.75 91.25 199.76 91.25 191.97 83.45 191.82 83.3 46.25 83.31 84.62 44.94 115.01 75.33 137.53 75.33 84.69 22.35 15.79 91.25 15.98 91.43 15.97 91.44 23.76 99.23 23.92 99.39 169.49 99.38 131.12 137.75 100.72 107.35 78.2 107.35 131.04 160.34 199.94 91.44 199.75 91.25"/></g><g id="MASL_txt" data-name="MASL txt"><g id="ASL"><path d="M252.14,288.44,246,326.64h5.51l1-6.93h7.37l1,6.93h6l-6.11-38.2Zm1.2,26.08,2.89-19.31,2.89,19.31Z" transform="translate(-9.18 -159.99)"/><path d="M294.8,306.29c2.68-1.26,3.88-3.77,3.88-7.7v-1.36c0-5.9-2.62-8.79-8.9-8.79h-9v38.2h9.44c6.05,0,9.11-3.17,9.11-9.06v-3.11C299.28,310.38,298.08,307.54,294.8,306.29Zm-8.07-12.39h2.89c2.13,0,3.06,1.14,3.06,3.93V300c0,3.05-1.37,4-3.6,4h-2.35Zm6.55,23.52c0,2.83-1.1,3.76-3.11,3.76h-3.44V309.45h2.67c2.78,0,3.88,1.09,3.88,4.64Z" transform="translate(-9.18 -159.99)"/><path d="M322.41,288c-5.89,0-9.11,3.43-9.11,9.6v19.86c0,6.17,3.22,9.6,9.11,9.6s9.11-3.43,9.11-9.6V297.61C331.52,291.44,328.3,288,322.41,288Zm3.11,29.84c0,2.79-1.2,3.77-3.11,3.77s-3.11-1-3.11-3.77V297.23c0-2.79,1.2-3.77,3.11-3.77s3.11,1,3.11,3.77Z" transform="translate(-9.18 -159.99)"/><polygon points="346.13 159.61 341.55 128.45 335.49 128.45 341.38 166.65 350.33 166.65 356.23 128.45 350.71 128.45 346.13 159.61" /><polygon points="369.92 166.65 386.29 166.65 386.29 161.19 375.92 161.19 375.92 150.01 384.16 150.01 384.16 144.55 375.92 144.55 375.92 133.91 386.29 133.91 386.29 128.45 369.92 128.45 369.92 166.65" /><path d="M440.59,306.18a33.23,33.23,0,0,1-2.84-2.68c-1.74-1.74-3.05-3.65-3.05-6.27,0-2.79,1.09-3.77,3-3.77s3,1,3,3.77v1.58h5.67v-1.2c0-6.17-2.94-9.6-8.84-9.6s-8.84,3.43-8.84,9.6a11.74,11.74,0,0,0,.88,4.75,18.06,18.06,0,0,0,5,6.49c1,.93,1.91,1.8,2.78,2.67,1.75,1.8,3.06,3.71,3.06,6.33,0,2.79-1.21,3.71-3.11,3.71s-3.12-.92-3.12-3.71v-2.73h-5.67v2.35c0,6.17,3.06,9.6,9,9.6s8.95-3.43,8.95-9.6a11.74,11.74,0,0,0-.88-4.75A19.26,19.26,0,0,0,440.59,306.18Z" transform="translate(-9.18 -159.99)"/><polygon points="451.6 166.65 467.96 166.65 467.96 161.19 457.6 161.19 457.6 150.01 465.84 150.01 465.84 144.55 457.6 144.55 457.6 133.91 467.96 133.91 467.96 128.45 451.6 128.45 451.6 166.65" /><path d="M496.29,288.44l-6.11,38.2h5.51l1-6.93h7.37l1,6.93h6.06l-6.11-38.2Zm1.2,26.08,2.9-19.31,2.89,19.31Z" transform="translate(-9.18 -159.99)"/><polygon points="541.07 128.45 535.07 128.45 535.07 166.65 550.95 166.65 550.95 161.19 541.07 161.19 541.07 128.45" /><polygon points="564.48 166.65 580.85 166.65 580.85 161.19 570.48 161.19 570.48 150.01 578.72 150.01 578.72 144.55 570.48 144.55 570.48 133.91 580.85 133.91 580.85 128.45 564.48 128.45 564.48 166.65" /><polygon points="604.53 159.61 599.95 128.45 593.89 128.45 599.78 166.65 608.73 166.65 614.62 128.45 609.11 128.45 604.53 159.61" /><polygon points="628.32 166.65 644.68 166.65 644.68 161.19 634.32 161.19 634.32 150.01 642.56 150.01 642.56 144.55 634.32 144.55 634.32 133.91 644.68 133.91 644.68 128.45 628.32 128.45 628.32 166.65" /><polygon points="665.31 161.19 665.31 128.45 659.31 128.45 659.31 166.65 675.18 166.65 675.18 161.19 665.31 161.19" /></g><g id="memories"><polygon points="282.13 28.82 264.52 95.69 262.15 87.09 243.36 17.17 236.23 17.19 236.22 116.6 243.65 115.69 243.66 45.52 261.55 113.64 267.48 113 270.58 100.75 285.17 44.49 285.07 111.22 292.4 110.53 292.54 17.08 285.3 17.09 282.13 28.82" /><path d="M326.71,177l-.17,91.37,2-.16,5.41-.4,4.7-.34,4.47-.32,4.7-.31,5.41-.35,1.71-.11v-7.63l-1.93.11-4.62.28-11.82.78-2.66.19.07-35.2,3.27-.12,15.4-.54,0-7.64-18.68.6.06-32.53,21-.09V177H343.11Z" transform="translate(-9.18 -159.99)"/><polygon points="399.17 87.84 377.96 16.97 370.87 16.98 370.73 105.05 378.17 104.71 378.27 42.38 396.17 104.02 402.04 103.83 419.82 42.16 419.77 103.38 427.11 103.25 427.17 16.94 419.96 16.94 399.17 87.84" /><path d="M488.92,183.24a10.92,10.92,0,0,0-1.86-3,9.26,9.26,0,0,0-2.94-2.31,9.52,9.52,0,0,0-3.63-1H470.41a9.42,9.42,0,0,0-4.14.85,7.05,7.05,0,0,0-3,2.69,12.77,12.77,0,0,0-1.47,3.34,14,14,0,0,0-.48,3.71v64.9a13.66,13.66,0,0,0,.46,3.53,13.25,13.25,0,0,0,1.36,3.26A7.26,7.26,0,0,0,466,262a10.08,10.08,0,0,0,4.18,1l10.92.07h.06a8.86,8.86,0,0,0,3.68-.95,7.57,7.57,0,0,0,2.75-2.47,11.15,11.15,0,0,0,2-6.45l0-66.56A9.26,9.26,0,0,0,488.92,183.24Zm-6.65,67a16.9,16.9,0,0,1-.21,2.86,6.38,6.38,0,0,1-.53,1.72c-.36.68-1.56.8-2.47.8l-6.05,0a7.84,7.84,0,0,1-2.6-.37,1.65,1.65,0,0,1-.89-.63,5.41,5.41,0,0,1-.62-1.71,13.65,13.65,0,0,1-.24-2.73V189.71a10.37,10.37,0,0,1,.28-2.5,5.22,5.22,0,0,1,.74-1.67c.71-1,1.3-1.14,1.75-1.14H479c.93,0,2.11.15,2.47.84A6.17,6.17,0,0,1,482,187a16.86,16.86,0,0,1,.21,2.85Z" transform="translate(-9.18 -159.99)"/><path d="M538.45,235c-.37-1.35-.74-2.61-1.11-3.75a30.23,30.23,0,0,0-1.45-3.61c-.34-.71-.71-1.43-1.12-2.15a12.69,12.69,0,0,0,2-2,23.44,23.44,0,0,0,3-5A24.9,24.9,0,0,0,541,215a34,34,0,0,0,.84-3.89c.22-1.36.39-2.85.5-4.41s.16-3.22.16-4.94-.1-3.49-.27-5.11a39.33,39.33,0,0,0-.8-4.7,40.56,40.56,0,0,0-1.21-4.13,28.64,28.64,0,0,0-1.53-3.56,21.34,21.34,0,0,0-1.83-2.93,14.36,14.36,0,0,0-2.13-2.3,7.67,7.67,0,0,0-4.93-2.11H514.54l.1,86.77,7.33.22,0-36.91,4,.08a11.56,11.56,0,0,1,1.29,1.19,12.28,12.28,0,0,1,1.78,2.79c.32.65.66,1.44,1,2.34s.71,2,1.07,3.12.74,2.52,1.12,4.05.79,3.28,1.2,5.21l4,18.69,1.41.06,4.36.19,2.4.1-6-25.45C539.19,237.8,538.81,236.31,538.45,235Zm-3.51-30.06c-.11,1.08-.22,2.2-.33,3.35s-.26,2.17-.44,3.18-.41,2-.67,2.89a12.81,12.81,0,0,1-.9,2.34,9.06,9.06,0,0,1-1.17,1.77,3.3,3.3,0,0,1-1.26.88,5,5,0,0,1-2,.29l-6.27-.1,0-35H527a6.69,6.69,0,0,1,2.2.34,4.23,4.23,0,0,1,1.52.94,9.31,9.31,0,0,1,1.38,1.71,12,12,0,0,1,1.1,2.21,22.3,22.3,0,0,1,.84,2.73,30.75,30.75,0,0,1,.58,3.06c.14,1.11.27,2.23.38,3.34,0,.3.07.61.11.92a18.69,18.69,0,0,1,.17,2.22,16.83,16.83,0,0,1-.18,1.77C535,204.11,535,204.51,534.94,204.91Z" transform="translate(-9.18 -159.99)"/><polygon points="560.71 17 560.87 106.14 568.53 106.61 568.37 17 560.71 17" /><path d="M629.37,262.8l-4.61-.4-11.81-1-2.93-.23L610,225.51l18.66.84v-7.82l-18.67-.76-.06-33,21,.12v-7.83l-28.35,0,.16,91.33,1.68.13,5.41.44,4.69.39,4.46.38,4.7.41,5.41.5,2,.18V263Z" transform="translate(-9.18 -159.99)"/><path d="M683.24,226.43a11.53,11.53,0,0,0-1.85-2.59A9.45,9.45,0,0,0,679,222a6.08,6.08,0,0,0-2.48-.82l-10.72-.59a3.7,3.7,0,0,1-2-.44h0a11,11,0,0,1-.42-3.41l0-25.4a21.17,21.17,0,0,1,.2-3.05,9.67,9.67,0,0,1,.55-2.13c.15-.36.46-1.05,2-1l7.6.06c2,0,2.31.77,2.44,1.05a8,8,0,0,1,.57,2.14,22.18,22.18,0,0,1,.22,3.38v19.07l7.33.3v-23a11.62,11.62,0,0,0-.61-3.76,12.31,12.31,0,0,0-1.81-3.43,9.64,9.64,0,0,0-2.92-2.66,8.84,8.84,0,0,0-3.71-1.13l-10.09,0H665a9.57,9.57,0,0,0-4.13,1.14,7.67,7.67,0,0,0-2.92,2.9,14,14,0,0,0-1.45,3.6,16.8,16.8,0,0,0-.47,4l0,30.71a9.76,9.76,0,0,0,.69,3.8,7.06,7.06,0,0,0,2.18,2.92,9.34,9.34,0,0,0,5.22,2.24l9.15.55c1.75.11,2.63.5,2.88.84a5.32,5.32,0,0,1,.66,3v28.58a18.57,18.57,0,0,1-.22,3.07,8,8,0,0,1-.6,2c-.23.49-.54.92-1.72.78l-7.59-.84c-2.1-.23-2.49-1.09-2.62-1.37a8.84,8.84,0,0,1-.57-2.1,24.21,24.21,0,0,1-.22-3.31V240.92l-7.32-.55,0,22.43a11.83,11.83,0,0,0,.61,3.72,13.43,13.43,0,0,0,1.79,3.46,10.87,10.87,0,0,0,2.83,2.83,9.68,9.68,0,0,0,3.62,1.47l.13,0,5,.57,5,.58H675l.63,0a8.55,8.55,0,0,0,3.57-.71,6.87,6.87,0,0,0,3-2.75,13,13,0,0,0,1.46-3.57,17.19,17.19,0,0,0,.47-4.09v-34.3A7.53,7.53,0,0,0,683.24,226.43Z" transform="translate(-9.18 -159.99)"/></g></g></svg></a>
           <div class="banner-text">
             <div class="banner-title" id="banner-title-btn" role="button" tabindex="0" aria-expanded="false" aria-controls="utc-tip" onclick="toggleUtcTip(event)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleUtcTip(event);}">Unified Trail Calendar</div>
-            <div class="banner-sub" id="bannerSub">Upcoming Trail Races Sa Pinas</div>
+            <div class="banner-sub" id="bannerSub">Mga Upcoming Trail Races Sa Pinas</div>
           </div>
         </div>
         <button class="banner-nav-btn" onclick="shift(1)" aria-label="Next month">
@@ -2558,7 +2565,7 @@ body {
     <div class="sf-bar">
       <button class="sf-toggle-btn" id="sf-toggle-btn" onclick="toggleSearchPanel()" aria-expanded="false" aria-controls="sf-panel">
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <span>SEARCH &amp; FILTER</span>
+        <span>SEARCH EVENTS</span>
       </button>
       <button class="sf-clear-btn" id="sf-clear-btn" onclick="clearSearch()" style="display:none" aria-label="Clear search and filters">CLEAR ✕</button>
     </div>
@@ -2591,13 +2598,13 @@ body {
      href="https://docs.google.com/forms/d/e/1FAIpQLSfhpuMI4T_9rXTtIwcS--tUYmDQgR8WwSObjJIxQ4rooj1XRg/viewform?usp=header"
      target="_blank"
      rel="noopener noreferrer">
-    <span class="update-banner-text"><span class="ubt-line1">Help improve this calendar.</span><span class="ubt-line2">Tap to send updates or feedback.</span></span>
+    <span class="update-banner-text"><span class="ubt-line1">Missing an event, spotted an error, or have a suggestion?</span><span class="ubt-line2">We're listening.</span></span>
     <span class="update-banner-arr">&#8250;</span>
   </a>
 
   <div class="mission-footer">
-    <p class="mission-line-1">We exist to make Philippine outdoor culture easier to discover.</p>
-    <p class="mission-line-2">If you want to support that mission, let's talk.</p>
+    <p class="mission-line-1">We make Philippine outdoor culture easier to discover.</p>
+    <p class="mission-line-2">If this is your world, we'd love to talk.</p>
     <a href="mailto:collab@masl.ph" class="mission-email" aria-label="Send an email to collab@masl.ph"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink:0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>collab@masl.ph</a>
   </div>
 
@@ -3294,6 +3301,10 @@ function render() {
 function renderCenter(y, m, today) {
   const el = document.getElementById('center-info');
 
+  // Determine if we're on the current calendar month
+  const isCurrentMonth = (y === today.getFullYear() && m === today.getMonth());
+  const todayDate      = today.getDate();
+
   // Chronological order — sort by ISO date key ascending
   const evs = Object.entries(TRAIL_EVENTS).filter(([k]) => {
     const [ky, km] = k.split('-').map(Number);
@@ -3301,12 +3312,14 @@ function renderCenter(y, m, today) {
   }).sort(([a], [b]) => a.localeCompare(b));
 
   // Build flat list of all events in chrono order
+  // isPast: true only when viewing current month AND the event date is before today
   const allCards = [];
   evs.forEach(([k, arr]) => {
     const d         = parseInt(k.split('-')[2]);
     const dateLabel = `${MONTHS[m].slice(0,3)} ${d}`;
+    const isPast    = isCurrentMonth && d < todayDate;
     arr.forEach(name => {
-      allCards.push({ k, name, dateLabel });
+      allCards.push({ k, name, dateLabel, isPast });
     });
   });
 
@@ -3336,7 +3349,7 @@ function renderCenter(y, m, today) {
     h += `<div class="race-strip-wrap at-start" id="race-strip-wrap">
             <div class="race-strip" id="race-strip">`;
 
-    allCards.forEach(({ k, name, dateLabel }) => {
+    allCards.forEach(({ k, name, dateLabel, isPast }) => {
       const det      = EVENT_DETAILS[name];
       const safeName = name.replace(/'/g, "\'").replace(/"/g, '&quot;');
       let metaStr;
@@ -3355,7 +3368,7 @@ function renderCenter(y, m, today) {
       const cardIsland = det ? (det.islandGroup || '') : '';
       const cardStatus = det ? (det.regStatus   || '') : '';
 
-      h += `<div class="race-card" data-island="${cardIsland}" data-status="${cardStatus}" onclick="openEventDetailFromList('${safeName}','${k}',this)">
+      h += `<div class="race-card${isPast ? ' is-past' : ''}" data-island="${cardIsland}" data-status="${cardStatus}" onclick="openEventDetailFromList('${safeName}','${k}',this)">
               <div class="rc-date">${dateLabel}</div>
               <div class="rc-div"></div>
               <div class="rc-name">${name}</div>
@@ -3373,6 +3386,25 @@ function renderCenter(y, m, today) {
 
   if (hasEvents) {
     _initStripBehavior();
+
+    // ── Auto-scroll to first upcoming event on current month ──
+    // Smooth-scroll so the user briefly sees the dimmed past cards
+    // slide by, making the left-scroll discoverable.
+    if (isCurrentMonth) {
+      const firstUpcomingIdx = allCards.findIndex(c => !c.isPast);
+      if (firstUpcomingIdx > 0) {
+        setTimeout(() => {
+          const strip = document.getElementById('race-strip');
+          if (!strip) return;
+          const cards = strip.querySelectorAll('.race-card');
+          const target = cards[firstUpcomingIdx];
+          if (target) {
+            // Offset by left padding (14px) so the card isn't flush against the edge
+            strip.scrollTo({ left: Math.max(0, target.offsetLeft - 14), behavior: 'smooth' });
+          }
+        }, 120);
+      }
+    }
   }
 }
 
@@ -5171,8 +5203,8 @@ async function switchMode(mode) {
 
   // ── Banner subtitle ─────────────────────────────────────
   document.getElementById('bannerSub').textContent = mode === 'hikes'
-    ? 'Upcoming Hikes & Treks Sa Pinas'
-    : 'Upcoming Trail Races Sa Pinas';
+    ? 'Mga Upcoming Hikes & Treks Sa Pinas'
+    : 'Mga Upcoming Trail Races Sa Pinas';
 
   // ── Update-banner link ──────────────────────────────────
   if (banner) banner.href = mode === 'hikes' ? HIKE_FORM_URL : RACE_FORM_URL;
