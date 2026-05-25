@@ -6,13 +6,13 @@ export default function handler(req, res) {
   res.send(`<!DOCTYPE html>
 <html>
 <head>
-  <meta property="og:title"       content="Memories Above Sea Level Ph" />
+  <meta property="og:title"       content="Memories Above Sea Level Ph - Trail Calendar 2026" />
   <meta property="og:description" content="Finding your next trail race or hike in the Philippines just got easier. Races, hike schedules, and events from across the islands, in one place." />
   <meta property="og:image"       content="${ogImageUrl}" />
   <meta property="og:url"         content="${shareUrl}" />
   <meta property="og:type"        content="website" />
   <meta name="twitter:card"       content="summary_large_image" />
-  <meta name="twitter:title"      content="Memories Above Sea Level Ph" />
+  <meta name="twitter:title"      content="Memories Above Sea Level Ph - Trail Calendar 2026" />
   <meta name="twitter:description" content="Finding your next trail race or hike in the Philippines just got easier. Races, hike schedules, and events from across the islands, in one place." />
   <meta name="twitter:image"      content="${ogImageUrl}" />
 </head>
