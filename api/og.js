@@ -29,7 +29,61 @@ export default function handler(req) {
   const bodyFs    = bodySize(body.length);
   const commonHfs = headingSize(title.length, 58);
   const rareHfs   = headingSize(title.length, 54);
-  const ultraHfs  = headingSize(title.length, 92);
+  // ── Ultra-Rare adaptive scaling (finer-grained, edge-case-safe) ────────────
+
+  // 10-step title scaling instead of the shared 5-step headingSize()
+  function ultraTitleSize(len) {
+    if (len === 0)  return 48;  // empty string fallback
+    if (len <= 8)   return 92;
+    if (len <= 15)  return 84;
+    if (len <= 22)  return 76;
+    if (len <= 30)  return 68;
+    if (len <= 40)  return 58;
+    if (len <= 55)  return 48;
+    if (len <= 75)  return 40;
+    if (len <= 100) return 34;
+    if (len <= 130) return 28;
+    return 24;
+  }
+
+  // Letter-spacing shrinks as title grows (avoids horizontal blowout)
+  function ultraLetterSpacing(len) {
+    if (len <= 10) return '8px';
+    if (len <= 20) return '6px';
+    if (len <= 35) return '4px';
+    if (len <= 55) return '2px';
+    return '1px';
+  }
+
+  // Body font sizing separate from shared bodySize() — wider range
+  function ultraBodySize(len) {
+    if (len === 0)  return 20;
+    if (len <= 80)  return 24;
+    if (len <= 150) return 22;
+    if (len <= 250) return 20;
+    if (len <= 350) return 18;
+    if (len <= 500) return 16;
+    if (len <= 650) return 14;
+    return 13;
+  }
+
+  // Gap between title and body shrinks when combined content is heavy
+  function ultraContentGap(titleLen, bodyLen) {
+    const combined = titleLen + bodyLen;
+    if (combined <= 100) return '28px';
+    if (combined <= 200) return '22px';
+    if (combined <= 350) return '16px';
+    return '10px';
+  }
+
+  // Safe text values — guard against empty strings and whitespace-only input
+  const safeTitle   = title.trim() || '\u2726';  // fallback to ✦ star glyph if empty
+  const safeBody    = body.trim();               // intentionally allow empty (body is optional)
+
+  const ultraHfs    = ultraTitleSize(safeTitle.length);
+  const ultraLs     = ultraLetterSpacing(safeTitle.length);
+  const ultraBodyFs = ultraBodySize(safeBody.length);
+  const ultraGap    = ultraContentGap(safeTitle.length, safeBody.length);
 
   // ─────────────────────────────────────────────────────────
   // COMMON — Brutalist Mono
@@ -157,31 +211,34 @@ export default function handler(req) {
                       children: 'DEVELOPING STORY · TRAIL ALERT'
                     }
                   },
-                  // ✅ UPDATED: headline now shows "BREAKING:" prefix badge + dynamic title
+                  // Headline block — BREAKING badge stacked above title, sharing the same left edge
                   {
                     type: 'div',
                     props: {
                       style: {
-                        display: 'flex', flexWrap: 'wrap', alignItems: 'baseline',
-                        gap: '14px', maxWidth: '1060px',
+                        display: 'flex', flexDirection: 'column', // ✅ vertical stack, not a row
+                        alignItems: 'flex-start',                  // ✅ both children pin to the left
+                        gap: '10px',
+                        maxWidth: '1060px',
                       },
                       children: [
+                        // BREAKING badge — its own row, same left edge as the title below it
                         {
                           type: 'div',
                           props: {
                             style: {
-                              fontSize: `${rareHfs * 0.52}px`, fontWeight: 'bold',
-                              color: '#D0021B',
-                              background: '#D0021B',
+                              fontSize: '16px',          // ✅ fixed size, independent of rareHfs
+                              fontWeight: 'bold',
                               color: '#ffffff',
-                              padding: '4px 10px',
-                              letterSpacing: '2px',
+                              background: '#D0021B',
+                              padding: '5px 12px',
+                              letterSpacing: '2.5px',
                               display: 'flex',
-                              flexShrink: 0,
                             },
                             children: 'BREAKING:'
                           }
                         },
+                        // Headline — starts at the same left edge as the badge above
                         {
                           type: 'div',
                           props: {
@@ -304,10 +361,11 @@ export default function handler(req) {
               },
               children: [
 
+                // ── Top label (fixed, always visible) ───────────────────────
                 {
                   type: 'div',
                   props: {
-                    style: { display: 'flex', alignItems: 'center', gap: '10px' },
+                    style: { display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 },
                     children: [
                       { type: 'div', props: { style: { fontSize: '15px', color: '#9B72CF', display: 'flex' }, children: '\u2726' } },
                       { type: 'div', props: { style: { fontSize: '13px', letterSpacing: '4.5px', color: '#9B72CF', fontFamily: 'sans-serif', display: 'flex' }, children: 'YOUR COSMIC READING' } },
@@ -315,44 +373,65 @@ export default function handler(req) {
                   }
                 },
 
+                // ── Main content block (fully adaptive) ─────────────────────
                 {
                   type: 'div',
                   props: {
-                    style: { display: 'flex', flexDirection: 'column', gap: '26px' },
+                    style: {
+                      display: 'flex', flexDirection: 'column',
+                      gap: ultraGap,
+                      overflow: 'hidden',   // safety net — nothing bleeds outside
+                      maxHeight: '460px',   // ceiling keeps content within card bounds
+                    },
                     children: [
+
+                      // Headline — finely scaled font + letter-spacing + word-break safe
                       {
                         type: 'div',
                         props: {
                           style: {
-                            fontSize: `${ultraHfs}px`, fontWeight: 'bold',
-                            color: '#ffffff', lineHeight: 1.0,
-                            maxWidth: '860px',
-                            fontFamily: 'serif', display: 'flex', flexWrap: 'wrap',
-                            letterSpacing: '8px',
+                            fontSize: `${ultraHfs}px`,
+                            fontWeight: 'bold',
+                            color: '#ffffff',
+                            lineHeight: ultraHfs >= 68 ? 1.0 : 1.08, // tighter for huge text, looser for small
+                            maxWidth: '1040px',
+                            fontFamily: 'serif',
+                            display: 'flex', flexWrap: 'wrap',
+                            letterSpacing: ultraLs,   // scales down as title grows
+                            wordBreak: 'break-word',  // handles long unbroken strings
+                            overflowWrap: 'break-word',
+                            overflow: 'hidden',
                           },
-                          children: title
+                          children: safeTitle          // uses safe fallback if empty
                         }
                       },
-                      {
+
+                      // Body — only rendered when non-empty (avoids ghost spacing)
+                      ...(safeBody ? [{
                         type: 'div',
                         props: {
                           style: {
-                            fontSize: `${bodyFs}px`,
-                            color: '#ffffff', // ✅ CHANGED: was rgba(220,200,255,0.72) — now solid white
-                            lineHeight: 1.65,
-                            maxWidth: '780px',
+                            fontSize: `${ultraBodyFs}px`,
+                            color: '#ffffff',
+                            lineHeight: ultraBodyFs >= 20 ? 1.65 : 1.5, // tighter for small text
+                            maxWidth: '900px',
                             fontFamily: 'serif',
                             fontStyle: 'italic',
                             display: 'flex', flexWrap: 'wrap',
+                            wordBreak: 'break-word',
+                            overflowWrap: 'break-word',
+                            overflow: 'hidden',
                           },
-                          children: body
+                          children: safeBody
                         }
-                      },
+                      }] : []),
+
                     ]
                   }
                 },
 
-                // ✅ REMOVED: bottom row with 'MASL.PH' and '✦ The Stars Said Share This ✦'
+                // ── Bottom anchor (keeps layout stable with no bottom label) ─
+                { type: 'div', props: { style: { display: 'flex', height: '1px', flexShrink: 0 } } },
 
               ]
             }
