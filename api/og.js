@@ -2,13 +2,54 @@ import { ImageResponse } from '@vercel/og';
 
 export const config = { runtime: 'edge' };
 
-export default function handler(req) {
+export default async function handler(req) {
   const { searchParams } = new URL(req.url);
   const type  = searchParams.get('type')  || 'common';
   const title = searchParams.get('title') || 'MASL.PH';
   const body  = searchParams.get('body')  || 'Philippine Trail Race & Hike Calendar';
 
-  // ── Font scaling based on character count ─────────────────
+  // ── Google Fonts loader ───────────────────────────────────
+  async function loadGoogleFont(family, weight) {
+    const cssUrl = `https://fonts.googleapis.com/css2?family=${family}:wght@${weight}&display=swap`;
+    const css = await fetch(cssUrl, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1)' },
+    }).then(r => r.text());
+    const fontUrl = css.match(/src: url\((.+?)\) format\('woff2'\)/)?.[1];
+    if (!fontUrl) throw new Error(`Could not find woff2 URL for ${family}`);
+    return fetch(fontUrl).then(r => r.arrayBuffer());
+  }
+
+  // ── Load only the font needed for the requested tier ─────
+  // Wrapped in try/catch — if the font fetch fails for ANY reason
+  // (network issue, bad URL, timeout), the card still renders using
+  // the generic fallback font instead of crashing the whole function.
+  let fontData = null;
+  let fontName;
+
+  try {
+    if (type === 'common') {
+      fontData = await loadGoogleFont('Space+Mono', 700);
+      fontName = 'Space Mono';
+    } else if (type === 'rare') {
+      fontData = await loadGoogleFont('Barlow+Condensed', 700);
+      fontName = 'Barlow Condensed';
+    } else {
+      fontData = await loadGoogleFont('Playfair+Display', 700);
+      fontName = 'Playfair Display';
+    }
+  } catch (_) {
+    // Font failed to load — fall back to safe generic families
+    fontName = type === 'common' ? 'monospace'
+             : type === 'rare'   ? 'sans-serif'
+             :                     'serif';
+  }
+
+  // Helper used by ImageResponse options — passes font only if it loaded
+  const fontOptions = fontData
+    ? [{ name: fontName, data: fontData, weight: 700, style: 'normal' }]
+    : [];
+
+
   function headingSize(len, base) {
     if (len <= 20)  return base;
     if (len <= 35)  return base - 8;
@@ -102,7 +143,7 @@ export default function handler(req) {
             display: 'flex',
             position: 'relative',
             overflow: 'hidden',
-            fontFamily: 'monospace',
+            fontFamily: 'Space Mono',
             border: '10px solid #111',
           },
           children: [
@@ -138,7 +179,7 @@ export default function handler(req) {
                       style: {
                         fontSize: `${bodyFs}px`, color: '#333',
                         lineHeight: 1.55, maxWidth: '1060px',
-                        fontFamily: 'monospace', display: 'flex', flexWrap: 'wrap',
+                        fontFamily: 'Space Mono', display: 'flex', flexWrap: 'wrap',
                       },
                       children: body
                     }
@@ -149,7 +190,7 @@ export default function handler(req) {
           ]
         }
       },
-      { width: 1200, height: 630 }
+      { width: 1200, height: 630, fonts: fontOptions }
     );
   }
 
@@ -167,7 +208,7 @@ export default function handler(req) {
             display: 'flex', flexDirection: 'column',
             position: 'relative',
             overflow: 'hidden',
-            fontFamily: 'sans-serif',
+            fontFamily: 'Barlow Condensed',
           },
           children: [
 
@@ -273,7 +314,7 @@ export default function handler(req) {
           ]
         }
       },
-      { width: 1200, height: 630 }
+      { width: 1200, height: 630, fonts: fontOptions }
     );
   }
 
@@ -395,9 +436,7 @@ export default function handler(req) {
                             color: '#ffffff',
                             lineHeight: ultraHfs >= 68 ? 1.0 : 1.08, // tighter for huge text, looser for small
                             maxWidth: '1040px',
-                            fontFamily: 'serif',
-                            display: 'flex', flexWrap: 'wrap',
-                            letterSpacing: ultraLs,   // scales down as title grows
+                            fontFamily: 'Playfair Display',
                             wordBreak: 'break-word',  // handles long unbroken strings
                             overflowWrap: 'break-word',
                             overflow: 'hidden',
@@ -415,7 +454,7 @@ export default function handler(req) {
                             color: '#ffffff',
                             lineHeight: ultraBodyFs >= 20 ? 1.65 : 1.5, // tighter for small text
                             maxWidth: '900px',
-                            fontFamily: 'serif',
+                            fontFamily: 'Playfair Display',
                             fontStyle: 'italic',
                             display: 'flex', flexWrap: 'wrap',
                             wordBreak: 'break-word',
@@ -440,6 +479,6 @@ export default function handler(req) {
         ]
       }
     },
-    { width: 1200, height: 630 }
+    { width: 1200, height: 630, fonts: fontOptions }
   );
 }
