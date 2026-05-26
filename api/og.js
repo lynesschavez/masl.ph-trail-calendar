@@ -2,54 +2,13 @@ import { ImageResponse } from '@vercel/og';
 
 export const config = { runtime: 'edge' };
 
-export default async function handler(req) {
+export default function handler(req) {
   const { searchParams } = new URL(req.url);
   const type  = searchParams.get('type')  || 'common';
   const title = searchParams.get('title') || 'MASL.PH';
   const body  = searchParams.get('body')  || 'Philippine Trail Race & Hike Calendar';
 
-  // ── Google Fonts loader ───────────────────────────────────
-  async function loadGoogleFont(family, weight) {
-    const cssUrl = `https://fonts.googleapis.com/css2?family=${family}:wght@${weight}&display=swap`;
-    const css = await fetch(cssUrl, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1)' },
-    }).then(r => r.text());
-    const fontUrl = css.match(/src: url\((.+?)\) format\('woff2'\)/)?.[1];
-    if (!fontUrl) throw new Error(`Could not find woff2 URL for ${family}`);
-    return fetch(fontUrl).then(r => r.arrayBuffer());
-  }
-
-  // ── Load only the font needed for the requested tier ─────
-  // Wrapped in try/catch — if the font fetch fails for ANY reason
-  // (network issue, bad URL, timeout), the card still renders using
-  // the generic fallback font instead of crashing the whole function.
-  let fontData = null;
-  let fontName;
-
-  try {
-    if (type === 'common') {
-      fontData = await loadGoogleFont('Space+Mono', 700);
-      fontName = 'Space Mono';
-    } else if (type === 'rare') {
-      fontData = await loadGoogleFont('Barlow+Condensed', 700);
-      fontName = 'Barlow Condensed';
-    } else {
-      fontData = await loadGoogleFont('Playfair+Display', 700);
-      fontName = 'Playfair Display';
-    }
-  } catch (_) {
-    // Font failed to load — fall back to safe generic families
-    fontName = type === 'common' ? 'monospace'
-             : type === 'rare'   ? 'sans-serif'
-             :                     'serif';
-  }
-
-  // Helper used by ImageResponse options — passes font only if it loaded
-  const fontOptions = fontData
-    ? [{ name: fontName, data: fontData, weight: 700, style: 'normal' }]
-    : [];
-
-
+  // ── Font scaling based on character count ─────────────────
   function headingSize(len, base) {
     if (len <= 20)  return base;
     if (len <= 35)  return base - 8;
@@ -70,11 +29,10 @@ export default async function handler(req) {
   const bodyFs    = bodySize(body.length);
   const commonHfs = headingSize(title.length, 58);
   const rareHfs   = headingSize(title.length, 54);
-  // ── Ultra-Rare adaptive scaling (finer-grained, edge-case-safe) ────────────
 
-  // 10-step title scaling instead of the shared 5-step headingSize()
+  // ── Ultra-Rare adaptive scaling ───────────────────────────
   function ultraTitleSize(len) {
-    if (len === 0)  return 48;  // empty string fallback
+    if (len === 0)  return 48;
     if (len <= 8)   return 92;
     if (len <= 15)  return 84;
     if (len <= 22)  return 76;
@@ -87,7 +45,6 @@ export default async function handler(req) {
     return 24;
   }
 
-  // Letter-spacing shrinks as title grows (avoids horizontal blowout)
   function ultraLetterSpacing(len) {
     if (len <= 10) return '8px';
     if (len <= 20) return '6px';
@@ -96,7 +53,6 @@ export default async function handler(req) {
     return '1px';
   }
 
-  // Body font sizing separate from shared bodySize() — wider range
   function ultraBodySize(len) {
     if (len === 0)  return 20;
     if (len <= 80)  return 24;
@@ -108,7 +64,6 @@ export default async function handler(req) {
     return 13;
   }
 
-  // Gap between title and body shrinks when combined content is heavy
   function ultraContentGap(titleLen, bodyLen) {
     const combined = titleLen + bodyLen;
     if (combined <= 100) return '28px';
@@ -117,9 +72,8 @@ export default async function handler(req) {
     return '10px';
   }
 
-  // Safe text values — guard against empty strings and whitespace-only input
-  const safeTitle   = title.trim() || '\u2726';  // fallback to ✦ star glyph if empty
-  const safeBody    = body.trim();               // intentionally allow empty (body is optional)
+  const safeTitle   = title.trim() || '\u2726';
+  const safeBody    = body.trim();
 
   const ultraHfs    = ultraTitleSize(safeTitle.length);
   const ultraLs     = ultraLetterSpacing(safeTitle.length);
@@ -143,7 +97,7 @@ export default async function handler(req) {
             display: 'flex',
             position: 'relative',
             overflow: 'hidden',
-            fontFamily: 'Space Mono',
+            fontFamily: 'monospace',
             border: '10px solid #111',
           },
           children: [
@@ -179,7 +133,7 @@ export default async function handler(req) {
                       style: {
                         fontSize: `${bodyFs}px`, color: '#333',
                         lineHeight: 1.55, maxWidth: '1060px',
-                        fontFamily: 'Space Mono', display: 'flex', flexWrap: 'wrap',
+                        fontFamily: 'monospace', display: 'flex', flexWrap: 'wrap',
                       },
                       children: body
                     }
@@ -190,7 +144,7 @@ export default async function handler(req) {
           ]
         }
       },
-      { width: 1200, height: 630, fonts: fontOptions }
+      { width: 1200, height: 630 }
     );
   }
 
@@ -208,7 +162,7 @@ export default async function handler(req) {
             display: 'flex', flexDirection: 'column',
             position: 'relative',
             overflow: 'hidden',
-            fontFamily: 'Barlow Condensed',
+            fontFamily: 'sans-serif',
           },
           children: [
 
@@ -239,12 +193,11 @@ export default async function handler(req) {
                 style: {
                   display: 'flex', flexDirection: 'column',
                   justifyContent: 'center',
-                  padding: '28px 64px 28px 84px', // ✅ tightened vertical padding for more text room
+                  padding: '28px 64px 28px 84px',
                   flex: 1,
-                  gap: '14px', // ✅ reduced gap so content breathes but doesn't clip
+                  gap: '14px',
                 },
                 children: [
-                  // ✅ UPDATED: more urgent, breaking-news-style category label
                   {
                     type: 'div',
                     props: {
@@ -252,23 +205,21 @@ export default async function handler(req) {
                       children: 'DEVELOPING STORY · TRAIL ALERT'
                     }
                   },
-                  // Headline block — BREAKING badge stacked above title, sharing the same left edge
                   {
                     type: 'div',
                     props: {
                       style: {
-                        display: 'flex', flexDirection: 'column', // ✅ vertical stack, not a row
-                        alignItems: 'flex-start',                  // ✅ both children pin to the left
+                        display: 'flex', flexDirection: 'column',
+                        alignItems: 'flex-start',
                         gap: '10px',
                         maxWidth: '1060px',
                       },
                       children: [
-                        // BREAKING badge — its own row, same left edge as the title below it
                         {
                           type: 'div',
                           props: {
                             style: {
-                              fontSize: '16px',          // ✅ fixed size, independent of rareHfs
+                              fontSize: '16px',
                               fontWeight: 'bold',
                               color: '#ffffff',
                               background: '#D0021B',
@@ -279,7 +230,6 @@ export default async function handler(req) {
                             children: 'BREAKING:'
                           }
                         },
-                        // Headline — starts at the same left edge as the badge above
                         {
                           type: 'div',
                           props: {
@@ -295,7 +245,6 @@ export default async function handler(req) {
                       ]
                     }
                   },
-                  // ✅ UPDATED: body text opacity raised from 0.60 → 0.85 for better readability
                   {
                     type: 'div',
                     props: {
@@ -314,7 +263,7 @@ export default async function handler(req) {
           ]
         }
       },
-      { width: 1200, height: 630, fonts: fontOptions }
+      { width: 1200, height: 630 }
     );
   }
 
@@ -402,7 +351,6 @@ export default async function handler(req) {
               },
               children: [
 
-                // ── Top label (fixed, always visible) ───────────────────────
                 {
                   type: 'div',
                   props: {
@@ -414,19 +362,16 @@ export default async function handler(req) {
                   }
                 },
 
-                // ── Main content block (fully adaptive) ─────────────────────
                 {
                   type: 'div',
                   props: {
                     style: {
                       display: 'flex', flexDirection: 'column',
                       gap: ultraGap,
-                      overflow: 'hidden',   // safety net — nothing bleeds outside
-                      maxHeight: '460px',   // ceiling keeps content within card bounds
+                      overflow: 'hidden',
+                      maxHeight: '460px',
                     },
                     children: [
-
-                      // Headline — finely scaled font + letter-spacing + word-break safe
                       {
                         type: 'div',
                         props: {
@@ -434,27 +379,27 @@ export default async function handler(req) {
                             fontSize: `${ultraHfs}px`,
                             fontWeight: 'bold',
                             color: '#ffffff',
-                            lineHeight: ultraHfs >= 68 ? 1.0 : 1.08, // tighter for huge text, looser for small
+                            lineHeight: ultraHfs >= 68 ? 1.0 : 1.08,
                             maxWidth: '1040px',
-                            fontFamily: 'Playfair Display',
-                            wordBreak: 'break-word',  // handles long unbroken strings
+                            fontFamily: 'serif',
+                            display: 'flex', flexWrap: 'wrap',
+                            letterSpacing: ultraLs,
+                            wordBreak: 'break-word',
                             overflowWrap: 'break-word',
                             overflow: 'hidden',
                           },
-                          children: safeTitle          // uses safe fallback if empty
+                          children: safeTitle
                         }
                       },
-
-                      // Body — only rendered when non-empty (avoids ghost spacing)
                       ...(safeBody ? [{
                         type: 'div',
                         props: {
                           style: {
                             fontSize: `${ultraBodyFs}px`,
                             color: '#ffffff',
-                            lineHeight: ultraBodyFs >= 20 ? 1.65 : 1.5, // tighter for small text
+                            lineHeight: ultraBodyFs >= 20 ? 1.65 : 1.5,
                             maxWidth: '900px',
-                            fontFamily: 'Playfair Display',
+                            fontFamily: 'serif',
                             fontStyle: 'italic',
                             display: 'flex', flexWrap: 'wrap',
                             wordBreak: 'break-word',
@@ -464,12 +409,10 @@ export default async function handler(req) {
                           children: safeBody
                         }
                       }] : []),
-
                     ]
                   }
                 },
 
-                // ── Bottom anchor (keeps layout stable with no bottom label) ─
                 { type: 'div', props: { style: { display: 'flex', height: '1px', flexShrink: 0 } } },
 
               ]
@@ -479,6 +422,6 @@ export default async function handler(req) {
         ]
       }
     },
-    { width: 1200, height: 630, fonts: fontOptions }
+    { width: 1200, height: 630 }
   );
 }
