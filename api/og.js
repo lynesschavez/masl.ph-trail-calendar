@@ -8,132 +8,243 @@ export default function handler(req) {
   const title = searchParams.get('title') || 'MASL.PH';
   const body  = searchParams.get('body')  || 'Philippine Trail Race & Hike Calendar';
 
-  // ── Rare-tier fallback content ─────────────────────────────
+  // ── Rare-tier: breaking-news fallback content ─────────────
   const rareTitle = title === 'MASL.PH'
     ? 'RACE REGISTRATION NOW OPEN — LIMITED SLOTS REMAIN'
     : title;
-  const rareBody = body === 'Philippine Trail Race & Hike Calendar'
+  const rareBody  = body === 'Philippine Trail Race & Hike Calendar'
     ? 'Organizers confirm slots are filling fast. Runners urged to register immediately. Full route details and cutoff times now posted on the official event page.'
     : body;
 
   // ══════════════════════════════════════════════════════════════
-  // ADAPTIVE ENGINE
+  // SHARED ADAPTIVE ENGINE
   //
-  // Two primitives + one solver used by all three tiers.
+  // All three tiers (common, rare, ultra-rare) use this same
+  // geometry-aware engine instead of step-table font lookups.
   //
-  // estimateH  — how tall will this text block be at a given font size?
-  // fitFs      — what is the largest font size that fits within a pixel budget?
-  // solveLayout — jointly solve title + body for a given card geometry.
+  // Pipeline:
+  //   1. Model estimated rendered height from font size + line count
+  //   2. Binary-search for the largest font size that fits a pixel budget
+  //   3. Jointly solve title + body sizing so they sum to ≤ available height
+  //   4. Redistribute leftover pixels as natural gap — no magic numbers
   // ══════════════════════════════════════════════════════════════
 
-  function estimateH(text, fontSize, lineHeight, maxWidth, isItalic = false) {
-    if (!text) return 0;
-    const charsPerLine = Math.max(1, Math.floor(maxWidth / (fontSize * (isItalic ? 0.50 : 0.54))));
-    return Math.ceil(text.length / charsPerLine) * fontSize * lineHeight;
+  // Average rendered char width as a fraction of font size.
+  // Tuned for @vercel/og's default serif (Georgia-like):
+  //   • Display/headline serif: ~0.54× (wide letterforms, tracking)
+  //   • Italic body serif:      ~0.50× (slightly compressed)
+  function urCharsPerLine(fontSize, maxWidth, isItalic) {
+    const avgRatio = isItalic ? 0.50 : 0.54;
+    return Math.max(1, Math.floor(maxWidth / (fontSize * avgRatio)));
   }
 
-  function fitFs(text, lineHeight, maxWidth, budget, minFs, maxFs, isItalic = false) {
-    if (!text) return minFs;
+  function urEstimateLines(text, fontSize, maxWidth, isItalic) {
+    if (!text || !text.length) return 0;
+    return Math.ceil(text.length / urCharsPerLine(fontSize, maxWidth, isItalic));
+  }
+
+  function urEstimateH(text, fontSize, lineHeight, maxWidth, isItalic) {
+    return urEstimateLines(text, fontSize, maxWidth, isItalic) * fontSize * lineHeight;
+  }
+
+  // Returns the largest integer font size where the text block fits within
+  // pixelBudget. Falls back to minFs if even the minimum overflows.
+  function urFitFs(text, lineHeight, maxWidth, pixelBudget, minFs, maxFs, isItalic) {
+    if (!text || !text.length) return minFs;
     let lo = minFs, hi = maxFs, best = minFs;
     while (lo <= hi) {
       const mid = Math.floor((lo + hi) / 2);
-      if (estimateH(text, mid, lineHeight, maxWidth, isItalic) <= budget) { best = mid; lo = mid + 1; }
-      else hi = mid - 1;
+      if (urEstimateH(text, mid, lineHeight, maxWidth, isItalic) <= pixelBudget) {
+        best = mid;
+        lo = mid + 1;
+      } else {
+        hi = mid - 1;
+      }
     }
     return best;
   }
 
-  // Finds the largest titleFs and bodyFs that jointly fit within budgetH.
-  //
-  // titleOverheadFn(fs) → extra pixels above the title text at a given font
-  // size. Defaults to zero. Used by the rare tier to account for the badge
-  // (BREAKING: label) that sits above the headline in the column layout.
-  function solveLayout({
-    title, body,
-    innerW, budgetH,
-    titleLH, bodyLH,
-    bodyW,
-    titleMaxFs = 92, bodyMaxFs = 26,
-    titleIsItalic = false, bodyIsItalic = false,
-    titleOverheadFn = () => 0,
-  }) {
-    bodyW = bodyW || innerW;
-    const hasBody = body && body.trim().length > 0;
-
-    const GAP_RESERVE = 16;
-    const titleBudget = Math.floor((budgetH - GAP_RESERVE) * 0.60);
-    const bodyBudget  = budgetH - GAP_RESERVE - titleBudget;
-
-    // Binary-search for titleFs, incorporating any per-font-size overhead
-    let titleFs = 22;
-    {
-      let lo = 22, hi = hasBody ? titleMaxFs : titleMaxFs, best = 22;
-      const cap = hasBody ? titleBudget : budgetH;
-      while (lo <= hi) {
-        const mid = Math.floor((lo + hi) / 2);
-        if (titleOverheadFn(mid) + estimateH(title, mid, titleLH, innerW, titleIsItalic) <= cap) {
-          best = mid; lo = mid + 1;
-        } else {
-          hi = mid - 1;
-        }
-      }
-      titleFs = best;
-    }
-
-    if (!hasBody) return { titleFs, bodyFs: 0, gapPx: 0 };
-
-    // Body: fit within its budget, then absorb any surplus from a short title
-    const titleActualH = titleOverheadFn(titleFs) + estimateH(title, titleFs, titleLH, innerW, titleIsItalic);
-    const surplus      = Math.max(0, titleBudget - titleActualH);
-    const bodyFs       = fitFs(body, bodyLH, bodyW, bodyBudget + surplus, 13, bodyMaxFs, bodyIsItalic);
-
-    // Natural gap: distribute remaining space rather than using fixed padding
-    const usedH  = titleActualH + estimateH(body, bodyFs, bodyLH, bodyW, bodyIsItalic);
-    const gapPx  = Math.min(36, Math.max(10, Math.floor((budgetH - usedH) * 0.42)));
-
-    return { titleFs, bodyFs, gapPx };
+  // Line-height tightens for large display sizes to prevent runaway block height.
+  function urLineHeight(fs) {
+    if (fs >= 72) return 1.00;
+    if (fs >= 56) return 1.04;
+    if (fs >= 40) return 1.08;
+    return 1.14;
   }
 
-  // ── Per-tier geometry constants and solve ─────────────────
+  // Letter-spacing loosens for small sizes, compresses for large.
+  function urLetterSpacing(fs) {
+    if (fs >= 80) return '4px';
+    if (fs >= 64) return '3px';
+    if (fs >= 48) return '2px';
+    if (fs >= 36) return '1px';
+    return '0px';
+  }
+
+  // ══════════════════════════════════════════════════════════════
+  // COMMON — adaptive sizing
   //
-  // Each card's budgetH is the usable vertical space after subtracting
-  // every fixed element (padding, bars, rules, labels) from the 630px height.
+  // Card:   1200 × 630px, padding: 64px 72px
+  // Inner:  1056px wide × 502px tall
+  // Layout: [title] [2px rule] [body]
+  // gap: 22px between each child → reserve: 2px rule + 22 + 22 = 46px
+  // ══════════════════════════════════════════════════════════════
+  const CM_PAD_V       = 64;
+  const CM_PAD_H       = 72;
+  const CM_INNER_H     = 630 - CM_PAD_V * 2;          // 502px
+  const CM_INNER_W     = 1200 - CM_PAD_H * 2;         // 1056px
+  const CM_DIVIDER_RES = 46;                           // 2px rule + both 22px gaps
+  const CM_BUDGET_H    = CM_INNER_H - CM_DIVIDER_RES; // 456px
+  const CM_TITLE_LH    = 1.02;
+  const CM_BODY_LH     = 1.55;
+  const cmHasBody      = body.trim().length > 0;
 
-  // COMMON — 1200×630, padding 64px top/bottom 72px left/right
-  // Fixed overhead: 2px rule + 22px gap above + 22px gap below = 46px
-  const { titleFs: cmTitleFs, bodyFs: cmBodyFs } = solveLayout({
-    title, body,
-    innerW: 1056, budgetH: 456,
-    titleLH: 1.02, bodyLH: 1.55,
-  });
+  let cmTitleFs, cmBodyFs;
 
-  // RARE — 1200×630, 62px top bar, 20px top/bottom content padding
-  // Fixed overhead: kicker 13px + divider 4px + 3 gaps × 12px = 53px
-  // Badge overhead per font size: round(fs × 0.28) + 10px height + 8px gap
-  const { titleFs: raHfs, bodyFs: raBodyFs } = solveLayout({
-    title: rareTitle, body: rareBody,
-    innerW: 1052, budgetH: 475,
-    titleLH: 1.05, bodyLH: 1.55,
-    bodyW: 920,
-    titleMaxFs: 54,
-    titleOverheadFn: (fs) => Math.round(fs * 0.28) + 18,
-  });
+  if (!cmHasBody) {
+    cmTitleFs = urFitFs(title, CM_TITLE_LH, CM_INNER_W, CM_BUDGET_H, 22, 92, false);
+    cmBodyFs  = 0;
+  } else {
+    const cmGapReserve  = 16;
+    const cmTitleBudget = Math.floor((CM_BUDGET_H - cmGapReserve) * 0.60);
+    const cmBodyBudget  = CM_BUDGET_H - cmGapReserve - cmTitleBudget;
 
-  // ULTRA-RARE — 1200×630, 48px top/bottom padding 80px left/right
-  // Fixed overhead: 28px label + 28px label gap = 56px
-  const safeTitle = title.trim() || '\u2726';
-  const safeBody  = body.trim();
-  const { titleFs: urTitleFs, bodyFs: urBodyFs, gapPx: urGapPx } = solveLayout({
-    title: safeTitle, body: safeBody,
-    innerW: 1040, budgetH: 478,
-    titleLH: 1.05, bodyLH: 1.58,
-    bodyW: Math.round(1040 * 0.87),
-    bodyIsItalic: true,
-  });
+    cmTitleFs = urFitFs(title, CM_TITLE_LH, CM_INNER_W, cmTitleBudget, 22, 92, false);
+    cmBodyFs  = urFitFs(body,  CM_BODY_LH,  CM_INNER_W, cmBodyBudget,  13, 26, false);
 
-  // Derived style values for ultra-rare headline
-  const urTitleLH = urTitleFs >= 72 ? 1.00 : urTitleFs >= 56 ? 1.04 : urTitleFs >= 40 ? 1.08 : 1.14;
-  const urTitleLS = urTitleFs >= 80 ? '4px' : urTitleFs >= 64 ? '3px' : urTitleFs >= 48 ? '2px' : urTitleFs >= 36 ? '1px' : '0px';
+    // If title has surplus (short heading), try upsizing body one step
+    const titleActualH = urEstimateH(title, cmTitleFs, CM_TITLE_LH, CM_INNER_W, false);
+    const cmSurplus    = cmTitleBudget - titleActualH;
+    if (cmSurplus > CM_BODY_LH * (cmBodyFs + 1)) {
+      cmBodyFs = urFitFs(body, CM_BODY_LH, CM_INNER_W, cmBodyBudget + cmSurplus, 13, 26, false);
+    }
+  }
+
+  // ══════════════════════════════════════════════════════════════
+  // RARE — adaptive sizing
+  //
+  // Card:    1200 × 630px
+  // Top bar: 62px
+  // Content: padding 20px top + 20px bottom → 528px usable
+  // Content children (flex column, gap: 12px):
+  //   [kicker ~13px] [headline-block] [divider ~4px] [body]
+  //   3 inter-child gaps × 12px = 36px
+  // Fixed overhead: 13 + 4 + 36 = 53px → budget = 475px
+  //
+  // HEADLINE BLOCK — column layout (badge stacked above headline):
+  //   [BREAKING: badge]
+  //   [8px gap]
+  //   [headline text]
+  //
+  // Both children share the same left edge naturally — no nudge needed.
+  // The badge height must be included in the binary search for raHfs.
+  // ══════════════════════════════════════════════════════════════
+  const RA_TOP_BAR_H  = 62;
+  const RA_PAD_V      = 20;
+  const RA_PAD_LEFT   = 84;
+  const RA_PAD_RIGHT  = 64;
+  const RA_INNER_W    = 1200 - RA_PAD_LEFT - RA_PAD_RIGHT;   // 1052px
+  const RA_CONTENT_H  = 630 - RA_TOP_BAR_H - RA_PAD_V * 2;  // 528px
+  const RA_FIXED_H    = 13 + 4 + 12 * 3;                     // kicker + divider + 3 gaps = 53px
+  const RA_BUDGET_H   = RA_CONTENT_H - RA_FIXED_H;           // 475px
+  const RA_TITLE_LH   = 1.05;
+  const RA_BODY_LH    = 1.55;
+  const RA_BADGE_GAP  = 8;                                    // gap between badge and headline
+
+  // Combined height of the headline block: badge + gap + headline text
+  function raHeadlineBlockH(fs) {
+    const badgeH    = Math.round(fs * 0.28) + 10;  // badge font size + 5px×2 vertical padding
+    const headlineH = urEstimateH(rareTitle, fs, RA_TITLE_LH, RA_INNER_W, false);
+    return badgeH + RA_BADGE_GAP + headlineH;
+  }
+
+  let raHfs, raBodyFs;
+  {
+    const raGapReserve  = 16;
+    const raTitleBudget = Math.floor((RA_BUDGET_H - raGapReserve) * 0.60);
+    const raBodyBudget  = RA_BUDGET_H - raGapReserve - raTitleBudget;
+
+    // Binary search for the largest headline font size whose block fits the budget
+    let lo = 22, hi = 54, best = 22;
+    while (lo <= hi) {
+      const mid = Math.floor((lo + hi) / 2);
+      if (raHeadlineBlockH(mid) <= raTitleBudget) { best = mid; lo = mid + 1; }
+      else hi = mid - 1;
+    }
+    raHfs    = best;
+    raBodyFs = urFitFs(rareBody, RA_BODY_LH, 920, raBodyBudget, 13, 26, false);
+
+    // Try upsizing body if headline block has surplus
+    const headlineActualH = raHeadlineBlockH(raHfs);
+    const raSurplus       = raTitleBudget - headlineActualH;
+    if (raSurplus > RA_BODY_LH * (raBodyFs + 1)) {
+      raBodyFs = urFitFs(rareBody, RA_BODY_LH, 920, raBodyBudget + raSurplus, 13, 26, false);
+    }
+  }
+
+  // ══════════════════════════════════════════════════════════════
+  // ULTRA-RARE — Geometry-aware adaptive layout engine
+  //
+  // Uses the shared engine functions above.
+  // Jointly solves title + body sizing so they always sum to ≤ available height.
+  // Redistributes leftover pixels as natural gap.
+  // ══════════════════════════════════════════════════════════════
+
+  // Safe text values — guard against empty / whitespace-only input
+  const safeTitle = title.trim() || '\u2726';  // ✦ star glyph fallback if empty
+  const safeBody  = body.trim();               // body is optional; empty string is valid
+
+  // ── Card geometry ─────────────────────────────────────────
+  const UR_CARD_H   = 630;
+  const UR_PAD_V    = 48;
+  const UR_PAD_H    = 80;
+  const UR_INNER_H  = UR_CARD_H - UR_PAD_V * 2;
+  const UR_INNER_W  = 1200 - UR_PAD_H * 2;
+  const UR_BODY_W   = Math.round(UR_INNER_W * 0.87);
+  const UR_LABEL_H  = 28;
+  const UR_LABEL_GAP = 28;
+  const UR_BUDGET_H = UR_INNER_H - UR_LABEL_H - UR_LABEL_GAP;
+
+  const UR_TITLE_LH  = 1.05;
+  const UR_BODY_LH   = 1.58;
+  const hasBody      = safeBody.length > 0;
+
+  let urTitleFs, urBodyFs, urGapPx;
+
+  if (!hasBody) {
+    urTitleFs = urFitFs(safeTitle, UR_TITLE_LH, UR_INNER_W, UR_BUDGET_H, 24, 96, false);
+    urBodyFs  = 0;
+    urGapPx   = 0;
+  } else {
+    const GAP_RESERVE  = 18;
+    const titleBudget1 = Math.floor((UR_BUDGET_H - GAP_RESERVE) * 0.60);
+    const bodyBudget1  = UR_BUDGET_H - GAP_RESERVE - titleBudget1;
+
+    const titleFs1 = urFitFs(safeTitle, UR_TITLE_LH, UR_INNER_W, titleBudget1, 22, 92, false);
+    const bodyFs1  = urFitFs(safeBody,  UR_BODY_LH,  UR_BODY_W,  bodyBudget1,  13, 26, true);
+
+    const titleH1 = urEstimateH(safeTitle, titleFs1, UR_TITLE_LH, UR_INNER_W, false);
+    const bodyH1  = urEstimateH(safeBody,  bodyFs1,  UR_BODY_LH,  UR_BODY_W,  true);
+    const used1   = titleH1 + bodyH1 + GAP_RESERVE;
+    const surplus = UR_BUDGET_H - used1;
+
+    let urBodyFsFinal = bodyFs1;
+    if (surplus > UR_BODY_LH * (bodyFs1 + 1)) {
+      const extraBodyBudget = bodyBudget1 + surplus;
+      urBodyFsFinal = urFitFs(safeBody, UR_BODY_LH, UR_BODY_W, extraBodyBudget, 13, 26, true);
+    }
+
+    urTitleFs = titleFs1;
+    urBodyFs  = urBodyFsFinal;
+
+    const finalTitleH = urEstimateH(safeTitle, urTitleFs, UR_TITLE_LH, UR_INNER_W, false);
+    const finalBodyH  = urEstimateH(safeBody,  urBodyFs,  UR_BODY_LH,  UR_BODY_W,  true);
+    const leftover    = UR_BUDGET_H - finalTitleH - finalBodyH;
+    urGapPx = Math.min(36, Math.max(10, Math.floor(leftover * 0.42)));
+  }
+
+  const urTitleLH = urLineHeight(urTitleFs);
+  const urTitleLS = urLetterSpacing(urTitleFs);
 
   // ─────────────────────────────────────────────────────────
   // COMMON — Brutalist Mono
@@ -163,7 +274,7 @@ export default function handler(req) {
                 style: {
                   display: 'flex', flexDirection: 'column',
                   justifyContent: 'center',
-                  padding: '64px 72px',
+                  padding: `${CM_PAD_V}px ${CM_PAD_H}px`,
                   width: '1200px', height: '630px',
                   position: 'relative',
                   gap: '22px',
@@ -174,12 +285,12 @@ export default function handler(req) {
                     props: {
                       style: {
                         fontSize: `${cmTitleFs}px`, fontWeight: 'bold',
-                        color: '#111', lineHeight: 1.02,
-                        maxWidth: '1056px',
+                        color: '#111', lineHeight: CM_TITLE_LH,
+                        maxWidth: `${CM_INNER_W}px`,
                         fontFamily: 'monospace', display: 'flex', flexWrap: 'wrap',
                         wordBreak: 'break-word', overflowWrap: 'break-word',
                       },
-                      children: title,
+                      children: title
                     }
                   },
                   { type: 'div', props: { style: { width: '100%', height: '2px', background: '#111', display: 'flex' } } },
@@ -188,11 +299,11 @@ export default function handler(req) {
                     props: {
                       style: {
                         fontSize: `${cmBodyFs}px`, color: '#333',
-                        lineHeight: 1.55, maxWidth: '1056px',
+                        lineHeight: CM_BODY_LH, maxWidth: `${CM_INNER_W}px`,
                         fontFamily: 'monospace', display: 'flex', flexWrap: 'wrap',
                         wordBreak: 'break-word', overflowWrap: 'break-word',
                       },
-                      children: body,
+                      children: body
                     }
                   },
                 ]
@@ -223,8 +334,10 @@ export default function handler(req) {
           },
           children: [
 
+            // Left red edge accent
             { type: 'div', props: { style: { position: 'absolute', top: 0, left: 0, width: '8px', height: '630px', background: '#D0021B', display: 'flex' } } },
 
+            // Top bar
             {
               type: 'div',
               props: {
@@ -232,7 +345,7 @@ export default function handler(req) {
                   display: 'flex', alignItems: 'center',
                   background: '#D0021B',
                   padding: '0 40px 0 28px',
-                  height: '62px', width: '1200px',
+                  height: `${RA_TOP_BAR_H}px`, width: '1200px',
                   flexShrink: 0,
                 },
                 children: [
@@ -244,19 +357,21 @@ export default function handler(req) {
               }
             },
 
+            // Content column
             {
               type: 'div',
               props: {
                 style: {
                   display: 'flex', flexDirection: 'column',
                   justifyContent: 'center',
-                  padding: '20px 64px 20px 84px',
+                  padding: `${RA_PAD_V}px ${RA_PAD_RIGHT}px ${RA_PAD_V}px ${RA_PAD_LEFT}px`,
                   flex: 1,
                   gap: '12px',
                   overflow: 'hidden',
                 },
                 children: [
 
+                  // ── Kicker label ─────────────────────────────────────
                   {
                     type: 'div',
                     props: {
@@ -269,20 +384,23 @@ export default function handler(req) {
                     }
                   },
 
-                  // Headline block — badge stacked above headline (column layout)
-                  // Both share the same left edge naturally; no nudge required.
+                  // ── Headline block — column layout ───────────────────
+                  // Badge stacked above headline text: both share the same
+                  // left edge naturally. No nudge, no flexWrap ambiguity.
                   {
                     type: 'div',
                     props: {
                       style: {
                         display: 'flex', flexDirection: 'column',
                         alignItems: 'flex-start',
-                        gap: '8px',
-                        maxWidth: '1052px',
+                        gap: `${RA_BADGE_GAP}px`,
+                        maxWidth: `${RA_INNER_W}px`,
                         overflow: 'hidden',
                         flexShrink: 0,
                       },
                       children: [
+
+                        // BREAKING: badge
                         {
                           type: 'div',
                           props: {
@@ -298,6 +416,8 @@ export default function handler(req) {
                             children: 'BREAKING:'
                           }
                         },
+
+                        // Headline text
                         {
                           type: 'div',
                           props: {
@@ -307,15 +427,18 @@ export default function handler(req) {
                               lineHeight: raHfs >= 46 ? 1.02 : 1.08,
                               display: 'flex', flexWrap: 'wrap',
                               textTransform: 'uppercase',
-                              wordBreak: 'break-word', overflowWrap: 'break-word',
+                              wordBreak: 'break-word',
+                              overflowWrap: 'break-word',
                             },
                             children: rareTitle
                           }
                         },
+
                       ]
                     }
                   },
 
+                  // ── Red accent divider ───────────────────────────────
                   {
                     type: 'div',
                     props: {
@@ -328,15 +451,17 @@ export default function handler(req) {
                     }
                   },
 
+                  // ── Body blurb ───────────────────────────────────────
                   {
                     type: 'div',
                     props: {
                       style: {
                         fontSize: `${raBodyFs}px`,
                         color: 'rgba(255,255,255,0.88)',
-                        lineHeight: 1.55, maxWidth: '920px',
+                        lineHeight: RA_BODY_LH, maxWidth: '920px',
                         display: 'flex', flexWrap: 'wrap',
-                        wordBreak: 'break-word', overflowWrap: 'break-word',
+                        wordBreak: 'break-word',
+                        overflowWrap: 'break-word',
                         overflow: 'hidden',
                       },
                       children: rareBody
@@ -438,6 +563,7 @@ export default function handler(req) {
               },
               children: [
 
+                // ── Top label (fixed, always visible) ────────────────────
                 {
                   type: 'div',
                   props: {
@@ -449,6 +575,7 @@ export default function handler(req) {
                   }
                 },
 
+                // ── Main content block ────────────────────────────────────
                 {
                   type: 'div',
                   props: {
@@ -456,10 +583,11 @@ export default function handler(req) {
                       display: 'flex', flexDirection: 'column',
                       gap: `${urGapPx}px`,
                       overflow: 'hidden',
-                      maxHeight: '478px',
+                      maxHeight: `${UR_BUDGET_H}px`,
                     },
                     children: [
 
+                      // Headline
                       {
                         type: 'div',
                         props: {
@@ -468,29 +596,32 @@ export default function handler(req) {
                             fontWeight: 'bold',
                             color: '#ffffff',
                             lineHeight: urTitleLH,
-                            maxWidth: '1040px',
+                            maxWidth: `${UR_INNER_W}px`,
                             fontFamily: 'serif',
                             display: 'flex', flexWrap: 'wrap',
                             letterSpacing: urTitleLS,
-                            wordBreak: 'break-word', overflowWrap: 'break-word',
+                            wordBreak: 'break-word',
+                            overflowWrap: 'break-word',
                             overflow: 'hidden',
                           },
                           children: safeTitle
                         }
                       },
 
-                      ...(safeBody.length > 0 ? [{
+                      // Body — only rendered when non-empty
+                      ...(hasBody ? [{
                         type: 'div',
                         props: {
                           style: {
                             fontSize: `${urBodyFs}px`,
                             color: 'rgba(255,255,255,0.88)',
-                            lineHeight: 1.58,
-                            maxWidth: `${Math.round(1040 * 0.87)}px`,
+                            lineHeight: UR_BODY_LH,
+                            maxWidth: `${UR_BODY_W}px`,
                             fontFamily: 'serif',
                             fontStyle: 'italic',
                             display: 'flex', flexWrap: 'wrap',
-                            wordBreak: 'break-word', overflowWrap: 'break-word',
+                            wordBreak: 'break-word',
+                            overflowWrap: 'break-word',
                             overflow: 'hidden',
                           },
                           children: safeBody
@@ -501,6 +632,7 @@ export default function handler(req) {
                   }
                 },
 
+                // ── Bottom anchor ─────────────────────────────────────────
                 { type: 'div', props: { style: { display: 'flex', height: '1px', flexShrink: 0 } } },
 
               ]
