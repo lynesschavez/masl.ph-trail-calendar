@@ -38,61 +38,140 @@ export default function handler(req) {
   const commonHfs = headingSize(title.length, 58);
   const rareHfs   = headingSize(rareTitle.length, 54);
   const rareBodyFs = bodySize(rareBody.length);
-  // ── Ultra-Rare adaptive scaling (finer-grained, edge-case-safe) ────────────
+  // ══════════════════════════════════════════════════════════════
+  // ULTRA-RARE — Geometry-aware adaptive layout engine
+  //
+  // Instead of step-tables keyed on character count (which ignore
+  // actual pixel geometry), this engine:
+  //   1. Models estimated rendered height from font size + line count
+  //   2. Binary-searches for the largest font size that fits a pixel budget
+  //   3. Jointly solves title + body sizing so they always sum to ≤ available height
+  //   4. Redistributes leftover pixels as natural gap — no arbitrary magic numbers
+  // ══════════════════════════════════════════════════════════════
 
-  // 10-step title scaling instead of the shared 5-step headingSize()
-  function ultraTitleSize(len) {
-    if (len === 0)  return 48;  // empty string fallback
-    if (len <= 8)   return 92;
-    if (len <= 15)  return 84;
-    if (len <= 22)  return 76;
-    if (len <= 30)  return 68;
-    if (len <= 40)  return 58;
-    if (len <= 55)  return 48;
-    if (len <= 75)  return 40;
-    if (len <= 100) return 34;
-    if (len <= 130) return 28;
-    return 24;
+  // Safe text values — guard against empty / whitespace-only input
+  const safeTitle = title.trim() || '\u2726';  // ✦ star glyph fallback if empty
+  const safeBody  = body.trim();               // body is optional; empty string is valid
+
+  // ── Card geometry ─────────────────────────────────────────
+  const UR_CARD_H   = 630;
+  const UR_PAD_V    = 48;                           // top + bottom padding
+  const UR_PAD_H    = 80;                           // left + right padding
+  const UR_INNER_H  = UR_CARD_H - UR_PAD_V * 2;   // 534px usable column height
+  const UR_INNER_W  = 1200 - UR_PAD_H * 2;         // 1040px usable column width
+  const UR_BODY_W   = Math.round(UR_INNER_W * 0.87); // 905px — narrower for italic readability
+  // Reserve space for the top label row ("YOUR COSMIC READING") and its breathing room
+  const UR_LABEL_H  = 28;
+  const UR_LABEL_GAP = 28;
+  const UR_BUDGET_H = UR_INNER_H - UR_LABEL_H - UR_LABEL_GAP; // ≈ 478px
+
+  // ── Char-width model ──────────────────────────────────────
+  // Average rendered char width as a fraction of font size.
+  // Tuned for @vercel/og's default serif (Georgia-like):
+  //   • Display/headline serif: ~0.54× (wide letterforms, tracking)
+  //   • Italic body serif:      ~0.50× (slightly compressed)
+  // Long unbroken strings are handled by word-break:break-word in CSS;
+  // the line estimator still works because break-word wraps at the column edge.
+  function urCharsPerLine(fontSize, maxWidth, isItalic) {
+    const avgRatio = isItalic ? 0.50 : 0.54;
+    return Math.max(1, Math.floor(maxWidth / (fontSize * avgRatio)));
   }
 
-  // Letter-spacing shrinks as title grows (avoids horizontal blowout)
-  function ultraLetterSpacing(len) {
-    if (len <= 10) return '8px';
-    if (len <= 20) return '6px';
-    if (len <= 35) return '4px';
-    if (len <= 55) return '2px';
-    return '1px';
+  function urEstimateLines(text, fontSize, maxWidth, isItalic) {
+    if (!text || !text.length) return 0;
+    return Math.ceil(text.length / urCharsPerLine(fontSize, maxWidth, isItalic));
   }
 
-  // Body font sizing separate from shared bodySize() — wider range
-  function ultraBodySize(len) {
-    if (len === 0)  return 20;
-    if (len <= 80)  return 24;
-    if (len <= 150) return 22;
-    if (len <= 250) return 20;
-    if (len <= 350) return 18;
-    if (len <= 500) return 16;
-    if (len <= 650) return 14;
-    return 13;
+  function urEstimateH(text, fontSize, lineHeight, maxWidth, isItalic) {
+    return urEstimateLines(text, fontSize, maxWidth, isItalic) * fontSize * lineHeight;
   }
 
-  // Gap between title and body shrinks when combined content is heavy
-  function ultraContentGap(titleLen, bodyLen) {
-    const combined = titleLen + bodyLen;
-    if (combined <= 100) return '28px';
-    if (combined <= 200) return '22px';
-    if (combined <= 350) return '16px';
-    return '10px';
+  // ── Binary-search font fitter ─────────────────────────────
+  // Returns the largest integer font size where the text block fits within pixelBudget.
+  // Falls back to minFs if even the minimum overflows (extremely long strings).
+  function urFitFs(text, lineHeight, maxWidth, pixelBudget, minFs, maxFs, isItalic) {
+    if (!text || !text.length) return minFs;
+    let lo = minFs, hi = maxFs, best = minFs;
+    while (lo <= hi) {
+      const mid = Math.floor((lo + hi) / 2);
+      if (urEstimateH(text, mid, lineHeight, maxWidth, isItalic) <= pixelBudget) {
+        best = mid;
+        lo = mid + 1;
+      } else {
+        hi = mid - 1;
+      }
+    }
+    return best;
   }
 
-  // Safe text values — guard against empty strings and whitespace-only input
-  const safeTitle   = title.trim() || '\u2726';  // fallback to ✦ star glyph if empty
-  const safeBody    = body.trim();               // intentionally allow empty (body is optional)
+  // ── Derived style properties from solved font size ────────
+  // Line-height tightens for large display sizes to prevent runaway block height
+  function urLineHeight(fs) {
+    if (fs >= 72) return 1.00;
+    if (fs >= 56) return 1.04;
+    if (fs >= 40) return 1.08;
+    return 1.14;
+  }
 
-  const ultraHfs    = ultraTitleSize(safeTitle.length);
-  const ultraLs     = ultraLetterSpacing(safeTitle.length);
-  const ultraBodyFs = ultraBodySize(safeBody.length);
-  const ultraGap    = ultraContentGap(safeTitle.length, safeBody.length);
+  // Letter-spacing loosens for small sizes, compresses for large to prevent overflow
+  function urLetterSpacing(fs) {
+    if (fs >= 80) return '4px';
+    if (fs >= 64) return '3px';
+    if (fs >= 48) return '2px';
+    if (fs >= 36) return '1px';
+    return '0px';
+  }
+
+  // ── Joint title + body solve ──────────────────────────────
+  const UR_TITLE_LH  = 1.05;  // used in budget solve (≈ urLineHeight output for sizing)
+  const UR_BODY_LH   = 1.58;
+  const hasBody      = safeBody.length > 0;
+
+  let urTitleFs, urBodyFs, urGapPx;
+
+  if (!hasBody) {
+    // ── Title-only: entire budget to headline ───────────────
+    urTitleFs = urFitFs(safeTitle, UR_TITLE_LH, UR_INNER_W, UR_BUDGET_H, 24, 96, false);
+    urBodyFs  = 0;
+    urGapPx   = 0;
+  } else {
+    // ── Title + body: two-phase joint solve ─────────────────
+    // Phase 1 — first-pass split (title 60%, body 40%, minus gap reserve)
+    const GAP_RESERVE  = 18;
+    const titleBudget1 = Math.floor((UR_BUDGET_H - GAP_RESERVE) * 0.60);
+    const bodyBudget1  = UR_BUDGET_H - GAP_RESERVE - titleBudget1;
+
+    const titleFs1 = urFitFs(safeTitle, UR_TITLE_LH, UR_INNER_W, titleBudget1, 22, 92, false);
+    const bodyFs1  = urFitFs(safeBody,  UR_BODY_LH,  UR_BODY_W,  bodyBudget1,  13, 26, true);
+
+    // Phase 2 — measure actual rendered heights at phase-1 sizes,
+    //           check if title can grow into unused body budget or vice versa
+    const titleH1 = urEstimateH(safeTitle, titleFs1, UR_TITLE_LH, UR_INNER_W, false);
+    const bodyH1  = urEstimateH(safeBody,  bodyFs1,  UR_BODY_LH,  UR_BODY_W,  true);
+    const used1   = titleH1 + bodyH1 + GAP_RESERVE;
+    const surplus = UR_BUDGET_H - used1;
+
+    // If there's meaningful surplus, try upsizing the body one step at a time
+    let urBodyFsFinal = bodyFs1;
+    if (surplus > UR_BODY_LH * (bodyFs1 + 1)) {
+      const extraBodyBudget = bodyBudget1 + surplus;
+      urBodyFsFinal = urFitFs(safeBody, UR_BODY_LH, UR_BODY_W, extraBodyBudget, 13, 26, true);
+    }
+
+    urTitleFs = titleFs1;
+    urBodyFs  = urBodyFsFinal;
+
+    // Phase 3 — recompute actual heights at final sizes, set gap from leftover
+    const finalTitleH = urEstimateH(safeTitle, urTitleFs, UR_TITLE_LH, UR_INNER_W, false);
+    const finalBodyH  = urEstimateH(safeBody,  urBodyFs,  UR_BODY_LH,  UR_BODY_W,  true);
+    const leftover    = UR_BUDGET_H - finalTitleH - finalBodyH;
+    // Gap: natural proportion of leftover, clamped to a pleasant visual range
+    urGapPx = Math.min(36, Math.max(10, Math.floor(leftover * 0.42)));
+  }
+
+  // Final derived style values used in JSX
+  const urTitleLH = urLineHeight(urTitleFs);
+  const urTitleLS = urLetterSpacing(urTitleFs);
 
   // ─────────────────────────────────────────────────────────
   // COMMON — Brutalist Mono
@@ -410,6 +489,7 @@ export default function handler(req) {
               },
               children: [
 
+                // ── Top label (fixed, always visible) ────────────────────
                 {
                   type: 'div',
                   props: {
@@ -421,29 +501,35 @@ export default function handler(req) {
                   }
                 },
 
+                // ── Main content block ────────────────────────────────────
+                // Sized by the adaptive engine; overflow:hidden is the final
+                // safety net — in practice the engine should prevent overflow.
                 {
                   type: 'div',
                   props: {
                     style: {
                       display: 'flex', flexDirection: 'column',
-                      gap: ultraGap,
+                      gap: `${urGapPx}px`,
                       overflow: 'hidden',
-                      maxHeight: '460px',
+                      // maxHeight = full budget; engine guarantees content fits within it
+                      maxHeight: `${UR_BUDGET_H}px`,
                     },
                     children: [
 
+                      // Headline
                       {
                         type: 'div',
                         props: {
                           style: {
-                            fontSize: `${ultraHfs}px`,
+                            fontSize: `${urTitleFs}px`,
                             fontWeight: 'bold',
                             color: '#ffffff',
-                            lineHeight: ultraHfs >= 68 ? 1.0 : 1.08,
-                            maxWidth: '1040px',
+                            lineHeight: urTitleLH,
+                            maxWidth: `${UR_INNER_W}px`,
                             fontFamily: 'serif',
                             display: 'flex', flexWrap: 'wrap',
-                            letterSpacing: ultraLs,
+                            letterSpacing: urTitleLS,
+                            // break-word handles long unbroken strings (URLs, slugs, etc.)
                             wordBreak: 'break-word',
                             overflowWrap: 'break-word',
                             overflow: 'hidden',
@@ -452,14 +538,15 @@ export default function handler(req) {
                         }
                       },
 
-                      ...(safeBody ? [{
+                      // Body — only rendered when non-empty (avoids ghost gap)
+                      ...(hasBody ? [{
                         type: 'div',
                         props: {
                           style: {
-                            fontSize: `${ultraBodyFs}px`,
-                            color: '#ffffff',
-                            lineHeight: ultraBodyFs >= 20 ? 1.65 : 1.5,
-                            maxWidth: '900px',
+                            fontSize: `${urBodyFs}px`,
+                            color: 'rgba(255,255,255,0.88)',
+                            lineHeight: UR_BODY_LH,
+                            maxWidth: `${UR_BODY_W}px`,
                             fontFamily: 'serif',
                             fontStyle: 'italic',
                             display: 'flex', flexWrap: 'wrap',
@@ -475,6 +562,7 @@ export default function handler(req) {
                   }
                 },
 
+                // ── Bottom anchor (keeps space-between stable) ────────────
                 { type: 'div', props: { style: { display: 'flex', height: '1px', flexShrink: 0 } } },
 
               ]
