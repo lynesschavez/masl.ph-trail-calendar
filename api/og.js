@@ -8,6 +8,14 @@ export default function handler(req) {
   const title = searchParams.get('title') || 'MASL.PH';
   const body  = searchParams.get('body')  || 'Philippine Trail Race & Hike Calendar';
 
+  // ── Rare-tier: breaking-news fallback content ─────────────
+  const rareTitle = title === 'MASL.PH'
+    ? 'RACE REGISTRATION NOW OPEN — LIMITED SLOTS REMAIN'
+    : title;
+  const rareBody  = body === 'Philippine Trail Race & Hike Calendar'
+    ? 'Organizers confirm slots are filling fast. Runners urged to register immediately. Full route details and cutoff times now posted on the official event page.'
+    : body;
+
   // ── Font scaling based on character count ─────────────────
   function headingSize(len, base) {
     if (len <= 20)  return base;
@@ -28,7 +36,8 @@ export default function handler(req) {
 
   const bodyFs    = bodySize(body.length);
   const commonHfs = headingSize(title.length, 58);
-  const rareHfs   = headingSize(title.length, 54);
+  const rareHfs   = headingSize(rareTitle.length, 54);
+  const rareBodyFs = bodySize(rareBody.length);
   // ── Ultra-Rare adaptive scaling (finer-grained, edge-case-safe) ────────────
 
   // 10-step title scaling instead of the shared 5-step headingSize()
@@ -198,74 +207,105 @@ export default function handler(req) {
                 style: {
                   display: 'flex', flexDirection: 'column',
                   justifyContent: 'center',
-                  padding: '28px 64px 28px 84px', // ✅ tightened vertical padding for more text room
+                  // tightened vertical padding so headline + body never clip
+                  padding: '20px 64px 20px 84px',
                   flex: 1,
-                  gap: '14px', // ✅ reduced gap so content breathes but doesn't clip
+                  gap: '12px',
+                  overflow: 'hidden',  // safety — nothing bleeds outside card bounds
                 },
                 children: [
-                  // ✅ UPDATED: more urgent, breaking-news-style category label
-                  {
-                    type: 'div',
-                    props: {
-                      style: { fontSize: '13px', letterSpacing: '4px', color: '#D0021B', display: 'flex', fontWeight: 'bold' },
-                      children: 'DEVELOPING STORY · TRAIL ALERT'
-                    }
-                  },
-                  // Headline block — BREAKING badge stacked above title, sharing the same left edge
+
+                  // ── Kicker label ───────────────────────────────────────
                   {
                     type: 'div',
                     props: {
                       style: {
-                        display: 'flex', flexDirection: 'column', // ✅ vertical stack, not a row
-                        alignItems: 'flex-start',                  // ✅ both children pin to the left
-                        gap: '10px',
+                        fontSize: '13px', letterSpacing: '4px',
+                        color: '#D0021B', display: 'flex',
+                        fontWeight: 'bold', flexShrink: 0,
+                      },
+                      children: 'DEVELOPING STORY · TRAIL ALERT'
+                    }
+                  },
+
+                  // ── Headline block ─────────────────────────────────────
+                  {
+                    type: 'div',
+                    props: {
+                      style: {
+                        display: 'flex', flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        gap: '8px',
                         maxWidth: '1060px',
+                        overflow: 'hidden',
                       },
                       children: [
-                        // BREAKING badge — its own row, same left edge as the title below it
+                        // BREAKING badge — fixed size, never scaled by rareHfs
                         {
                           type: 'div',
                           props: {
                             style: {
-                              fontSize: '16px',          // ✅ fixed size, independent of rareHfs
-                              fontWeight: 'bold',
-                              color: '#ffffff',
-                              background: '#D0021B',
-                              padding: '5px 12px',
-                              letterSpacing: '2.5px',
-                              display: 'flex',
+                              fontSize: '15px', fontWeight: 'bold',
+                              color: '#ffffff', background: '#D0021B',
+                              padding: '4px 12px', letterSpacing: '2.5px',
+                              display: 'flex', flexShrink: 0,
                             },
                             children: 'BREAKING:'
                           }
                         },
-                        // Headline — starts at the same left edge as the badge above
+                        // Headline — all-caps, punchy, adaptive size via rareHfs
                         {
                           type: 'div',
                           props: {
                             style: {
                               fontSize: `${rareHfs}px`, fontWeight: 'bold',
-                              color: '#ffffff', lineHeight: 1.05,
+                              color: '#ffffff',
+                              // tighter leading for dense all-caps stacks
+                              lineHeight: rareHfs >= 46 ? 1.02 : 1.08,
                               display: 'flex', flexWrap: 'wrap',
                               textTransform: 'uppercase',
+                              maxWidth: '1060px',
+                              wordBreak: 'break-word',
+                              overflowWrap: 'break-word',
                             },
-                            children: title
+                            children: rareTitle
                           }
                         },
                       ]
                     }
                   },
-                  // ✅ UPDATED: body text opacity raised from 0.60 → 0.85 for better readability
+
+                  // ── Red accent divider ─────────────────────────────────
                   {
                     type: 'div',
                     props: {
                       style: {
-                        fontSize: `${bodyFs}px`, color: 'rgba(255,255,255,0.85)',
-                        lineHeight: 1.6, maxWidth: '1060px',
-                        display: 'flex', flexWrap: 'wrap',
-                      },
-                      children: body
+                        width: '48px', height: '2px',
+                        background: '#D0021B',
+                        display: 'flex', flexShrink: 0,
+                        marginTop: '2px',
+                      }
                     }
                   },
+
+                  // ── Body blurb ─────────────────────────────────────────
+                  // Short sentences, active voice, factual — no overflow
+                  {
+                    type: 'div',
+                    props: {
+                      style: {
+                        fontSize: `${rareBodyFs}px`,
+                        color: 'rgba(255,255,255,0.88)',
+                        lineHeight: 1.55, maxWidth: '920px',
+                        display: 'flex', flexWrap: 'wrap',
+                        wordBreak: 'break-word',
+                        overflowWrap: 'break-word',
+                        overflow: 'hidden',
+                      },
+                      children: rareBody
+                    }
+                  },
+
                 ]
               }
             },
@@ -361,7 +401,6 @@ export default function handler(req) {
               },
               children: [
 
-                // ── Top label (fixed, always visible) ───────────────────────
                 {
                   type: 'div',
                   props: {
@@ -373,19 +412,17 @@ export default function handler(req) {
                   }
                 },
 
-                // ── Main content block (fully adaptive) ─────────────────────
                 {
                   type: 'div',
                   props: {
                     style: {
                       display: 'flex', flexDirection: 'column',
                       gap: ultraGap,
-                      overflow: 'hidden',   // safety net — nothing bleeds outside
-                      maxHeight: '460px',   // ceiling keeps content within card bounds
+                      overflow: 'hidden',
+                      maxHeight: '460px',
                     },
                     children: [
 
-                      // Headline — finely scaled font + letter-spacing + word-break safe
                       {
                         type: 'div',
                         props: {
@@ -393,27 +430,26 @@ export default function handler(req) {
                             fontSize: `${ultraHfs}px`,
                             fontWeight: 'bold',
                             color: '#ffffff',
-                            lineHeight: ultraHfs >= 68 ? 1.0 : 1.08, // tighter for huge text, looser for small
+                            lineHeight: ultraHfs >= 68 ? 1.0 : 1.08,
                             maxWidth: '1040px',
                             fontFamily: 'serif',
                             display: 'flex', flexWrap: 'wrap',
-                            letterSpacing: ultraLs,   // scales down as title grows
-                            wordBreak: 'break-word',  // handles long unbroken strings
+                            letterSpacing: ultraLs,
+                            wordBreak: 'break-word',
                             overflowWrap: 'break-word',
                             overflow: 'hidden',
                           },
-                          children: safeTitle          // uses safe fallback if empty
+                          children: safeTitle
                         }
                       },
 
-                      // Body — only rendered when non-empty (avoids ghost spacing)
                       ...(safeBody ? [{
                         type: 'div',
                         props: {
                           style: {
                             fontSize: `${ultraBodyFs}px`,
                             color: '#ffffff',
-                            lineHeight: ultraBodyFs >= 20 ? 1.65 : 1.5, // tighter for small text
+                            lineHeight: ultraBodyFs >= 20 ? 1.65 : 1.5,
                             maxWidth: '900px',
                             fontFamily: 'serif',
                             fontStyle: 'italic',
@@ -430,7 +466,6 @@ export default function handler(req) {
                   }
                 },
 
-                // ── Bottom anchor (keeps layout stable with no bottom label) ─
                 { type: 'div', props: { style: { display: 'flex', height: '1px', flexShrink: 0 } } },
 
               ]
