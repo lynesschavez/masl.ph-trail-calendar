@@ -229,42 +229,51 @@ export default function handler(req) {
                   },
 
                   // ── Headline block ─────────────────────────────────────
+                  // Row layout: badge + headline share the same flex row so
+                  // their left edges are structurally locked — no column drift.
                   {
                     type: 'div',
                     props: {
                       style: {
-                        display: 'flex', flexDirection: 'column',
-                        alignItems: 'flex-start',
-                        gap: '8px',
+                        display: 'flex', flexDirection: 'row',
+                        alignItems: 'flex-start',   // badge top-aligns with first line of text
+                        flexWrap: 'wrap',           // wraps naturally on narrow titles
+                        gap: '12px',
                         maxWidth: '1060px',
                         overflow: 'hidden',
                       },
                       children: [
-                        // BREAKING badge — fixed size, never scaled by rareHfs
+                        // BREAKING badge — vertically centred against the headline cap-height
+                        // via marginTop nudge so the red box optical centre matches the text
                         {
                           type: 'div',
                           props: {
                             style: {
-                              fontSize: '15px', fontWeight: 'bold',
+                              fontSize: `${Math.round(rareHfs * 0.28)}px`,
+                              fontWeight: 'bold',
                               color: '#ffffff', background: '#D0021B',
-                              padding: '4px 12px', letterSpacing: '2.5px',
+                              padding: '5px 11px',
+                              letterSpacing: '2.5px',
                               display: 'flex', flexShrink: 0,
+                              // nudge top so the badge cap-height aligns with headline cap-height
+                              marginTop: `${Math.round(rareHfs * 0.08)}px`,
+                              lineHeight: 1,
                             },
                             children: 'BREAKING:'
                           }
                         },
-                        // Headline — all-caps, punchy, adaptive size via rareHfs
+                        // Headline — all-caps, punchy, adaptive size; sits flush left with badge
                         {
                           type: 'div',
                           props: {
                             style: {
                               fontSize: `${rareHfs}px`, fontWeight: 'bold',
                               color: '#ffffff',
-                              // tighter leading for dense all-caps stacks
                               lineHeight: rareHfs >= 46 ? 1.02 : 1.08,
                               display: 'flex', flexWrap: 'wrap',
                               textTransform: 'uppercase',
-                              maxWidth: '1060px',
+                              flex: 1,                       // fills remaining row width
+                              minWidth: '0',                 // allows flex child to shrink/wrap
                               wordBreak: 'break-word',
                               overflowWrap: 'break-word',
                             },
