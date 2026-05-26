@@ -9,8 +9,6 @@ export default async function handler(req) {
   const body  = searchParams.get('body')  || 'Philippine Trail Race & Hike Calendar';
 
   // ── Google Fonts loader ───────────────────────────────────
-  // Fetches the woff2 font file for a given Google Fonts family + weight.
-  // The User-Agent header tells Google to return the modern woff2 format.
   async function loadGoogleFont(family, weight) {
     const cssUrl = `https://fonts.googleapis.com/css2?family=${family}:wght@${weight}&display=swap`;
     const css = await fetch(cssUrl, {
@@ -22,19 +20,34 @@ export default async function handler(req) {
   }
 
   // ── Load only the font needed for the requested tier ─────
-  // Loading all three every request would be slow — we pick one.
-  let fontData, fontName;
+  // Wrapped in try/catch — if the font fetch fails for ANY reason
+  // (network issue, bad URL, timeout), the card still renders using
+  // the generic fallback font instead of crashing the whole function.
+  let fontData = null;
+  let fontName;
 
-  if (type === 'common') {
-    fontData = await loadGoogleFont('Space+Mono', 700);
-    fontName = 'Space Mono';
-  } else if (type === 'rare') {
-    fontData = await loadGoogleFont('Barlow+Condensed', 700);
-    fontName = 'Barlow Condensed';
-  } else {
-    fontData = await loadGoogleFont('Playfair+Display', 700);
-    fontName = 'Playfair Display';
+  try {
+    if (type === 'common') {
+      fontData = await loadGoogleFont('Space+Mono', 700);
+      fontName = 'Space Mono';
+    } else if (type === 'rare') {
+      fontData = await loadGoogleFont('Barlow+Condensed', 700);
+      fontName = 'Barlow Condensed';
+    } else {
+      fontData = await loadGoogleFont('Playfair+Display', 700);
+      fontName = 'Playfair Display';
+    }
+  } catch (_) {
+    // Font failed to load — fall back to safe generic families
+    fontName = type === 'common' ? 'monospace'
+             : type === 'rare'   ? 'sans-serif'
+             :                     'serif';
   }
+
+  // Helper used by ImageResponse options — passes font only if it loaded
+  const fontOptions = fontData
+    ? [{ name: fontName, data: fontData, weight: 700, style: 'normal' }]
+    : [];
 
 
   function headingSize(len, base) {
@@ -177,7 +190,7 @@ export default async function handler(req) {
           ]
         }
       },
-      { width: 1200, height: 630, fonts: [{ name: 'Space Mono', data: fontData, weight: 700, style: 'normal' }] }
+      { width: 1200, height: 630, fonts: fontOptions }
     );
   }
 
@@ -301,7 +314,7 @@ export default async function handler(req) {
           ]
         }
       },
-      { width: 1200, height: 630, fonts: [{ name: 'Barlow Condensed', data: fontData, weight: 700, style: 'normal' }] }
+      { width: 1200, height: 630, fonts: fontOptions }
     );
   }
 
@@ -466,6 +479,6 @@ export default async function handler(req) {
         ]
       }
     },
-    { width: 1200, height: 630, fonts: [{ name: 'Playfair Display', data: fontData, weight: 700, style: 'normal' }] }
+    { width: 1200, height: 630, fonts: fontOptions }
   );
 }
