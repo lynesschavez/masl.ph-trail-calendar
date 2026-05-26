@@ -144,37 +144,66 @@ export default function handler(req) {
                 style: {
                   display: 'flex', flexDirection: 'column',
                   justifyContent: 'center',
-                  padding: '36px 64px 36px 84px',
+                  padding: '28px 64px 28px 84px', // ✅ tightened vertical padding for more text room
                   flex: 1,
-                  gap: '18px',
+                  gap: '14px', // ✅ reduced gap so content breathes but doesn't clip
                 },
                 children: [
+                  // ✅ UPDATED: more urgent, breaking-news-style category label
                   {
                     type: 'div',
                     props: {
                       style: { fontSize: '13px', letterSpacing: '4px', color: '#D0021B', display: 'flex', fontWeight: 'bold' },
-                      children: 'TRAIL INCIDENT REPORT'
+                      children: 'DEVELOPING STORY · TRAIL ALERT'
                     }
                   },
+                  // ✅ UPDATED: headline now shows "BREAKING:" prefix badge + dynamic title
                   {
                     type: 'div',
                     props: {
                       style: {
-                        fontSize: `${rareHfs}px`, fontWeight: 'bold',
-                        color: '#ffffff', lineHeight: 1.0,
-                        maxWidth: '1060px',
-                        display: 'flex', flexWrap: 'wrap',
-                        textTransform: 'uppercase',
+                        display: 'flex', flexWrap: 'wrap', alignItems: 'baseline',
+                        gap: '14px', maxWidth: '1060px',
                       },
-                      children: title
+                      children: [
+                        {
+                          type: 'div',
+                          props: {
+                            style: {
+                              fontSize: `${rareHfs * 0.52}px`, fontWeight: 'bold',
+                              color: '#D0021B',
+                              background: '#D0021B',
+                              color: '#ffffff',
+                              padding: '4px 10px',
+                              letterSpacing: '2px',
+                              display: 'flex',
+                              flexShrink: 0,
+                            },
+                            children: 'BREAKING:'
+                          }
+                        },
+                        {
+                          type: 'div',
+                          props: {
+                            style: {
+                              fontSize: `${rareHfs}px`, fontWeight: 'bold',
+                              color: '#ffffff', lineHeight: 1.05,
+                              display: 'flex', flexWrap: 'wrap',
+                              textTransform: 'uppercase',
+                            },
+                            children: title
+                          }
+                        },
+                      ]
                     }
                   },
+                  // ✅ UPDATED: body text opacity raised from 0.60 → 0.85 for better readability
                   {
                     type: 'div',
                     props: {
                       style: {
-                        fontSize: `${bodyFs}px`, color: 'rgba(255,255,255,0.60)',
-                        lineHeight: 1.55, maxWidth: '1060px',
+                        fontSize: `${bodyFs}px`, color: 'rgba(255,255,255,0.85)',
+                        lineHeight: 1.6, maxWidth: '1060px',
                         display: 'flex', flexWrap: 'wrap',
                       },
                       children: body
@@ -309,7 +338,7 @@ export default function handler(req) {
                         props: {
                           style: {
                             fontSize: `${bodyFs}px`,
-                            color: 'rgba(220,200,255,0.72)',
+                            color: '#ffffff', // ✅ CHANGED: was rgba(220,200,255,0.72) — now solid white
                             lineHeight: 1.65,
                             maxWidth: '780px',
                             fontFamily: 'serif',
@@ -323,16 +352,7 @@ export default function handler(req) {
                   }
                 },
 
-                {
-                  type: 'div',
-                  props: {
-                    style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
-                    children: [
-                      { type: 'div', props: { style: { fontSize: '13px', letterSpacing: '3.5px', color: '#7B5EA7', fontFamily: 'sans-serif', display: 'flex' }, children: 'MASL.PH' } },
-                      { type: 'div', props: { style: { fontSize: '13px', color: 'rgba(155,114,207,0.55)', fontFamily: 'serif', fontStyle: 'italic', display: 'flex' }, children: '\u2726 The Stars Said Share This \u2726' } },
-                    ]
-                  }
-                },
+                // ✅ REMOVED: bottom row with 'MASL.PH' and '✦ The Stars Said Share This ✦'
 
               ]
             }
