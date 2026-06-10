@@ -348,6 +348,70 @@ body {
 /* current date highlight — red border only, no background tint */
 .day-cell.is-today { box-shadow: inset 0 0 0 3px var(--accent); }
 
+/* ── BATCH 2: EVENT-CELL PULSE NUDGE ──────────────────────────
+   Single-shot expanding ring that fades out. Plays once on the
+   nearest upcoming event cell to teach "tap a date" affordance.
+   Two keyframe variants: with and without the is-today inset shadow.
+   ─────────────────────────────────────────────────────────── */
+@keyframes nudgePulse {
+  0%   { box-shadow: 0 0 0 0 rgba(208, 2, 27, 0.58); }
+  70%  { box-shadow: 0 0 0 14px rgba(208, 2, 27, 0); }
+  100% { box-shadow: 0 0 0 14px rgba(208, 2, 27, 0); }
+}
+@keyframes nudgePulseToday {
+  0%   { box-shadow: inset 0 0 0 3px var(--accent), 0 0 0 0 rgba(208, 2, 27, 0.58); }
+  70%  { box-shadow: inset 0 0 0 3px var(--accent), 0 0 0 14px rgba(208, 2, 27, 0); }
+  100% { box-shadow: inset 0 0 0 3px var(--accent), 0 0 0 14px rgba(208, 2, 27, 0); }
+}
+.nudge-pulse {
+  animation: nudgePulse 0.95s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+  position: relative; /* ensure z-index stacking above siblings */
+  z-index: 1;
+}
+.day-cell.is-today.nudge-pulse {
+  animation: nudgePulseToday 0.95s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nudge-pulse,
+  .day-cell.is-today.nudge-pulse { animation: none; }
+}
+
+/* ── BATCH 3: SWIPE NUDGE ──────────────────────────────────────
+   Fixed-position pill that fades in, holds, then fades out once
+   to teach the horizontal swipe gesture for month navigation.
+   z-index 250: above bottom-nav (200), below fc-overlay (300).
+   ─────────────────────────────────────────────────────────── */
+@keyframes swipeNudgeShow {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(10px); }
+  14%  { opacity: 1; transform: translateX(-50%) translateY(0);    }
+  74%  { opacity: 1; transform: translateX(-50%) translateY(0);    }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+}
+.swipe-nudge {
+  position: fixed;
+  left: 50%;
+  bottom: 96px; /* clears bottom-nav (~56px) + safe-area + comfortable gap */
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: white;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 9px 14px;
+  border-radius: 24px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 250;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.24);
+  animation: swipeNudgeShow 2.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.swipe-nudge svg { flex-shrink: 0; }
+
 /* ── BOTTOM SECTION ── */
 .bottom-row {
   border-top: 3px solid var(--primary);
@@ -2434,6 +2498,128 @@ body {
 }
 .utc-tip-close:hover { opacity: 1; }
 
+/* ── ONBOARDING TOUR ────────────────────────────────────────── */
+
+/* Overlay — hidden by default; .is-active makes it visible */
+#tour-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 500;         /* clears .top-banner (100) and .month-header (99) */
+  pointer-events: none; /* interactive children override this */
+}
+#tour-overlay.is-active {
+  display: block;
+}
+
+/* Spotlight — dark vignette with cutout over target element */
+#tour-spotlight {
+  position: absolute;
+  border-radius: 6px;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.65);
+  transition: top 0.35s ease, left 0.35s ease,
+              width 0.35s ease, height 0.35s ease;
+  pointer-events: none;
+}
+
+/* Tooltip card */
+#tour-tooltip {
+  position: fixed;
+  background: white;
+  border: 3px solid var(--primary);
+  box-shadow: 4px 4px 0 2px rgba(0,0,0,0.35);
+  padding: 16px 18px 14px;
+  max-width: 280px;
+  min-width: 220px;
+  z-index: 501;
+  pointer-events: all;
+  transition: top 0.35s ease, left 0.35s ease;
+}
+#tour-step-counter {
+  font-family: 'Oswald', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+#tour-step-text {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 15px;
+  color: #111;
+  line-height: 1.45;
+  margin-bottom: 14px;
+}
+#tour-controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+#tour-back-btn,
+#tour-next-btn {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  border: none;
+  padding: 10px 16px;
+  min-width: 44px;
+  min-height: 44px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+#tour-back-btn {
+  background: white;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+#tour-back-btn:hover { background: #f4f4f4; } /* neutral — safe in both Trail Runs + Hikes modes */
+#tour-next-btn {
+  background: var(--primary);
+  color: white;
+  flex: 1;
+}
+#tour-next-btn:hover { background: var(--accent); }
+#tour-back-btn.is-hidden { display: none; }
+#tour-skip-link {
+  display: block;
+  text-align: center;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 12px;
+  color: #999;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  padding: 8px 0;
+  pointer-events: all;
+}
+#tour-skip-link:hover { color: var(--accent); }
+
+/* "?" floating help button */
+#help-btn {
+  position: fixed;
+  bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s, opacity 0.15s;
+}
+#help-btn:hover  { background: var(--accent); }
+#help-btn:active { opacity: 0.8; }
+
+/* ── END ONBOARDING TOUR ────────────────────────────────────── */
+
 </style>
 <body>
 
@@ -2991,7 +3177,7 @@ const MONTHS = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE',
                 'JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
 const DAY_NAMES_FULL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-let cur = new Date(2026, 4, 1);
+let cur = (function() { const _now = new Date(); return new Date(_now.getFullYear(), _now.getMonth(), 1); })();
 
 function pad(n) { return String(n).padStart(2, '0'); }
 function key(y, m, d) { return `${y}-${pad(m+1)}-${pad(d)}`; }
@@ -3296,6 +3482,8 @@ function render() {
   renderCenter(y, m, today);
   updateStickyOffset();
   updateTodayBtn();
+  triggerEventNudge(); // Batch 2: one-shot event-cell pulse (no-ops after first fire)
+  triggerSwipeNudge(); // Batch 3: one-shot swipe hint (no-ops after first fire)
 }
 
 function renderCenter(y, m, today) {
@@ -3581,7 +3769,10 @@ function rwGetProfile() {
     collectedUltraRareIds: [],
     dailyTapDate: null,
     dailyTapCount: 0,
-    fp: null
+    fp: null,
+    tourSeen: false,            // ← onboarding tour tracking
+    eventNudgeSeen: false,      // ← event-cell pulse nudge (Batch 2)
+    swipeNudgeSeen: false       // ← swipe gesture nudge (Batch 3)
   };
 
   let profile;
@@ -5298,5 +5489,357 @@ document.addEventListener('click', function(e) {
   }
 });
 </script>
+
+<!-- ── ONBOARDING TOUR ──────────────────────────────────────────
+     Batch 1: HTML + CSS scaffolding.
+     Batch 2: Core JS — launch, detection, step data, event listeners.
+     Batch 3: Spotlight positioning + tooltip viewport clamping.
+     Batch 4: Resize handling + color-mode fix + z-index audit.
+  ──────────────────────────────────────────────────────────── -->
+<div id="tour-overlay">
+  <div id="tour-spotlight"></div>
+  <div id="tour-tooltip">
+    <div id="tour-step-counter">1 / 5</div>
+    <p id="tour-step-text"></p>
+    <div id="tour-controls">
+      <button id="tour-back-btn" class="is-hidden">← Back</button>
+      <button id="tour-next-btn">Next →</button>
+    </div>
+    <a id="tour-skip-link" href="#">Skip tour</a>
+  </div>
+</div>
+
+<!-- "?" floating help button — always visible, re-launches tour -->
+<button id="help-btn" aria-label="Show feature guide">?</button>
+
+<script>
+// ── ONBOARDING TOUR — Batch 3: Spotlight Positioning | Batch 4: Polish ──────
+
+let currentStep        = 0;
+let tourActive         = false;
+let _tourFirstPosition = true; // reset each launchTour(); disables transition on first tooltip placement
+
+const TOUR_STEPS = [
+  {
+    getTarget: function() { return document.querySelector('.banner-nav-btn'); },
+    text: 'Use these arrows to move between months.',
+  },
+  {
+    getTarget: function() {
+      return document.getElementById('tabRuns') || document.querySelector('.bottom-nav');
+    },
+    text: 'Switch between trail races and hiking events here.',
+  },
+  {
+    getTarget: function() { return document.querySelector('.day-cell:not(.blank)'); },
+    text: 'Tap any date to see events scheduled on that day.',
+  },
+  {
+    getTarget: function() {
+      var badge = document.querySelector('.more-badge');
+      return (badge && badge.closest('.day-cell')) || document.getElementById('cal-grid');
+    },
+    text: null, // resolved at launchTour() time — see Step 4 fallback below
+  },
+  {
+    getTarget: function() {
+      return document.querySelector('.race-strip') || document.querySelector('.bottom-row');
+    },
+    text: 'This strip shows all events this month. Scroll sideways to browse.',
+  },
+];
+
+function launchTour() {
+  // Step 4 fallback: resolve text at call time based on current DOM state
+  var hasBadge = !!document.querySelector('.more-badge');
+  TOUR_STEPS[3].text = hasBadge
+    ? 'When multiple events fall on the same date, tap the badge to see all of them.'
+    : 'When many events fall on the same date, a badge appears — tap it to see all of them.';
+
+  // Hide tooltip until first positionTooltip call — prevents flash at default/last position
+  document.getElementById('tour-tooltip').style.visibility = 'hidden';
+  _tourFirstPosition = true;
+
+  currentStep = 0;
+  tourActive  = true;
+  document.getElementById('tour-overlay').classList.add('is-active');
+  goToStep(0);
+}
+
+function endTour() {
+  tourActive = false;
+  document.getElementById('tour-overlay').classList.remove('is-active');
+  var profile = rwGetProfile();
+  profile.tourSeen = true;
+  rwSaveProfile(profile);
+}
+
+function skipTour() { endTour(); }
+
+// ── Spotlight + tooltip positioning (Batch 3) ────────────────────────────────
+
+function positionSpotlight(el) {
+  var r   = el.getBoundingClientRect();
+  var pad = 8;
+  var s   = document.getElementById('tour-spotlight');
+  s.style.top    = (r.top    - pad) + 'px';
+  s.style.left   = (r.left   - pad) + 'px';
+  s.style.width  = (r.width  + pad * 2) + 'px';
+  s.style.height = (r.height + pad * 2) + 'px';
+}
+
+function positionTooltip(el, stepIndex) {
+  var r       = el.getBoundingClientRect();
+  var tooltip = document.getElementById('tour-tooltip');
+  var GAP     = 12;  // gap between spotlight edge and tooltip
+  var PAD     = 8;   // minimum clearance from any viewport edge
+  var pad     = 8;   // spotlight padding — must match positionSpotlight
+
+  // Tooltip rendered dimensions
+  var tw = tooltip.offsetWidth  || 260;
+  var th = tooltip.offsetHeight || 160;
+
+  // Spotlight bounds (with padding applied)
+  var sTop    = r.top    - pad;
+  var sBottom = r.bottom + pad;
+  var sLeft   = r.left   - pad;
+
+  // Vertical: prefer below the target; fall back to above when there's more space there
+  var spaceBelow = window.innerHeight - sBottom - GAP;
+  var spaceAbove = sTop - GAP;
+  var top = (spaceBelow >= th || spaceBelow >= spaceAbove)
+    ? sBottom + GAP
+    : sTop - GAP - th;
+
+  // Horizontal: align to spotlight left, clamped inside viewport
+  var left = Math.min(sLeft, window.innerWidth  - tw - PAD);
+  left     = Math.max(left, PAD);
+
+  // Clamp vertical to viewport
+  top = Math.min(top, window.innerHeight - th - PAD);
+  top = Math.max(top, PAD);
+
+  if (_tourFirstPosition) {
+    // First placement this tour: snap without CSS transition to avoid fly-in
+    // from hidden/default position; re-enable transitions after layout settles.
+    _tourFirstPosition       = false;
+    tooltip.style.transition = 'none';
+    tooltip.style.top        = top  + 'px';
+    tooltip.style.left       = left + 'px';
+    tooltip.style.visibility = 'visible';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        tooltip.style.transition = ''; // restore CSS-defined transitions for step changes
+      });
+    });
+  } else {
+    // Subsequent steps: let CSS transition animate spotlight + tooltip movement
+    tooltip.style.top  = top  + 'px';
+    tooltip.style.left = left + 'px';
+  }
+}
+
+// goToStep — FULL IMPLEMENTATION (replaces Batch 2 stub)
+function goToStep(n) {
+  var step    = TOUR_STEPS[n];
+  var backBtn = document.getElementById('tour-back-btn');
+  var nextBtn = document.getElementById('tour-next-btn');
+
+  // Update counter, text, and button state immediately (visible while spotlight travels)
+  document.getElementById('tour-step-counter').textContent =
+    (n + 1) + ' / ' + TOUR_STEPS.length;
+  document.getElementById('tour-step-text').textContent = step.text;
+  if (n === 0) {
+    backBtn.classList.add('is-hidden');
+  } else {
+    backBtn.classList.remove('is-hidden');
+  }
+  nextBtn.textContent = (n === TOUR_STEPS.length - 1) ? 'Done' : 'Next \u2192';
+
+  // Resolve target element, scroll into view, then reposition spotlight + tooltip
+  var target = step.getTarget();
+  if (!target) return; // guard: element not in DOM
+
+  target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  // 350ms delay lets smooth scroll settle so getBoundingClientRect() is accurate
+  setTimeout(function() {
+    if (!tourActive || currentStep !== n) return; // guard: tour dismissed or step changed during scroll
+    positionSpotlight(target);
+    positionTooltip(target, n);
+  }, 350);
+}
+
+// ── Event listeners ──────────────────────────────────────────────────────────
+
+document.getElementById('help-btn').addEventListener('click', launchTour);
+
+document.getElementById('tour-skip-link').addEventListener('click', function(e) {
+  e.preventDefault();
+  skipTour();
+});
+
+document.getElementById('tour-next-btn').addEventListener('click', function() {
+  if (currentStep < TOUR_STEPS.length - 1) {
+    goToStep(++currentStep);
+  } else {
+    endTour();
+  }
+});
+
+document.getElementById('tour-back-btn').addEventListener('click', function() {
+  if (currentStep > 0) goToStep(--currentStep);
+});
+
+// ── Viewport resize handling (Batch 4) ───────────────────────────────────────
+// Recomputes spotlight + tooltip if window is resized while tour is active.
+// Debounced at 100ms to avoid thrashing getBoundingClientRect on every resize frame.
+var _resizeTimer = null;
+window.addEventListener('resize', function() {
+  if (!tourActive) return;
+  clearTimeout(_resizeTimer);
+  _resizeTimer = setTimeout(function() {
+    var target = TOUR_STEPS[currentStep].getTarget();
+    if (!target) return;
+    positionSpotlight(target);
+    positionTooltip(target, currentStep);
+  }, 100);
+}, { passive: true });
+
+// ── SESSION DETECTION ────────────────────────────────────────────────────────
+// Uses sessionStorage so a page reload within the same tab does not re-trigger
+// nudges. A new tab or new browser session resets isNewSession to true.
+// isNewSession is read by Batch 2 (event-cell pulse) and Batch 3 (swipe nudge).
+const isNewSession = !sessionStorage.getItem('masl_session_started');
+if (isNewSession) sessionStorage.setItem('masl_session_started', '1');
+
+// ── BATCH 2: EVENT-CELL PULSE NUDGE ──────────────────────────────────────────
+// findNearestEventCell — scans the rendered grid for the earliest upcoming
+// date cell (today or future) that contains at least one event pill.
+// Returns the DOM element, or null if none exists in the current view.
+function findNearestEventCell() {
+  const today = new Date();
+  const todayFlat = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+
+  let nearest     = null;
+  let nearestDiff = Infinity;
+
+  document.querySelectorAll('.day-cell:not(.blank)').forEach(function(cell) {
+    // Must have at least one event pill to qualify
+    if (!cell.querySelector('.event-pill')) return;
+    const dk = cell.dataset.dk;
+    if (!dk) return;
+    const parts = dk.split('-').map(Number);
+    const cellTime = new Date(parts[0], parts[1] - 1, parts[2]).getTime();
+    const diff = cellTime - todayFlat;
+    // Today (diff === 0) and future cells (diff > 0) qualify
+    if (diff >= 0 && diff < nearestDiff) {
+      nearestDiff = diff;
+      nearest     = cell;
+    }
+  });
+
+  return nearest;
+}
+
+// _nudgeFired — one-shot guard so triggerEventNudge() is truly side-effect-free
+// after the first qualifying call, even if render() is called again later.
+var _nudgeFired = false;
+
+// triggerEventNudge — called at the end of render(). Applies the pulse to the
+// nearest upcoming event cell, or falls through to mark both nudge flags if
+// no qualifying cell exists (swipe nudge visual is added in Batch 3).
+function triggerEventNudge() {
+  if (_nudgeFired)    return;  // already fired this session
+  if (!isNewSession)  return;  // reloads and non-new sessions are excluded
+
+  var profile = rwGetProfile();
+  if (profile.eventNudgeSeen) {
+    _nudgeFired = true;        // flags already committed — nothing to do
+    return;
+  }
+
+  // Use the same 1000ms delay as the rest of the codebase to let layout settle
+  setTimeout(function() {
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var cell          = findNearestEventCell();
+
+    if (cell) {
+      // Mark seen before touching the DOM — guards against re-entry
+      profile.eventNudgeSeen = true;
+      rwSaveProfile(profile);
+
+      if (!reducedMotion) {
+        cell.classList.add('nudge-pulse');
+        cell.addEventListener('animationend', function onNudgeEnd() {
+          cell.classList.remove('nudge-pulse');
+          cell.removeEventListener('animationend', onNudgeEnd);
+        });
+      }
+      // reducedMotion path: flag already saved, no visual emitted
+    } else {
+      // Fallthrough: no upcoming events in current month view.
+      // Mark eventNudgeSeen and hand off to triggerSwipeNudge() for the
+      // swipeNudgeSeen flag and visual. (Batch 3)
+      profile.eventNudgeSeen = true;
+      rwSaveProfile(profile);
+      triggerSwipeNudge();
+    }
+  }, 1000);
+
+  // Raise the guard immediately so subsequent render() calls during the
+  // 1000ms window don't queue additional setTimeout invocations.
+  _nudgeFired = true;
+}
+
+// ── BATCH 3: SWIPE NUDGE ─────────────────────────────────────────────────────
+// triggerSwipeNudge — injects a fixed-position pill hinting at the horizontal
+// swipe gesture. Fires when eventNudgeSeen is already true but swipeNudgeSeen
+// is false — i.e. the second qualifying new session, or the fallthrough path
+// from Batch 2 when no upcoming events exist in the current month.
+
+var _swipeNudgeFired = false;
+
+function triggerSwipeNudge() {
+  if (_swipeNudgeFired) return;   // already fired this session
+  if (!isNewSession)   return;   // reloads excluded
+
+  var profile = rwGetProfile();
+  if (!profile.eventNudgeSeen || profile.swipeNudgeSeen) {
+    _swipeNudgeFired = true;     // conditions not met or already done
+    return;
+  }
+
+  _swipeNudgeFired = true;
+
+  // Mark seen immediately — before any async/visual work
+  profile.swipeNudgeSeen = true;
+  rwSaveProfile(profile);
+
+  // Respect reduced motion: flag is marked, no visual emitted
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  setTimeout(function() {
+    var frame = document.querySelector('.cal-frame');
+    if (!frame) return;
+
+    var el = document.createElement('div');
+    el.className = 'swipe-nudge';
+    el.setAttribute('aria-hidden', 'true');
+    el.innerHTML =
+      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>' +
+      '<span>Swipe to browse months</span>' +
+      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+
+    frame.appendChild(el);
+
+    // Self-remove after animation completes — no persistent DOM residue
+    el.addEventListener('animationend', function() {
+      el.remove();
+    });
+  }, 1000);
+}
+</script>
+
 </body>
 </html>
